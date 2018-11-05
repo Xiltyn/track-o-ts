@@ -1,0 +1,43 @@
+@import "../../style/core/variables";
+@import "../../style/utils/functions";
+@import "../../style/utils/mixins";
+
+.app-header {
+    position: relative;
+    height: 80px;
+    width: 100%;
+    padding: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba($GREY_DARK, .9);
+    box-shadow: 0 0 24px -4px $BLACK;
+    box-sizing: border-box;
+
+    .logotype-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 80px;
+        height: 100%;
+        padding: 12px;
+
+        display: inherit;
+        justify-content: flex-start;
+
+        img {
+            height: 100%;
+            width: auto;
+        }
+    }
+
+    .header-message {
+        width: 100%;
+        font-size: 24px;
+        text-align: center;
+        color: $GREY_LIGHT;
+    }
+}

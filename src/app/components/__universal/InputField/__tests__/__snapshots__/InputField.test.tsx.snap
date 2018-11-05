@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<|:===== <InputField /> =====:|> renders component 1`] = `
+<div
+  className="input-container "
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  <Field
+    className=""
+    component="input"
+    name="fake_name"
+    type="text"
+  />
+</div>
+`;

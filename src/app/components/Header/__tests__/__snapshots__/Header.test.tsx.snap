@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<|:===== <Header /> =====:|> renders component 1`] = `
+<header
+  className="app-header"
+  onClick={[Function]}
+>
+  <div
+    className="logotype-container"
+  >
+    test-file-stub
+  </div>
+  <h3
+    className="header-message"
+  >
+    Welcome to Dev&Deliver boilerplate for React apps with TypeScript!
+  </h3>
+</header>
+`;

@@ -1,0 +1,54 @@
+@import "../../../style/core/variables";
+@import "../../../style/utils/functions";
+@import "../../../style/utils/mixins";
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding-bottom: 24px;
+
+    label {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 20px;
+        padding-bottom: 8px;
+
+        transition: all .3s ease-in-out;
+    }
+
+    input {
+        background: transparent;
+        border: 1px solid $GREY_DIM;
+        border-radius: 2px;
+        padding: 8px 12px;
+
+        font-size: 16px;
+        line-height: 16px;
+        color: $GREY_DIM;
+
+        transition: all .3s ease-in-out;
+
+        &::placeholder {
+            color: $GREY_PALE;
+        }
+
+        &:hover,
+        &:active {
+            border-color: $PRIMARY;
+            color: $PRIMARY;
+        }
+    }
+
+    &.active {
+        label {
+            color: $PRIMARY;
+        }
+
+        input {
+            border-color: $PRIMARY;
+            color: $PRIMARY;
+        }
+    }
+}
