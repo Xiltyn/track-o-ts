@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import './Header.scss';
+import { App } from 'app/containers/App';
 
 /**
  * Header Properties.
@@ -11,6 +12,8 @@ export namespace Header {
         logotype:React.ReactElement<SVGElement|HTMLElement>;
         /** Example header message prop */
         message:string;
+        /** Redux actions object for App Container */
+        actions:App.appActions;
     }
 
     export interface State {
@@ -35,6 +38,8 @@ export class Header extends React.Component<Header.Props, Header.State> {
         if(text) {
             this.setState({ currentMessage: text });
         }
+
+        this.props.actions.logout();
     };
 
     render() {

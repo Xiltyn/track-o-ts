@@ -1,0 +1,66 @@
+@import "../../../style/core/variables";
+
+.btn {
+    position: relative;
+    padding: 8px 20px;
+    margin-top: 24px;
+
+    color: $GREY_TEXT;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: $MONTSERRAT;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    cursor: pointer;
+    border: 2px solid $GREY_TEXT;
+    background: transparent;
+
+    transition: all .6s ease-in-out;
+
+    &.submit-btn {
+        width: 150px;
+        height: 40px;
+
+    }
+
+    span {
+        position: relative;
+        z-index: 5;
+    }
+
+    &:after,
+    &:before {
+        content: '';
+        position: absolute;
+        background: rgba($GREY_TEXT, 0);
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 0;
+        z-index: 0;
+    }
+
+    &:before {
+        transition: all .4s ease-in-out .2s;
+    }
+
+    &:after {
+        transition: all .4s ease-in-out;
+    }
+
+    &:hover,
+    &.busy {
+        color: $PRIMARY;
+
+        &:after,
+        &:before {
+            width: 100%;
+            background: $GREY_TEXT;
+        }
+
+        &:after {
+            background: rgba($GREY_TEXT, .6);
+        }
+    }
+}

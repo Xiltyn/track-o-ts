@@ -10,7 +10,7 @@ describe('<|:===== Auth Reducer =====:|>', () => {
             .toEqual(state);
     });
 
-    it(`handle ${ AuthActions.Type.SIGNIN }`, () => {
+    it(`handle ${ AuthActions.Type.REQ_DISPATCH }`, () => {
         state = {
             ...state,
             started: true,
@@ -19,46 +19,55 @@ describe('<|:===== Auth Reducer =====:|>', () => {
         };
 
         expect(authReducer(state, {
-            type: AuthActions.Type.SIGNIN
+            type: AuthActions.Type.REQ_DISPATCH
         })).toEqual(state);
     });
 
-    it(`handle ${ AuthActions.Type.SIGNIN_SUCCESSFUL }`, () => {
+    it(`handle ${ AuthActions.Type.SIGNIN }`, () => {
         state = {
             ...state,
             started: false,
             completed: true,
             failed: false,
-            token: 'fake_token',
             user: {
-                email: 'fake_email@mail.com'
+                displayName: 'test user',
+                email: 'test.email@mail.com',
+                phoneNumber: '123456789',
+                photoURL: 'http://fake.com/url.png',
+                providerId: 'fake_provider',
+                uid: '0123',
             }
         };
 
         expect(authReducer(state, {
-            type: AuthActions.Type.SIGNIN_SUCCESSFUL,
+            type: AuthActions.Type.SIGNIN,
             payload: {
-                user: { email: 'fake_email@mail.com' },
-                token: 'fake_token',
+                user: {
+                    displayName: 'test user',
+                    email: 'test.email@mail.com',
+                    phoneNumber: '123456789',
+                    photoURL: 'http://fake.com/url.png',
+                    providerId: 'fake_provider',
+                    uid: '0123',
+                },
             }
         })).toEqual(state);
     });
 
-    it(`handle ${ AuthActions.Type.SIGNIN_FAILED }`, () => {
+    it(`handle ${ AuthActions.Type.REQ_FAILURE }`, () => {
         state = {
             ...state,
             started: false,
             completed: true,
             failed: true,
-            token: '',
             statusMessage: 'Authentication Failed',
-            user: {}
+            user: null
         };
 
         expect(authReducer(state, {
-            type: AuthActions.Type.SIGNIN_FAILED,
+            type: AuthActions.Type.REQ_FAILURE,
             payload: {
-                user: {},
+                user: null,
                 statusMessage: 'Authentication Failed',
             }
         })).toEqual(state);

@@ -1,8 +1,7 @@
 import { AuthModel } from "../../../../models";
 
 export const authStateMock:AuthModel = {
-    user: {},
-    token: '',
+    user: null,
     statusMessage: '',
     started: false,
     completed: false,

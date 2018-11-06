@@ -1,54 +1,79 @@
 @import "../../../style/core/variables";
-@import "../../../style/utils/functions";
-@import "../../../style/utils/mixins";
 
 .input-container {
+    position: relative;
+
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
 
-    padding-bottom: 24px;
+    color: $GREY_TEXT;
+
+    width: 100%;
+    margin-bottom: 32px;
+    background-color: $PRIMARY;
+    box-shadow: 0 0 16px -4px $GREY_DARK;
+    //border: 2px solid $GREY_DARK;
+
+    .error {
+        position: absolute;
+        font-size: 11px;
+        line-height: 14px;
+        text-align: center;
+        top: -36px;
+    }
 
     label {
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 20px;
-        padding-bottom: 8px;
+        position: absolute;
+        bottom: -16px;
+        left: 0;
 
-        transition: all .3s ease-in-out;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
     }
 
     input {
-        background: transparent;
-        border: 1px solid $GREY_DIM;
-        border-radius: 2px;
-        padding: 8px 12px;
+        padding: 12px;
 
-        font-size: 16px;
-        line-height: 16px;
-        color: $GREY_DIM;
+        font-size: 14px;
+        font-weight: 500;
+        color: $PRIMARY_LIGHT;
+        text-align: center;
+        letter-spacing: .5px;
+        font-family: $OPEN_SANS;
+
+        background: transparent;
+        transition: all .3s ease-in-out;
+
+        &:focus,
+        &:active {
+            background: $GREY_TEXT;
+            color: $GREY_DARK;
+        }
+
+    }
+
+    .show-password-btn {
+        position: absolute;
+        bottom: -18px;
+        right: 0;
+
+        color: $PRIMARY_LIGHT;
+        font-size: 10px;
+        font-weight: 200;
+        text-transform: capitalize;
+
+        cursor: pointer;
+        padding: 1px 2px;
+        border: none;
+        border-bottom: 2px solid rgba($GREY_TEXT, 0);
+        background: transparent;
 
         transition: all .3s ease-in-out;
 
-        &::placeholder {
-            color: $GREY_PALE;
-        }
-
-        &:hover,
-        &:active {
-            border-color: $PRIMARY;
-            color: $PRIMARY;
-        }
-    }
-
-    &.active {
-        label {
-            color: $PRIMARY;
-        }
-
-        input {
-            border-color: $PRIMARY;
-            color: $PRIMARY;
+        &:hover {
+            color: $GREY_TEXT;
+            border-bottom: 2px solid $GREY_TEXT;
         }
     }
 }

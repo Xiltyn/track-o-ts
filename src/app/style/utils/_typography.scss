@@ -1,0 +1,72 @@
+/*!
+ * Made with <3 by Kagami | jakub.bujko@kagami.info
+ * -----  kagami-info  -----
+ *   > $file.filename
+ *   > created @ 9/12/18 1:55 AM
+ */
+
+body {
+    font-family: $OPEN_SANS;
+    color: $GREY_TEXT;
+}
+
+.text-bit {
+    font-family: $MONTSERRAT;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 62px;
+    color: $GREY_LIGHT;
+    text-transform: uppercase;
+
+    &-alt {
+        font-size: 60px;
+        line-height: 68px;
+
+        &--primary {
+            color: $PRIMARY;
+        }
+        &--secondary {
+            color: $SECONDARY;
+        }
+        &--default {
+            color: $GREY_LIGHT;
+        }
+    }
+}
+
+h1, .h1 {
+    font-size: 48px;
+    font-weight: 300;
+    line-height: 56px;
+}
+h2, .h2 {
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 38px;
+}
+h3, .h3 {
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 32px;
+}
+h4, .h4 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 26px;
+}
+h5, .h5 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+}
+h6, .h6 {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 20px;
+}
+
+p, .p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 22px;
+}

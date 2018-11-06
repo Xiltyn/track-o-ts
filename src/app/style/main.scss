@@ -1,22 +1,19 @@
+// CORE
 @import "core/normalize";
 @import "core/fonts";
 @import "core/variables";
+// UTILS
+@import "utils/typography";
 
-html,
-body {
-    margin: 0;
-    padding: 0;
+html, body, #root {
+    width: 100%;
+    height: 100%;
+    background: $GREY_DARK;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    h1 {
+        font-family: $MONTSERRAT;
+    }
 }
 
-body {
-    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    line-height: 1.4em;
-    background: #f5f5f5;
-    color: #4d4d4d;
-    margin: 0 auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    -ms-font-smoothing: antialiased;
-    font-smoothing: antialiased;
-    font-weight: 300;
-}
+

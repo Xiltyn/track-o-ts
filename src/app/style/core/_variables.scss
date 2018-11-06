@@ -1,19 +1,28 @@
-// Global SASS variables
-
-// COLORS
-$PRIMARY: #da1c5b;
-$PRIMARY_DARK: #760f33;
-$PRIMARY_LIGHT: #fe5ea7;
-$WHITE: #ffffff;
-$BLACK: #000000;
-$GREY_PALE: #eeeeee;
-$GREY_LIGHT: #c8c7c7;
-$GREY_DIM: #6d6d6d;
-$GREY_TEXT: #222222;
-$GREY_DARK: #0c0c0c;
-$TO_CENTER_GRAD: linear-gradient(90deg, #3a2236 0%, #2e2a3c 50%, #3a2236 100%);
-$LEFT_RIGHT_GRAD: linear-gradient(90deg, #2e2a3c 0%, #2e2a3c 25%, #3a2236 75%, #3a2236 100%);
+/*!
+ * Made with <3 by Kagami | jakub.bujko@kagami.info
+ * -----  kagami-info  -----
+ *   > $file.filename
+ *   > created @ 9/12/18 12:25 AM
+ */
 
 // FONTS
-$main-font: 'Montserrat', sans-serif;
-$second-font: 'Raleway', sans-serif;
+$MONTSERRAT: 'Montserrat', Helvetica, Arial, sans-serif;
+$OPEN_SANS: 'Open Sans', Helvetica, Arial, sans-serif;
+
+// COLORS
+$PRIMARY: #F15025;
+$PRIMARY_DARK: #581E0E;
+$PRIMARY_LIGHT: #F8AF9B;
+
+$SECONDARY: #DB5461;
+$SECONDARY_DARK: #64272D;
+$SECONDARY_LIGHT: #EEB1B7;
+
+$GREY: #5D6278;
+$GREY_DARK: #1B1E29;
+$GREY_TEXT: #FCF7F8;
+$GREY_LIGHT: #9396A5;
+
+$SUCCESS: #85CB33;
+$ERROR: #E3170A;
+

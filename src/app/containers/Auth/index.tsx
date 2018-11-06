@@ -16,7 +16,8 @@ export namespace Auth {
     }
 
     export type authActions = {
-        signIn:(email:string, password:string) => void,
+        signIn?:(email:string, password:string) => void,
+        fetchUser?: (historyPush:(location:string) => void) => void,
         historyPush:(location:string) => void,
     }
 }
@@ -28,13 +29,20 @@ export namespace Auth {
     }),
     (dispatch:Dispatch):Pick<Auth.Props, 'actions'> => ({
         actions: bindActionCreators({
-            signIn: (email:string, password: string) => AuthMiddleware.signInWithEmailAndPassword(email, password),
+            fetchUser: (historyPush:(location:string) => void) => AuthMiddleware.fetchUser(historyPush),
+            signIn: (email:string, password: string) => AuthMiddleware.signInWithEmailAndPassword({email, password}),
             historyPush: (location: string) => push(location),
         }, dispatch),
     }),
 )
 
 export class Auth extends React.Component<Auth.Props & RouteComponentProps> {
+    componentDidMount() {
+        const { actions: { fetchUser, historyPush } } = this.props;
+
+        if(fetchUser) fetchUser(historyPush);
+    }
+
     render() {
         const {
             auth,

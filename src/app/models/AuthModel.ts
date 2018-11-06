@@ -1,8 +1,7 @@
+import { UserInfo } from "firebase";
+
 export interface AuthModel {
-    user:{
-        email?: string,
-    },
-    token?:string,
+    user:UserInfo|null,
     completed?:boolean,
     started?:boolean,
     failed?:boolean,

@@ -4,8 +4,7 @@ import { AuthActions } from './actions';
 import { AuthModel } from '../../models/index';
 
 const initialState:RootState.AuthState = {
-    user: {},
-    token: '',
+    user: null,
     statusMessage: '',
     started: false,
     completed: false,
@@ -14,26 +13,32 @@ const initialState:RootState.AuthState = {
 
 export const authReducer = handleActions<RootState.AuthState, AuthModel>(
     {
-        [ AuthActions.Type.SIGNIN || AuthActions.Type.ISLOGGEDIN ]: state => ({
+        [ AuthActions.Type.REQ_DISPATCH ]: state => ({
              ...state,
             started: true,
             failed: false,
             completed: false,
         }),
-        [ AuthActions.Type.SIGNIN_FAILED || AuthActions.Type.ISLOGGEDIN_FAILED ]: (state, action) => ({
+        [ AuthActions.Type.REQ_FAILURE]: (state, action) => ({
             ...state,
             started: false,
             completed: true,
             failed: true,
             statusMessage: action.payload ? action.payload.statusMessage : '',
         }),
-        [ AuthActions.Type.SIGNIN_SUCCESSFUL || AuthActions.Type.ISLOGGEDIN_SUCCESSFUL ]: (state, action) => ({
+        [ AuthActions.Type.SIGNIN ]: (state, action) => ({
             ...state,
             started: false,
             completed: true,
             failed: false,
-            user: action.payload ? action.payload.user : {},
-            token: action.payload ? action.payload.token : '',
+            user: action.payload ? action.payload.user : null,
+        }),
+        [ AuthActions.Type.LOGOUT ]: (state) => ({
+            ...state,
+            started: false,
+            completed: true,
+            failed: false,
+            user: null,
         }),
     },
     initialState

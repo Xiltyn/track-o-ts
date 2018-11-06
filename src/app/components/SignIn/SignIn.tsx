@@ -2,13 +2,12 @@ import * as React from 'react';
 import { RootState } from "../../modules";
 import { Form, FormStateMap, InjectedFormProps, reduxForm } from "redux-form";
 import { Auth } from "../../containers/Auth";
-import { AppLoader } from "../../components";
-import { appLoader } from '../__universal/AppLoader/AppLoader';
 import { InputField } from "../__universal/InputField/InputField";
 import AuthState = RootState.AuthState;
 import authActions = Auth.authActions;
 import animationContainer from "app/utils/animationContainer/animationContainer";
 import './SignIn.scss';
+import Button from "app/components/__universal/Button/Button";
 
 export namespace SignInComponent {
     export interface Props {
@@ -19,40 +18,44 @@ export namespace SignInComponent {
     }
 
     export interface State {
-        shouldRender: boolean,
     }
 }
 
 
-const SignInModal = (props:{handleSubmit:(evt:Event) => void}) => {
+const SignInModal = (props:{handleSubmit:(evt:Event) => void, isBusy:boolean},) => {
     const {
         handleSubmit,
+        isBusy
     } = props;
 
     return (
-        <div className="signin-container">
-            <h1>
-                Sign In
-            </h1>
-            <Form
-                className="signin-form"
-                onSubmit={ handleSubmit }>
-                <InputField
-                    className='field-email'
-                    label='Email'
-                    placeholder='regular.gnoll@happy.mail'
-                    name='email'/>
-                <InputField
-                    className='field-password'
-                    label='Password'
-                    placeholder='*********'
-                    name='password'
-                    type='password'/>
-                <button>
-                    SUBMIT
-                </button>
-            </Form>
-        </div>
+            <div className="signin-container">
+                <h1 className='logo'>
+                    <span className='big-letter'>t</span>rack<span className='logo-o'>o</span>
+                </h1>
+                <Form
+                    className="signin-form"
+                    onSubmit={ handleSubmit }>
+                    <h2>
+                        Sign In
+                    </h2>
+                    <InputField
+                        className='field-email'
+                        name='email'
+                        label='email'
+                        placeholder='john.lemon@fritz.cola'/>
+                    <InputField
+                        className='field-password'
+                        name='password'
+                        type='password'
+                        label='password'
+                        placeholder='qwerty123'/>
+                    <Button
+                        buttonClass='submit-btn'
+                        onSubmit={ handleSubmit }
+                        isBusy={ isBusy }/>
+                </Form>
+            </div>
     );
 };
 
@@ -63,15 +66,8 @@ class SignInComponent extends React.Component<SignInComponent.Props & InjectedFo
         shouldRender: false,
     };
 
-    componentDidMount() {
-        setTimeout(() => {
-            this.setState({
-                shouldRender: true,
-            })
-        }, 0)
-    }
     componentDidUpdate(oldProps:SignInComponent.Props & InjectedFormProps<{}, SignInComponent.Props>) {
-        if(!oldProps.auth.user.email && this.props.auth.user.email) {
+        if((oldProps.auth.user && !oldProps.auth.user.email) && (this.props.auth.user && this.props.auth.user.email)) {
             this.props.actions.historyPush('/app');
         }
     }
@@ -82,12 +78,8 @@ class SignInComponent extends React.Component<SignInComponent.Props & InjectedFo
 
         if(values) {
             if(values.email && values.password) {
-                this.setState({
-                   shouldRender: false,
-                });
-
                 setTimeout(() => {
-                    signIn(values.email, values.password);
+                    if(signIn) signIn(values.email, values.password);
                 }, 1000);
             }
         }
@@ -98,16 +90,11 @@ class SignInComponent extends React.Component<SignInComponent.Props & InjectedFo
             auth,
         } = this.props;
 
-        const {
-            shouldRender,
-        } = this.state;
-
-        return auth.started && (!auth.completed || !auth.failed )
-            ? <AppLoader type={ appLoader.loaderType.FULL }/>
-            : (
+        return (
             <AnimatedSignIn
                 handleSubmit={ this.handleSubmit }
-                isMounted={ shouldRender }
+                isMounted={ auth.user === null }
+                isBusy={ auth.started && (!auth.completed || !auth.failed ) }
                 identifier="signin"/>
         )
     }
