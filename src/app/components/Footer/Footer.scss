@@ -11,8 +11,11 @@ footer {
 
     p {
         width: 100%;
-        text-align: center;
         font-size: 14px;
+        font-weight: 600;
+        font-family: $MONTSERRAT;
+        color: $GREY;
         line-height: 40px;
+        text-align: center;
     }
 }

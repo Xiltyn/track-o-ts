@@ -10,7 +10,9 @@
     width: 100%;
     padding: 12px;
 
+    color: $GREY_LIGHT;
     display: flex;
+    user-select: none;
     align-items: center;
     justify-content: space-between;
 
@@ -18,28 +20,14 @@
     box-shadow: 0 0 24px -4px #000;
     box-sizing: border-box;
 
-    .logotype-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-
-        width: 80px;
-        height: 100%;
-        padding: 12px;
-
-        display: inherit;
-        justify-content: flex-start;
-
-        img {
-            height: 100%;
-            width: auto;
-        }
+    .logo {
+        color: $GREY_TEXT;
+        pointer-events: none;
     }
 
-    .header-message {
-        width: 100%;
-        font-size: 24px;
-        text-align: center;
-        color: $GREY_LIGHT;
+    h3 {
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
     }
 }
