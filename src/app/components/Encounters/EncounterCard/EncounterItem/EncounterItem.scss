@@ -1,0 +1,104 @@
+@import "../../../../style/core/variables";
+
+.item-strip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 64px;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    background-color: $GREY_DARK;
+    box-sizing: border-box;
+
+    transition: all .5s ease-in-out;
+
+    .item-name {
+        font-weight: 400;
+        color: $GREY;
+        pointer-events: none;
+    }
+
+    &.active {
+        width: calc(100% - 40px);
+        background-color: $SECONDARY;
+
+        &:after {
+            content: '';
+            position: absolute;
+
+            top: 0;
+            left: calc(100% + 8px);
+
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 32px 0 32px 32px;
+            border-color: transparent transparent transparent $SECONDARY;
+
+            animation: arrowMove 2s cubic-bezier(.8,.18,.31,.81) infinite;
+            z-index: 0;
+        }
+
+        .item-name {
+            color: $GREY_DARK;
+        }
+
+        .item-statuses .status {
+            background: $GREY_DARK;
+            svg path {
+                fill: $SECONDARY;
+                transition: all .5s ease-in-out;
+            }
+        }
+    }
+
+    .item-statuses {
+        display: flex;
+        justify-content: flex-end;
+
+        width: 60%;
+        height: 100%;
+
+        z-index: 10;
+        .status {
+            height: 100%;
+            width: 48px;
+            padding-top: 8px;
+            margin-right: 4px;
+
+            display: flex;
+            justify-content: center;
+
+            background: $GREY_DARK;
+            border-radius: 50%;
+
+            transition: all .5s ease-in-out;
+            svg {
+                height: 100%;
+
+                path {
+                    fill: $GREY;
+                }
+            }
+        }
+    }
+}
+
+@keyframes arrowMove {
+    0% {
+        transform: translateX(-56px);
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(8px);
+        opacity: 0;
+    }
+}

@@ -1,24 +1,20 @@
 import * as React from 'react';
 
 import './Header.scss';
-import { App } from 'app/containers/App';
+import { Logo } from "app/components/__universal/Logo/Logo";
 
 /**
  * Header Properties.
  */
 export namespace Header {
     export interface Props {
-        /** Brand logotype image */
-        logotype:React.ReactElement<SVGElement|HTMLElement>;
-        /** Example header message prop */
-        message:string;
         /** Redux actions object for App Container */
-        actions:App.appActions;
+        toggleSidebar:() => void;
+        logout:() => void;
     }
 
     export interface State {
-        /** Current examples message set on Header */
-        currentMessage:string,
+
     }
 }
 
@@ -26,40 +22,18 @@ export namespace Header {
  * Application Header.
  */
 export class Header extends React.Component<Header.Props, Header.State> {
-    constructor(props:Header.Props) {
-        super(props);
-
-        this.state = {
-            currentMessage: this.props.message,
-        }
-    }
-
-    switchMessage = (text:string) => {
-        if(text) {
-            this.setState({ currentMessage: text });
-        }
-
-        this.props.actions.logout();
-    };
-
     render() {
-        const {
-            logotype,
-        } = this.props;
-
-        const {
-            currentMessage,
-        } = this.state;
+        const { logout, toggleSidebar } = this.props;
 
         return (
             <header
-                className="app-header"
-                onClick={ () => this.switchMessage('Don\' touch this!' ) }>
-                <div className="logotype-container">
-                    { logotype }
-                </div>
-                <h3 className="header-message">
-                    { currentMessage }
+                className="app-header">
+                <h3 onClick={ () => toggleSidebar() }>
+                    Sidebar
+                </h3>
+                <Logo/>
+                <h3 onClick={ () => logout() }>
+                    Logout
                 </h3>
             </header>
         );

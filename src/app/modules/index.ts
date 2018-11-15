@@ -3,6 +3,7 @@ import { RootState } from './state';
 import { routerReducer, RouterState } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 import { authReducer } from "./auth/reducer";
+import { sidebarReducer } from "app/modules/sidebar/reducer";
 
 export { RootState, RouterState };
 
@@ -12,6 +13,7 @@ export const rootReducer = combineReducers<RootState>({
     router: routerReducer as any,
     form: formReducer as any,
     auth: authReducer as any,
+    sidebar: sidebarReducer as any,
 });
 
 

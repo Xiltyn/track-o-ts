@@ -1,0 +1,18 @@
+@import "../../style/core/variables";
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    width: 100%;
+    background: $GREY_DARK;
+    box-shadow: 0 0 24px -4px #000;
+
+    p {
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        line-height: 40px;
+    }
+}

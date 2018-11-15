@@ -31,15 +31,10 @@ export const authReducer = handleActions<RootState.AuthState, AuthModel>(
             started: false,
             completed: true,
             failed: false,
+            statusMessage: '',
             user: action.payload ? action.payload.user : null,
         }),
-        [ AuthActions.Type.LOGOUT ]: (state) => ({
-            ...state,
-            started: false,
-            completed: true,
-            failed: false,
-            user: null,
-        }),
+        [ AuthActions.Type.LOGOUT ]: () => initialState,
     },
     initialState
 );

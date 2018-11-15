@@ -4,6 +4,8 @@
 
 .app-header {
     position: relative;
+    top: 0;
+    left: 0;
     height: 80px;
     width: 100%;
     padding: 12px;
@@ -12,8 +14,8 @@
     align-items: center;
     justify-content: space-between;
 
-    background: rgba($PRIMARY, .9);
-    box-shadow: 0 0 24px -4px $GREY_DARK;
+    background: $GREY_DARK;
+    box-shadow: 0 0 24px -4px #000;
     box-sizing: border-box;
 
     .logotype-container {

@@ -10,6 +10,10 @@ export class Footer extends React.Component<Footer.Props> {
     static defaultProps:Partial<Footer.Props> = {};
 
     render() {
-        return <footer className="normal">Well damn</footer>;
+        return (
+            <footer>
+                <p>Copyrights® Kagami | 2018</p>
+            </footer>
+        );
     }
 }

@@ -22,7 +22,8 @@ export class AuthMiddleware {
         dispatch(AuthActions.requestDispatch());
 
         firebaseAuth.signInWithEmailAndPassword(credentials.email, credentials.password).catch(err => {
-            dispatch(AuthActions.requestFailure(err));
+            console.log('firebase error', err.message);
+            dispatch(AuthActions.requestFailure({ statusMessage: err.message }));
         });
     };
 

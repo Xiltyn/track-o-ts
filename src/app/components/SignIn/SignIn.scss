@@ -12,40 +12,12 @@
     box-sizing: border-box;
 
     .logo {
-        position: relative;
-        font-weight: 200;
-        letter-spacing: 1px;
-        text-transform: capitalize;
         padding-bottom: 48px;
-
-        .logo-o {
-            position: relative;
-
-            color: $PRIMARY;
-            font-weight: 900;
-            padding-left: 26px;
-
-            text-transform: uppercase;
-
-            &:after {
-                content: '';
-
-                position: absolute;
-                left: 8px;
-                top: 50%;
-
-                width: 8px;
-                height: 8px;
-
-                border-radius: 50%;
-                background: $PRIMARY;
-
-                transform: translateY(-50%);
-            }
-        }
     }
 
     .signin-form {
+        position: relative;
+
         width: 320px;
 
         display: flex;
@@ -66,6 +38,24 @@
             text-transform: uppercase;
 
             padding-bottom: 24px;
+        }
+
+        .animation-container {
+            position: absolute;
+            width: 100%;
+            top: 100%;
+
+            .error-message--container {
+                width: 100%;
+                padding: 16px 0;
+                text-align: center;
+
+                .error-message {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: $ERROR;
+                }
+            }
         }
     }
 }

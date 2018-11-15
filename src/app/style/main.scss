@@ -14,6 +14,26 @@ html, body, #root {
     h1 {
         font-family: $MONTSERRAT;
     }
+
+    .app-container {
+        position: relative;
+        height: 100%;
+        width: 100%;
+
+        display: flex;
+
+        .content {
+            position: relative;
+            height: 100%;
+            width: 100%;
+
+            transition: all .3s ease-in-out;
+
+            &.showSidebar {
+                width: calc(100% - 280px);
+            }
+        }
+    }
 }
 
 

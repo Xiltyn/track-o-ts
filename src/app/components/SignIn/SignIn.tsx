@@ -6,8 +6,9 @@ import { InputField } from "../__universal/InputField/InputField";
 import AuthState = RootState.AuthState;
 import authActions = Auth.authActions;
 import animationContainer from "app/utils/animationContainer/animationContainer";
-import './SignIn.scss';
 import Button from "app/components/__universal/Button/Button";
+import { Logo } from "app/components/__universal/Logo/Logo";
+import './SignIn.scss';
 
 export namespace SignInComponent {
     export interface Props {
@@ -21,18 +22,37 @@ export namespace SignInComponent {
     }
 }
 
+type errorMessageProps = {
+    message:string,
+}
 
-const SignInModal = (props:{handleSubmit:(evt:Event) => void, isBusy:boolean},) => {
+type SignInModalProps = {
+    handleSubmit:(evt:Event) => void,
+    isBusy:boolean,
+    message:string,
+}
+
+
+const ErrorMessage = (props:errorMessageProps) => (
+    <div className="error-message--container">
+        <p className="error-message">
+            { props.message }
+        </p>
+    </div>
+);
+
+const AnimatedErrorMessage = animationContainer(ErrorMessage);
+
+const SignInModal = (props:SignInModalProps) => {
     const {
         handleSubmit,
-        isBusy
+        isBusy,
+        message
     } = props;
 
     return (
             <div className="signin-container">
-                <h1 className='logo'>
-                    <span className='big-letter'>t</span>rack<span className='logo-o'>o</span>
-                </h1>
+                <Logo/>
                 <Form
                     className="signin-form"
                     onSubmit={ handleSubmit }>
@@ -54,6 +74,9 @@ const SignInModal = (props:{handleSubmit:(evt:Event) => void, isBusy:boolean},) 
                         buttonClass='submit-btn'
                         onSubmit={ handleSubmit }
                         isBusy={ isBusy }/>
+                    <AnimatedErrorMessage
+                        isMounted={ message !== '' }
+                        message={ message }/>
                 </Form>
             </div>
     );
@@ -95,6 +118,7 @@ class SignInComponent extends React.Component<SignInComponent.Props & InjectedFo
                 handleSubmit={ this.handleSubmit }
                 isMounted={ auth.user === null }
                 isBusy={ auth.started && (!auth.completed || !auth.failed ) }
+                message={ auth.statusMessage }
                 identifier="signin"/>
         )
     }
