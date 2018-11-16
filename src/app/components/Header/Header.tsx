@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import './Header.scss';
 import { Logo } from "app/components/__universal/Logo/Logo";
+import svg from "app/utils/svg";
 
 /**
  * Header Properties.
@@ -28,13 +29,13 @@ export class Header extends React.Component<Header.Props, Header.State> {
         return (
             <header
                 className="app-header">
-                <h3 onClick={ () => toggleSidebar() }>
-                    Sidebar
-                </h3>
+                <div onClick={ () => toggleSidebar() }>
+                    { svg.sidebar }
+                </div>
                 <Logo/>
-                <h3 onClick={ () => logout() }>
-                    Logout
-                </h3>
+                <div onClick={ () => logout() }>
+                    { svg.logout }
+                </div>
             </header>
         );
     }

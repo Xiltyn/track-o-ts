@@ -1,33 +1,40 @@
 import * as React from "react";
-import { getMockEncounters } from "app/components/Encounters/Encounters.mock";
 import { EncounterCard } from "app/components/Encounters/EncounterCard/EncounterCard";
 
 import './Encounters.scss';
+import { EncounterModel } from "app/models/EncounterModel";
 
 export namespace Encounters {
     export interface Props {
-
+        actions:encountersActions,
+        encounters:Array<EncounterModel>|undefined,
     }
 
     export interface State {
-        activeEncounter:number,
+
+    }
+
+    export type encountersActions = {
+        initMockEncounters:() => void,
+        setActiveEncounter:(id:number) => void,
     }
 }
 
 export class Encounters extends React.Component<Encounters.Props, Encounters.State> {
-    state:Encounters.State = {
-        activeEncounter: 0,
-    };
+    componentDidMount() {
+        const { actions: { initMockEncounters } } = this.props;
+
+        if(initMockEncounters) initMockEncounters();
+    }
 
     updateActiveEncouter = (id:number) => {
-        this.setState({
-            activeEncounter: id,
-        })
+        const { actions: { setActiveEncounter } } = this.props;
+
+        if(setActiveEncounter) setActiveEncounter(id);
     };
 
     render() {
-        const mockEncounters = getMockEncounters();
-        const { activeEncounter } = this.state;
+        const { encounters } = this.props;
 
         return(
             <section className="app-encounters">
@@ -36,14 +43,14 @@ export class Encounters extends React.Component<Encounters.Props, Encounters.Sta
                 </h2>
                 <div className="encounters-container">
                     {
-                        mockEncounters.map(encounter => (
+                        encounters && encounters.map(encounter => (
                                 <EncounterCard
                                     id={ encounter.id }
                                     key={ encounter.id }
                                     name={ encounter.name }
                                     items={ encounter.items }
                                     onClick={ this.updateActiveEncouter }
-                                    isActive={ activeEncounter === encounter.id }/>
+                                    isActive={ encounter.isActive }/>
                             )
                         )
                     }

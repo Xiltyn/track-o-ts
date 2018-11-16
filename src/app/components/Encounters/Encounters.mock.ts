@@ -5,6 +5,7 @@ const encountersData:Array<EncounterModelProps> = [
     {
         id: 0,
         name: 'Bandit Slavers',
+        isActive: false,
         items: [
             {
                 id: 0,
@@ -51,6 +52,7 @@ const encountersData:Array<EncounterModelProps> = [
     {
         id: 1,
         name: 'Sewer Rats',
+        isActive: false,
         items: [
             {
                 id: 0,
@@ -90,7 +92,10 @@ export const getMockEncounters = ():Array<EncounterModel> => {
 
     for(let encounter of encountersData) {
         result = [ ...result, new EncounterModel(encounter) ]
+
     }
+
+    console.log(result);
 
     return result;
 };

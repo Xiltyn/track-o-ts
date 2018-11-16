@@ -6,4 +6,4 @@ export type sidebarMenuElement = {
     slug:sidebarSections,
 };
 
-export type sidebarSections = 'menu'|'campaigns'|'encounters';
+export type sidebarSections = 'menu'|'campaigns'|'encounters'|null;

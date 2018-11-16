@@ -28,7 +28,7 @@
         color: $GREY_TEXT;
 
         padding: 32px;
-        background: $PRIMARY;
+        background: $GRADIENT_PRIMARY;
 
         box-shadow: 0 0 24px -4px #000;
 
@@ -53,7 +53,7 @@
                 .error-message {
                     font-size: 14px;
                     font-weight: 600;
-                    color: $ERROR;
+                    color: $SECONDARY;
                 }
             }
         }

@@ -2,31 +2,56 @@
 
 .logo {
     position: relative;
+
     font-weight: 200;
     letter-spacing: 1px;
     text-transform: capitalize;
 
-    .logo-o {
-        position: relative;
+    transform: translateX(-32px);
 
-        color: $PRIMARY;
+    .logo-o {
+        position: absolute;
+        top: 10px;
+        right: -68px;
+
+        color: transparent;
         font-weight: 900;
-        padding-left: 26px;
+
+        width: 40px;
+        height: 38px;
+        border-radius: 19px;
+
+        background: $GRADIENT_PRIMARY;
 
         text-transform: uppercase;
+
+        &:before {
+            content: '';
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            width: 15px;
+            height: 16px;
+            border-radius: 15px;
+
+            background-color: $GREY_DARK;
+            transform: translate(-50%, -50%);
+        }
 
         &:after {
             content: '';
 
             position: absolute;
-            left: 8px;
+            left: -18px;
             top: 50%;
 
             width: 8px;
             height: 8px;
 
             border-radius: 50%;
-            background: $PRIMARY;
+            background: $GRADIENT_PRIMARY;
 
             transform: translateY(-50%);
         }

@@ -91,7 +91,7 @@ class SignInComponent extends React.Component<SignInComponent.Props & InjectedFo
 
     componentDidUpdate(oldProps:SignInComponent.Props & InjectedFormProps<{}, SignInComponent.Props>) {
         if((oldProps.auth.user && !oldProps.auth.user.email) && (this.props.auth.user && this.props.auth.user.email)) {
-            this.props.actions.historyPush('/app');
+            this.props.actions.historyPush('/');
         }
     }
 

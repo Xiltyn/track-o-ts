@@ -9,7 +9,7 @@ export class AuthMiddleware {
         firebaseAuth.onAuthStateChanged(user => {
             if (user) {
                 dispatch(AuthActions.signin({ user: user }));
-                historyPush('/app');
+                historyPush('/');
             }
             else {
                 dispatch(AuthActions.logout());

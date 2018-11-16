@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125" x="0px" y="0px">
+    <path class="cls-1"
+          d="M74,39H12.76L28.35,23.41a2,2,0,0,0-2.83-2.83l-19,19a2,2,0,0,0,0,2.83l19,19a2,2,0,0,0,2.83-2.83L12.76,43H74a16.1,16.1,0,1,1,0,32.2v4A20.1,20.1,0,1,0,74,39Z"/>
+    <rect class="cls-1" x="41.93" y="76" width="4" height="4"/>
+    <rect class="cls-1" x="33.93" y="76" width="4" height="4"/>
+    <rect class="cls-1" x="57.93" y="76" width="4" height="4"/>
+    <rect class="cls-1" x="49.93" y="76" width="4" height="4"/>
+    <rect class="cls-1" x="65.93" y="76" width="4" height="4"/>
+</svg>

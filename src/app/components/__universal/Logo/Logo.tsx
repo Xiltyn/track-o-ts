@@ -9,6 +9,6 @@ export namespace Logo {
 
 export const Logo = (props:Logo.Props) => (
     <h1 className='logo'>
-        <span className='big-letter'>t</span>rack<span className='logo-o'>o</span>
+        track<div className='logo-o'>o</div>
     </h1>
 );

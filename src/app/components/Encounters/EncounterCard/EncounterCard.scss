@@ -10,6 +10,8 @@
     border: solid 1px rgba($GREY, .2);
     box-sizing: border-box;
 
+    transition: all .5s ease-in-out;
+
     &-name {
         width: 100%;
         padding: 16px 0 32px;
@@ -24,7 +26,7 @@
     }
 
     &.active {
-        border: solid 1px $SECONDARY_DARK;
+        border: solid 1px rgba($SECONDARY, .8);
         box-shadow: 0 0 32px -8px rgba(#000, 1);
 
         .encounter-name {
