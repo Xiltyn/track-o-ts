@@ -1,5 +1,5 @@
-import { Color } from "csstype";
 import { funcOptions } from "app/models/general.types";
+import { ConditionModel, ConditionsState } from "app/models/ConditionsModel";
 
 export type EncounterModelProps = {
     [key:string]:number|string|boolean|Array<Item>,
@@ -12,15 +12,11 @@ export type EncounterModelProps = {
 export type Item = {
     id:number,
     name:string,
+    color:string;
     position:number,
-    statuses:Array<Status>,
+    statuses:ConditionsState,
 }
 
-export type Status = {
-    id:number,
-    color:Color,
-    icon:JSX.Element,
-}
 
 export interface EncountersModel {
     encounters:Array<EncounterModel>|undefined,
@@ -38,6 +34,7 @@ export class EncounterModel {
         this.assignData(data);
         this.setActive = this.setActive.bind(this);
         this.setInactive = this.setInactive.bind(this);
+        this.addStatus = this.addStatus.bind(this);
     }
 
     private assignData = (data:EncounterModelProps, options?:funcOptions) => {
@@ -58,6 +55,17 @@ export class EncounterModel {
     public setInactive():boolean {
         console.log('Encounter isActive :: ', this.isActive);
         return this.isActive = false;
+    }
+
+    public addStatus(itemId:number, condition:ConditionModel):Array<Item> {
+        const { items } = this;
+        const itemToEdit = items.find(item => item.id === itemId);
+
+        if(itemToEdit) itemToEdit.statuses = [ ...itemToEdit.statuses, condition ];
+
+        console.log('==> addStatus result :: ', itemToEdit);
+
+        return items;
     }
 
 }

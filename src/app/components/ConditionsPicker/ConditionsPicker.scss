@@ -1,0 +1,71 @@
+@import "../../style/core/variables";
+
+.conditions-picker {
+    width: 100%;
+    height: auto;
+    padding: 8px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+
+    box-sizing: border-box;
+
+    .condition {
+        position: relative;
+
+        height: 64px;
+        width: 64px;
+
+        cursor: pointer;
+        svg {
+            height: 100%;
+            width: 100%;
+
+            margin: 8px 0 0 2px;
+
+            path,
+            polygon {
+                fill: $GREY_LIGHT;
+                transition: all .3s ease-in-out;
+            }
+        }
+
+        &:after {
+            content: '';
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            width: 0;
+            height: 0;
+
+            border-radius: 50%;
+            border: 2px solid transparent;
+
+            z-index: 10;
+            transition: all .6s cubic-bezier(.8,.18,.31,.81);
+        }
+
+        &:hover,
+        &.active {
+            svg path,
+            svg polygon {
+                fill: $SECONDARY;
+            }
+
+            &:after {
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: 100%;
+
+                border: 2px solid $SECONDARY;
+            }
+
+        }
+    }
+}

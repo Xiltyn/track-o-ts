@@ -3,6 +3,7 @@ import { getMockEncounters } from "app/components/Encounters/Encounters.mock";
 import { EncountersActions } from "app/modules/encounters/actions";
 import { RootState } from "app/modules";
 import { EncounterModel } from "app/models/EncounterModel";
+import { ConditionModel } from "app/models/ConditionsModel";
 
 export class EncountersMiddleware {
     static initMockEncounters = () => (dispatch:Dispatch) => {
@@ -31,5 +32,19 @@ export class EncountersMiddleware {
           };
 
           dispatch(EncountersActions.updateActiveEncounter({ encounters: getPayload() }))
+    }
+
+    static addCondition = (encounterId:number, itemId:number, condition:ConditionModel) => (dispatch:Dispatch, getState:() => RootState) => {
+        const currentEncounters = getState().encounters.encounters;
+
+        if(currentEncounters) {
+            const encounterToUpdate = currentEncounters.find(encounter => encounter.id === encounterId);
+
+            if(encounterToUpdate) encounterToUpdate.addStatus(itemId, condition);
+
+            dispatch(EncountersActions.updateActiveEncounter({ encounters: currentEncounters }))
+        }
+
+
     }
 }

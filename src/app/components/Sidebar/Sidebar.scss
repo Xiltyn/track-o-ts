@@ -4,12 +4,14 @@
     width: 280px;
     height: 100%;
 
+    padding-top: 80px;
+    margin-left: -280px;
+
     background: $GREY;
     color: $GREY_DARK;
     box-shadow: 0 0 24px -4px #000 inset;
 
     transition: all .3s ease-in-out;
-    margin-left: -280px;
     box-sizing: border-box;
 
     &.active {

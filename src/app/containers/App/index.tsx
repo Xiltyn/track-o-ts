@@ -14,6 +14,7 @@ import animationContainer from "app/utils/animationContainer/animationContainer"
 import { Encounters } from "app/components/Encounters/Encounters";
 import { EncountersMiddleware } from "app/modules/encounters/middleware";
 import { EncounterModel } from "app/models/EncounterModel";
+import { ConditionModel } from "app/models/ConditionsModel";
 
 export namespace App {
     import SidebarState = RootState.SidebarState;
@@ -52,6 +53,7 @@ const AnimatedEncounters = animationContainer(Encounters);
         encountersActions: bindActionCreators({
             setActiveEncounter:(id:number) => EncountersMiddleware.setActiveEncounter(id),
             initMockEncounters:() => EncountersMiddleware.initMockEncounters(),
+            addCondition:(encounterId:number, itemId:number, condition:ConditionModel) => EncountersMiddleware.addCondition(encounterId, itemId, condition),
         }, dispatch)
     }),
 )
@@ -84,10 +86,10 @@ export class App extends React.Component<App.Props & RouteComponentProps> {
                     <Header
                         logout={ appActions.logout }
                         toggleSidebar={ sidebarActions.toggleSidebar }/>
-                        <AnimatedEncounters
-                            actions={ encountersActions }
-                            encounters={ encounters }
-                            isMounted={ match.params && match.params.view === 'encounters' }/>
+                    <AnimatedEncounters
+                        actions={ encountersActions }
+                        encounters={ encounters }
+                        isMounted={ match.params && match.params.view === 'encounters' }/>
                     <Footer/>
                 </div>
             </div>

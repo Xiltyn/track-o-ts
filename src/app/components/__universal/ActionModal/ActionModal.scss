@@ -1,0 +1,58 @@
+@import "../../../style/core/variables";
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 400px;
+    height: auto;
+    padding: 24px;
+
+    background: $GREY_DARK;
+    box-shadow: 0 0 16px -4px rgba(#000, .7);
+    transform: translate(-50%, -50%);
+
+    z-index: 50;
+    box-sizing: border-box;
+
+    &-header {
+        width: 100%;
+        font-family: $MONTSERRAT;
+
+        h3 {
+            width: inherit;
+            margin-bottom: 16px;
+
+            font-size: 18px;
+            font-weight: 600;
+            font-family: inherit;
+            text-align: center;
+        }
+
+        p {
+            width: inherit;
+            margin-bottom: 16px;
+
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+
+    &-content {
+
+    }
+
+    &-controls {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+        button:hover {
+            color: $GREY_DARK;
+        }
+    }
+}

@@ -3,6 +3,7 @@ import { EncounterCard } from "app/components/Encounters/EncounterCard/Encounter
 
 import './Encounters.scss';
 import { EncounterModel } from "app/models/EncounterModel";
+import { ConditionModel } from "app/models/ConditionsModel";
 
 export namespace Encounters {
     export interface Props {
@@ -17,6 +18,7 @@ export namespace Encounters {
     export type encountersActions = {
         initMockEncounters:() => void,
         setActiveEncounter:(id:number) => void,
+        addCondition:(encounterId:number, itemId:number, condition:ConditionModel) => void,
     }
 }
 
@@ -34,7 +36,7 @@ export class Encounters extends React.Component<Encounters.Props, Encounters.Sta
     };
 
     render() {
-        const { encounters } = this.props;
+        const { encounters, actions } = this.props;
 
         return(
             <section className="app-encounters">
@@ -49,6 +51,7 @@ export class Encounters extends React.Component<Encounters.Props, Encounters.Sta
                                     key={ encounter.id }
                                     name={ encounter.name }
                                     items={ encounter.items }
+                                    addCondition={ actions.addCondition }
                                     onClick={ this.updateActiveEncouter }
                                     isActive={ encounter.isActive }/>
                             )

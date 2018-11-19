@@ -5,6 +5,7 @@ import { AppLoader } from "app/components";
 type ButtonProps = {
     onSubmit: any,
     isBusy: boolean,
+    label?: string,
     buttonClass?: string,
 }
 
@@ -19,7 +20,7 @@ const Button = (props:ButtonProps) => (
                     height: 24,
                     margin: '-12px',
                 } }/>
-                : 'Sign In' }
+                : (!props.label ? 'Sign In' : props.label) }
         </span>
     </button>
 );

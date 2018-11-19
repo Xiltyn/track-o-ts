@@ -62,9 +62,12 @@ const animationContainer = (ComponentToAnimate:any) =>
     };
 
     componentDidMount() {
-        if (this.props.isMounted) {
-            const _TIMEOUT = 300;
+        const _TIMEOUT = 200;
+        const {
+            isMounted,
+        } = this.props;
 
+        if(isMounted) {
             setTimeout(() => {
                 this.setState({
                     shouldAnimate: true,
@@ -87,7 +90,7 @@ const animationContainer = (ComponentToAnimate:any) =>
             }, delayTime);
 
         } else if(!oldProps.isMounted && isMounted) {
-            const _TIMEOUT = 300;
+            const _TIMEOUT = 200;
 
             this.setState({
                 shouldRender: true,
@@ -137,8 +140,9 @@ const animationContainer = (ComponentToAnimate:any) =>
         return this.state.shouldRender ?
             <AnimationWrapper
                 className={ `animation-container animation-container--${identifier}` }
+                initialPose={ `${identifier}preEnter` }
                 pose={ shouldAnimate ? `${identifier}enter` : isMounted ? `${identifier}preEnter` : `${identifier}exit` }>
-                <ComponentToAnimate { ...this.props } />
+                <ComponentToAnimate { ...this.props }/>
             </AnimationWrapper> : null;
     }
 };
