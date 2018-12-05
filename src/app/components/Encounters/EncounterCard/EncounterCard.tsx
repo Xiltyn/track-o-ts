@@ -1,25 +1,28 @@
 import * as React from 'react';
-import { Item } from "app/models/EncounterModel";
-import { EncounterItem } from "app/components/Encounters/EncounterCard/EncounterItem/EncounterItem";
 
-import './EncounterCard.scss';
 import animationContainer from "app/utils/animationContainer/animationContainer";
+
+import { EncounterItem } from "app/components/Encounters/EncounterCard/EncounterItem/EncounterItem";
 import { ActionModal } from "app/components/__universal/ActionModal/ActionModal";
 import { ConditionsPicker } from "app/components/ConditionsPicker/ConditionsPicker";
+
 import { ConditionModel } from "app/models/ConditionsModel";
+import { Item } from "app/models/EncounterModel";
+import './EncounterCard.scss';
 
 export namespace EncounterCard {
+
     export interface Props {
-        id:number,
+        id:string,
         name:string,
+        updateEncounter:(id:number) => void,
         isActive:boolean,
         items:Array<Item>,
-        addCondition:(encounterId:number, itemId:number, condition:ConditionModel) => void,
-        onClick:(id:number) => void,
+        addCondition:(encounterId:string, itemId:number, condition:ConditionModel) => void,
+        onClick:(id:string) => void,
     }
 
     export interface State {
-        activeItem:number,
         showModal:boolean,
         activeCondition:ConditionModel|null,
     }
@@ -29,15 +32,8 @@ const AnimatedActionModal = animationContainer(ActionModal);
 
 export class EncounterCard extends React.Component<EncounterCard.Props, EncounterCard.State> {
     state:EncounterCard.State = {
-        activeItem: 0,
         showModal:false,
         activeCondition:null,
-    };
-
-    updateActive = (id:number) => {
-        this.setState({
-            activeItem: id,
-        })
     };
 
     render() {
@@ -48,10 +44,10 @@ export class EncounterCard extends React.Component<EncounterCard.Props, Encounte
             onClick,
             isActive,
             addCondition,
+            updateEncounter,
         } = this.props;
 
         const {
-            activeItem,
             showModal,
             activeCondition,
         } = this.state;
@@ -65,16 +61,16 @@ export class EncounterCard extends React.Component<EncounterCard.Props, Encounte
                 </header>
                 <ul className="encounter-items">
                     {
-                        items.map(item => (
+                        items.sort((a:Item, b:Item) => b.roll - a.roll).map(item => (
                             <EncounterItem
                                 key={ item.id }
                                 id={ item.id }
                                 name={ item.name }
-                                color={ item.color }
-                                onClick={ isActive ? this.updateActive : () => console.log('Encounter not active > handler disabled') }
+                                color={ typeof item.color === "string" ? item.color : '#F15025' }
+                                onClick={ isActive ? updateEncounter : () => console.log('Encounter not active > handler disabled') }
                                 addStatus={ () => this.setState({ showModal: true }) }
                                 statuses={ item.statuses }
-                                isActive={ isActive && activeItem === item.id }/>
+                                isActive={ item.isActive && isActive }/>
                         ))
                     }
                 </ul>
@@ -85,9 +81,11 @@ export class EncounterCard extends React.Component<EncounterCard.Props, Encounte
                     description={ 'Choose a status from the ones below to add to the creature' }
                     onCancel={ () => this.setState({ showModal: false }) }
                     onConfirm={ () => {
-                        if(activeCondition) addCondition(id, activeItem, activeCondition);
+                        const activeItem = items.find(el => el.isActive);
+                        if(activeCondition && activeItem) addCondition(id, activeItem.id, activeCondition);
                         this.setState({ showModal: false })
-                    } }>
+                    } }
+                    enableNav>
                     <ConditionsPicker
                         dispatchAction={ condition => this.setState({ activeCondition: condition }) }/>
                 </AnimatedActionModal>

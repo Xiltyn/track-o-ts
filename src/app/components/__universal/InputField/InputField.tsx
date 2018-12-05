@@ -17,6 +17,13 @@ export namespace InputField {
     }
 }
 
+const renderField = (props:any) => (
+    <React.Fragment>
+        <input { ...props.input } type={ props.type } placeholder={ props.placeholder }/>
+        { props.touched && props.error && <span>{ props.error }</span> }
+    </React.Fragment>
+);
+
 export class InputField extends React.Component<InputField.Props, InputField.State> {
     static defaultProps:Pick<InputField.Props, 'type'> = {
         type: 'text',
@@ -54,7 +61,7 @@ export class InputField extends React.Component<InputField.Props, InputField.Sta
                     className={ className ? className : '' }
                     type={ type }
                     placeholder={ placeholder && placeholder }
-                    component="input"/>
+                    component={ renderField }/>
             </div>
         )
     }

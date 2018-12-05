@@ -10,7 +10,7 @@ type encounterItemProps = {
     name:string,
     isActive:boolean,
     color:string,
-    statuses:ConditionsState,
+    statuses?:ConditionsState,
     addStatus:() => void,
     onClick:(id:number) => void,
 }
@@ -25,18 +25,18 @@ const AnimatedAddButton = animationContainer(AddButton);
 
 export const EncounterItem = (props:encounterItemProps) => (
     <li
-        className={ `item-strip ${ props.color } ${ props.isActive ? 'active' : '' }` } //TODO: Add active/inactive handler
+        className={ `item-strip primary ${ props.isActive ? 'active' : '' }` } //TODO: Add active/inactive handler
         onClick={ () => props.onClick(props.id) }>
         <h4 className="item-name">
             { props.name }
         </h4>
         <ul className="item-statuses">
             {
-                props.statuses.map(status => (
+                props.statuses && props.statuses.map(status => (
                     <li
                         key={ status.id }
                         className={ `status ${ status.name }` }>
-                        { status.icon }
+                        { svg.conditions[ status.icon ] }
                     </li>
                 ))
             }

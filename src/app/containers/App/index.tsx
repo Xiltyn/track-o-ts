@@ -14,13 +14,14 @@ import animationContainer from "app/utils/animationContainer/animationContainer"
 import { Encounters } from "app/components/Encounters/Encounters";
 import { EncountersMiddleware } from "app/modules/encounters/middleware";
 import { EncounterModel } from "app/models/EncounterModel";
-import { ConditionModel } from "app/models/ConditionsModel";
+import { FormStateMap } from "redux-form";
 
 export namespace App {
     import SidebarState = RootState.SidebarState;
     import encountersActions = Encounters.encountersActions;
 
     export interface Props extends RouteComponentProps<{view:string}> {
+        forms:FormStateMap;
         router:RouterState,
         sidebar:SidebarState,
         appActions:appActions,
@@ -37,10 +38,11 @@ export namespace App {
 const AnimatedEncounters = animationContainer(Encounters);
 
 @connect(
-    (state:RootState):Pick<App.Props, 'router'|'sidebar'|'encounters'> => ({
+    (state:RootState):Pick<App.Props, 'router'|'sidebar'|'encounters'|'forms'> => ({
         router: state.router,
         sidebar: state.sidebar,
         encounters: state.encounters.encounters,
+        forms: state.form,
     }),
     (dispatch:Dispatch):Pick<App.Props, 'appActions'|'sidebarActions'|'encountersActions'> => ({
         appActions: bindActionCreators({
@@ -51,9 +53,13 @@ const AnimatedEncounters = animationContainer(Encounters);
             toggleSidebar: () => SidebarActions.toggleSidebar(),
         }, dispatch),
         encountersActions: bindActionCreators({
-            setActiveEncounter:(id:number) => EncountersMiddleware.setActiveEncounter(id),
+            initEncountersListener:() => EncountersMiddleware.initEncountersListener(),
+            fetchEncounters:() => EncountersMiddleware.fetchEncounters(),
+            updateEncounter:(updatedEncounter) => EncountersMiddleware.updateEncounter(updatedEncounter),
+            setActiveEncounter:(id) => EncountersMiddleware.setActiveEncounter(id),
             initMockEncounters:() => EncountersMiddleware.initMockEncounters(),
-            addCondition:(encounterId:number, itemId:number, condition:ConditionModel) => EncountersMiddleware.addCondition(encounterId, itemId, condition),
+            addEncounter:(encounter) => EncountersMiddleware.addEncounter(encounter),
+            addCondition:(encounterId, itemId, condition) => EncountersMiddleware.addCondition(encounterId, itemId, condition),
         }, dispatch)
     }),
 )
@@ -70,6 +76,7 @@ export class App extends React.Component<App.Props & RouteComponentProps> {
             sidebar,
             encounters,
             match,
+            forms,
         } = this.props;
 
         console.log(match.params);
@@ -88,6 +95,7 @@ export class App extends React.Component<App.Props & RouteComponentProps> {
                         toggleSidebar={ sidebarActions.toggleSidebar }/>
                     <AnimatedEncounters
                         actions={ encountersActions }
+                        formData={ forms.add_encounter }
                         encounters={ encounters }
                         isMounted={ match.params && match.params.view === 'encounters' }/>
                     <Footer/>

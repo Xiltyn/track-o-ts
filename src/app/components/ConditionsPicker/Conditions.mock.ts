@@ -6,5 +6,5 @@ const { conditions } = svg;
 export const getMockConditions = ():ConditionsState => Object.keys(conditions).map((condition, index:number):ConditionModel => ({
     id: index,
     name: condition,
-    icon: conditions[ condition ],
-}))
+    icon: condition,
+}));

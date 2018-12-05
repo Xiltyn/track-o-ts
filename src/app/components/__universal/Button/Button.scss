@@ -16,7 +16,7 @@
     border: 2px solid $GREY_TEXT;
     background: transparent;
 
-    transition: all .6s ease-in-out;
+    transition: all .2s ease-in-out;
 
     &.submit-btn {
         width: 150px;
@@ -24,7 +24,9 @@
 
     }
 
-    span {
+    .btn-label {
+        height: 100%;
+        width: 100%;
         position: relative;
         z-index: 5;
     }
@@ -51,7 +53,7 @@
 
     &:hover,
     &.busy {
-        color: $PRIMARY;
+        color: $GREY_DARK;
 
         &:after,
         &:before {
@@ -61,6 +63,60 @@
 
         &:after {
             background: rgba($GREY_TEXT, .6);
+        }
+    }
+
+    &.icon {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+
+        border:none;
+        border-radius: 50%;
+        background:none;
+        overflow: hidden;
+
+        .btn-label svg {
+            transition: all .5s ease-in-out;
+
+            path,
+            polygon {
+                fill: $SECONDARY;
+                transition: all .4s ease-in-out;
+            }
+        }
+
+
+        &:after,
+        &:before {
+            left: 50%;
+            top: 50%;
+            height: 0;
+            width: 0;
+            border-radius: 50%;
+            background: $GRADIENT_PRIMARY;
+        }
+
+        &:hover {
+            .btn-label svg {
+                path,
+                polygon {
+                    fill: $GREY_DARK;
+                }
+            }
+
+            &:after,
+            &:before {
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                box-shadow: 0 0 12px -2px #000;
+            }
+        }
+
+        &:active {
+            opacity: .7;
         }
     }
 }

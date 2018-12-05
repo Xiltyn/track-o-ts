@@ -7,6 +7,7 @@ export namespace ActionModal {
         header: string;
         description: string;
         children: JSX.Element;
+        enableNav?: boolean;
         onCancel?: (...params:any) => void;
         onConfirm?: (...params:any) => void;
     }
@@ -33,6 +34,7 @@ export class ActionModal extends React.Component<ActionModal.Props> {
             onConfirm,
             onCancel,
             children,
+            enableNav,
         } = this.props;
 
         return (
@@ -48,16 +50,19 @@ export class ActionModal extends React.Component<ActionModal.Props> {
                 <div className="modal-content">
                     { children }
                 </div>
-                <div className="modal-controls">
-                    <Button
-                        label='Cancel'
-                        onSubmit={ onCancel }
-                        isBusy={ false }/>
-                    <Button
-                        label='Confirm'
-                        onSubmit={ onConfirm }
-                        isBusy={ false }/>
-                </div>
+
+                {
+                    enableNav && <div className="modal-controls">
+                        <Button
+                            label='Cancel'
+                            onSubmit={ onCancel }
+                            isBusy={ false }/>
+                        <Button
+                            label='Confirm'
+                            onSubmit={ onConfirm }
+                            isBusy={ false }/>
+                    </div>
+                }
             </div>
         )
     }

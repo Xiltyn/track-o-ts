@@ -4,16 +4,17 @@ import { AppLoader } from "app/components";
 
 type ButtonProps = {
     onSubmit: any,
-    isBusy: boolean,
-    label?: string,
+    isBusy?: boolean,
+    label?: string|JSX.Element,
     buttonClass?: string,
 }
 
 const Button = (props:ButtonProps) => (
     <button
-        className={ `btn ${ props.buttonClass ? props.buttonClass : '' } ${ props.isBusy ? 'busy' : '' }` }
+        className={ `btn ${ props.buttonClass ? props.buttonClass : '' } ${ props.isBusy ? 'busy' : '' } ${ props.label && typeof props.label !== "string" ? 'icon' : '' }` }
+        type='button'
         onClick={ props.onSubmit }>
-        <span>
+        <div className="btn-label">
             { props.isBusy ?
                 <AppLoader style={ {
                     width: 24,
@@ -21,7 +22,7 @@ const Button = (props:ButtonProps) => (
                     margin: '-12px',
                 } }/>
                 : (!props.label ? 'Sign In' : props.label) }
-        </span>
+        </div>
     </button>
 );
 

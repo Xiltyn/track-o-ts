@@ -2,9 +2,9 @@ import { funcOptions } from "app/models/general.types";
 import { ConditionModel, ConditionsState } from "app/models/ConditionsModel";
 
 export type EncounterModelProps = {
-    [key:string]:number|string|boolean|Array<Item>,
-    isActive:boolean,
-    id:number;
+    [key:string]:number|string|boolean|Array<Item>|undefined,
+    isActive?:boolean,
+    id?:string;
     name:string;
     items:Array<Item>;
 }
@@ -12,8 +12,9 @@ export type EncounterModelProps = {
 export type Item = {
     id:number,
     name:string,
-    color:string;
-    position:number,
+    isActive:boolean,
+    color?:string;
+    roll:number;
     statuses:ConditionsState,
 }
 
@@ -25,13 +26,27 @@ export interface EncountersModel {
 export class EncounterModel {
     [key:string]:any;
 
-    public id:number = 0;
+    public id:string = '';
     public name:string = '';
     public items:Array<Item> = [];
     public isActive:boolean = false;
+    public roles:{[key:string]: string} = {};
 
     public constructor(data:EncounterModelProps) {
         this.assignData(data);
+
+        if(data.isActive === undefined) this.isActive = false;
+
+        //if(data.id) {
+        //    if(data.id > EncounterModel._id ) {
+        //        EncounterModel._id = data.id;
+        //    } else {
+        //        this.id = data.id;
+        //    }
+        //} else {
+        //    this.incrementId.bind(this)();
+        //}
+
         this.setActive = this.setActive.bind(this);
         this.setInactive = this.setInactive.bind(this);
         this.addStatus = this.addStatus.bind(this);
@@ -46,6 +61,12 @@ export class EncounterModel {
             }
         }
     };
+
+    //private incrementId() {
+    //    this.id = EncounterModel._id++;
+    //
+    //    return this;
+    //};
 
     public setActive():boolean {
         console.log('Encounter isActive :: ', this.isActive);
@@ -66,6 +87,15 @@ export class EncounterModel {
         console.log('==> addStatus result :: ', itemToEdit);
 
         return items;
+    }
+
+    public get plainData() {
+        return {
+            items: this.items,
+            name: this.name,
+            isActive: this.isActive,
+            roles: this.roles,
+        }
     }
 
 }

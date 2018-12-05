@@ -3,6 +3,7 @@ import { ConditionModel, ConditionsState } from "app/models/ConditionsModel";
 import { getMockConditions } from './Conditions.mock';
 
 import './ConditionsPicker.scss';
+import svg from "app/utils/svg";
 
 export namespace ConditionsPicker {
     export interface Props {
@@ -27,7 +28,6 @@ export class ConditionsPicker extends React.Component<ConditionsPicker.Props, Co
     handleConditionClick = (condition:ConditionModel) => {
         const { dispatchAction } = this.props;
 
-        console.log(condition);
         console.log(this.state.activeCondition);
         this.setState({
             activeCondition: condition.id,
@@ -48,7 +48,7 @@ export class ConditionsPicker extends React.Component<ConditionsPicker.Props, Co
                             key={ condition.id }
                             className={ `condition ${ condition.name } ${condition.id === activeCondition ? 'active' : '' }` }
                             onClick={ () => this.handleConditionClick(condition) }>
-                            { condition.icon }
+                            { svg.conditions[condition.icon] }
                         </div>
                     ))
                 }

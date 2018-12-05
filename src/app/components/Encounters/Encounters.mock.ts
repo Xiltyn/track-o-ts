@@ -2,7 +2,7 @@ import { EncounterModel, EncounterModelProps } from "app/models/EncounterModel";
 
 const encountersData:Array<EncounterModelProps> = [
     {
-        id: 0,
+        id: 'asdadsfrgw',
         name: 'Bandit Slavers',
         isActive: false,
         items: [
@@ -10,41 +10,46 @@ const encountersData:Array<EncounterModelProps> = [
                 id: 0,
                 name: 'Rogue | Bandit',
                 color: 'sea',
-                position: 1,
+                isActive: true,
+                roll: 15,
                 statuses: [],
             },
             {
                 id: 1,
                 name: 'Archer | Bandit',
                 color: 'green',
-                position: 2,
+                isActive: false,
+                roll: 10,
                 statuses: [],
             },
             {
                 id: 2,
-                position: 3,
                 color: 'primary',
+                roll: 19,
+                isActive: false,
                 name: 'Mage | Slaver',
                 statuses: [],
             }
         ],
     },
     {
-        id: 1,
+        id: 'dq13df3',
         name: 'Sewer Rats',
         isActive: false,
         items: [
             {
                 id: 0,
                 name: 'Craniun Rats | Swarm 1',
-                position: 1,
                 color: 'magenta',
+                roll: 21,
+                isActive: true,
                 statuses: [],
             },
             {
                 id: 1,
                 name: 'Craniun Rats | Swarm 2',
-                position: 2,
+                roll: 12,
+                isActive: false,
                 color: 'blue',
                 statuses: [],
             },

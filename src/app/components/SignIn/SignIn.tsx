@@ -95,8 +95,7 @@ class SignInComponent extends React.Component<SignInComponent.Props & InjectedFo
         }
     }
 
-    handleSubmit = (evt:Event) => {
-        evt.preventDefault();
+    handleSubmit = () => {
         const { actions: { signIn }, forms: { signin: { values } } } = this.props;
 
         if(values) {
@@ -111,11 +110,12 @@ class SignInComponent extends React.Component<SignInComponent.Props & InjectedFo
     render() {
         const {
             auth,
+            handleSubmit,
         } = this.props;
 
         return (
             <AnimatedSignIn
-                handleSubmit={ this.handleSubmit }
+                handleSubmit={ handleSubmit(this.handleSubmit) }
                 isMounted={ auth.user === null }
                 isBusy={ auth.started && (!auth.completed || !auth.failed ) }
                 message={ auth.statusMessage }

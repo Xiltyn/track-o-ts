@@ -1,7 +1,7 @@
 export interface ConditionModel {
     id:number,
     name:string,
-    icon:JSX.Element|HTMLOrSVGElement,
+    icon:string,
 }
 
 export type ConditionsState = Array<ConditionModel>;

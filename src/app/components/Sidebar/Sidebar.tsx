@@ -22,7 +22,7 @@ export namespace SidebarComponent {
 
 const SidebarEncounters = (props:Pick<SidebarComponent.Props, 'encounters'|'actions'>) => <ul className="sidebar-list sidebar-encounters">
     {
-        props.encounters && props.encounters.map(encounter => (
+        props.encounters && props.encounters.sort((a,b) => a.name.localeCompare(b.name)).map(encounter => (
             <li
                 className={ encounter.isActive ? 'active' : '' }
                 onClick={ () => props.actions && props.actions.setActiveEncounter(encounter.id) }
