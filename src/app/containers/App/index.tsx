@@ -77,7 +77,7 @@ const AnimatedCampaigns = animationContainer(Campaigns);
 )
 export class App extends React.Component<App.Props & RouteComponentProps<{view:string, id:string}>> {
     public componentDidMount():void {
-        const { campaignsActions, encountersActions } = this.props;
+        const { sidebarActions, campaignsActions, encountersActions, match } = this.props;
 
         if(campaignsActions) {
             campaignsActions.fetchCampaigns();
@@ -87,6 +87,10 @@ export class App extends React.Component<App.Props & RouteComponentProps<{view:s
         if(encountersActions) {
             encountersActions.fetchEncounters();
             encountersActions.initEncountersListener();
+        }
+
+        if(!match.params.view && sidebarActions) {
+            sidebarActions.historyPush('/campaigns')
         }
     }
 
@@ -102,8 +106,6 @@ export class App extends React.Component<App.Props & RouteComponentProps<{view:s
             match,
             forms,
         } = this.props;
-
-        console.log(match.params);
 
         return (
             <div className="app-container">

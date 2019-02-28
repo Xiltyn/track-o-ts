@@ -5,17 +5,12 @@ import { SidebarActions } from "app/modules/sidebar/actions";
 
 const initialState:RootState.SidebarState = {
     showSidebar: false,
-    currentSection:null,
+    currentSection:"campaigns",
     menuData:[
         {
             id: 1,
             name: 'Campaigns',
             slug: 'campaigns',
-        },
-        {
-            id: 2,
-            name: 'Encounters',
-            slug: 'encounters',
         }
     ]
 };
