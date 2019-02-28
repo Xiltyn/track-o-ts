@@ -7,8 +7,8 @@ export namespace EncountersActions {
         SET_ENCOUNTERS = 'SET_ENCOUNTERS',
     }
 
-    export const updateActiveEncounter = createAction<PartialPick<EncountersModel, 'encounters'>>(Type.TOGGLE_ACTIVE);
-    export const setEncounters = createAction<PartialPick<EncountersModel, 'encounters'>>(Type.SET_ENCOUNTERS);
+    export const updateActiveEncounter = createAction<PartialPick<EncountersModel, 'all'>>(Type.TOGGLE_ACTIVE);
+    export const setEncounters = createAction<PartialPick<EncountersModel, 'all'>>(Type.SET_ENCOUNTERS);
 }
 
 export type EncountersActions = Omit<typeof EncountersActions, 'Type'>;

@@ -8,7 +8,7 @@ import { Auth } from "./containers/Auth";
 export const Routes = hot(module)(() => (
         <Switch>
             <Route path='/login' component={ Auth }/>
-            <PrivateRoute path='/:view?' Component={ App }/>
+            <PrivateRoute path='/:view?/:id?' Component={ App }/>
         </Switch>
     )
 );

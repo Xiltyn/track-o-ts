@@ -2,12 +2,13 @@ import * as React from 'react';
 
 import animationContainer from "app/utils/animationContainer/animationContainer";
 
-import { EncounterItem } from "app/components/Encounters/EncounterCard/EncounterItem/EncounterItem";
+import { EncounterParticipant } from "app/components/Encounters/EncounterCard/EncounterParticipant/EncounterParticipant";
 import { ActionModal } from "app/components/__universal/ActionModal/ActionModal";
 import { ConditionsPicker } from "app/components/ConditionsPicker/ConditionsPicker";
 
 import { ConditionModel } from "app/models/ConditionsModel";
-import { Item } from "app/models/EncounterModel";
+import { Participant } from "app/models/EncounterModel";
+
 import './EncounterCard.scss';
 
 export namespace EncounterCard {
@@ -17,9 +18,9 @@ export namespace EncounterCard {
         name:string,
         updateEncounter:(id:number) => void,
         isActive:boolean,
-        items:Array<Item>,
+        participants:Array<Participant>,
         addCondition:(encounterId:string, itemId:number, condition:ConditionModel) => void,
-        onClick:(id:string) => void,
+        onClick?:(id:string) => void,
     }
 
     export interface State {
@@ -40,7 +41,7 @@ export class EncounterCard extends React.Component<EncounterCard.Props, Encounte
         const {
             id,
             name,
-            items,
+            participants,
             onClick,
             isActive,
             addCondition,
@@ -54,15 +55,15 @@ export class EncounterCard extends React.Component<EncounterCard.Props, Encounte
 
         return(
             <div
-                onClick={ () => onClick( id ) }
+                onClick={ () => onClick && onClick( id ) }
                 className={ `encounter ${ isActive ? 'active' : '' }` }>
                 <header className="encounter-name">
                     <h3>{ name }</h3>
                 </header>
                 <ul className="encounter-items">
                     {
-                        items.sort((a:Item, b:Item) => b.roll - a.roll).map(item => (
-                            <EncounterItem
+                        participants && participants.sort((a:Participant, b:Participant) => b.roll - a.roll).map(item => (
+                            <EncounterParticipant
                                 key={ item.id }
                                 id={ item.id }
                                 name={ item.name }
@@ -81,7 +82,7 @@ export class EncounterCard extends React.Component<EncounterCard.Props, Encounte
                     description={ 'Choose a status from the ones below to add to the creature' }
                     onCancel={ () => this.setState({ showModal: false }) }
                     onConfirm={ () => {
-                        const activeItem = items.find(el => el.isActive);
+                        const activeItem = participants.find(el => el.isActive);
                         if(activeCondition && activeItem) addCondition(id, activeItem.id, activeCondition);
                         this.setState({ showModal: false })
                     } }

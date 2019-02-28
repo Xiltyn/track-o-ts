@@ -24,6 +24,7 @@ export namespace AddEncounterFormComponent {
     export interface Props {
         closeModal: () => void;
         formData:FormState;
+        currentCampaign:string;
         addEncounter: (encounter:EncounterModelProps) => void;
     }
 }
@@ -79,13 +80,14 @@ const Members = (props:WrappedFieldArrayProps<AddEncounterFormComponent.Props>) 
 
 class AddEncounterFormComponent extends React.Component<AddEncounterFormComponent.Props & InjectedFormProps<{}, AddEncounterFormComponent.Props>> {
 
-    submitNew = () => {
-        const { formData: { values }, addEncounter } = this.props;
+    private submitNew = () => {
+        const { formData: { values }, addEncounter, currentCampaign } = this.props;
 
-        if( values && (values.encounter_name && values.members)) {
+        if( values && (values.encounter_name && values.members && currentCampaign)) {
             const payload:EncounterModelProps = {
                 name: values.encounter_name,
-                items: values.members.map((el:{ _fields:{[key:string]: any} }, index:number) => ({
+                campaignId: currentCampaign,
+                participants: values.members.map((el:{ _fields:{[key:string]: any} }, index:number) => ({
                     name: el._fields.name,
                     roll: el._fields.roll,
                     id: index,
@@ -116,7 +118,7 @@ class AddEncounterFormComponent extends React.Component<AddEncounterFormComponen
                 <FieldArray name='members' component={ Members }/>
                 <div className="modal-controls">
                     <Button
-                        label='Cancel'
+                        label='Close'
                         onSubmit={ (evt:Event) => {
                             evt.preventDefault();
                             closeModal();

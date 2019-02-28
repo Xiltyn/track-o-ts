@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import './EncounterItem.scss';
+import './EncounterParticipant.scss';
 import svg from "app/utils/svg";
 import animationContainer from "app/utils/animationContainer/animationContainer";
 import { ConditionsState } from "app/models/ConditionsModel";
@@ -23,7 +23,7 @@ const AddButton = (props:{ onClick:(...params:any) => void }) => <li
 
 const AnimatedAddButton = animationContainer(AddButton);
 
-export const EncounterItem = (props:encounterItemProps) => (
+export const EncounterParticipant = (props:encounterItemProps) => (
     <li
         className={ `item-strip primary ${ props.isActive ? 'active' : '' }` } //TODO: Add active/inactive handler
         onClick={ () => props.onClick(props.id) }>

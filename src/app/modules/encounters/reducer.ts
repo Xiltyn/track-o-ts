@@ -4,17 +4,17 @@ import { EncountersModel } from "app/models/EncounterModel";
 import { EncountersActions } from "app/modules/encounters/actions";
 
 const initialState:RootState.EncounterState = {
-    encounters: undefined,
+    all: [],
 };
 
 export const encountersReducer = handleActions<RootState.EncounterState, EncountersModel>(
     {
         [ EncountersActions.Type.SET_ENCOUNTERS ]: (state, action) => ({
             ...state,
-            encounters: action.payload && action.payload.encounters,
+            all: action.payload && action.payload.all,
         }),
         [ EncountersActions.Type.TOGGLE_ACTIVE ]: (state, action) => ({
             ...state,
-            encounters: action.payload && action.payload.encounters,
+            all: action.payload && action.payload.all,
         }),
 }, initialState);
