@@ -8,14 +8,17 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { Encounters } from "app/components/Encounters/Encounters";
 import { EncounterModel } from "app/models/EncounterModel";
 import animationContainer from "app/utils/animationContainer/animationContainer";
+import { CampaignModel } from "app/models/CampaignModel";
+import { Campaigns } from "app/components/Campaigns/Campaigns";
 
 
 export namespace SidebarComponent {
     export interface Props {
-        actions?: SidebarActions & Encounters.encountersActions,
+        actions?: SidebarActions & Encounters.encountersActions & Campaigns.campaignsActions & {historyPush:(location:string) => void},
         menuData: sidebarMenuData,
+        campaigns?: CampaignModel[],
         currentSection: sidebarSections,
-        encounters: Array<EncounterModel>|undefined,
+        encounters?: EncounterModel[],
         showSidebar: boolean,
     }
 }
@@ -33,7 +36,26 @@ const SidebarEncounters = (props:Pick<SidebarComponent.Props, 'encounters'|'acti
     }
 </ul>;
 
+const SidebarCampaigns = (props:Pick<SidebarComponent.Props, 'campaigns'|'actions'>) => <ul className="sidebar-list sidebar-campaigns">
+    {
+        props.campaigns && props.campaigns.sort((a,b) => a.name.localeCompare(b.name)).map(campaign => (
+            <li
+                className={ campaign.isActive ? 'active' : '' }
+                onClick={ () => {
+                    if(props.actions) {
+                        props.actions.setActiveCampaign(campaign.id)
+                        props.actions.historyPush(`/encounters/${campaign.id}`)
+                    }
+                } }
+                key={ campaign.id }>
+                <p>{ campaign.name }</p>
+            </li>
+        ))
+    }
+</ul>;
+
 const AnimatedSidebarEncounters = animationContainer(SidebarEncounters);
+const AnimatedSidebarCampaigns = animationContainer(SidebarCampaigns);
 
 class SidebarComponent extends React.Component<SidebarComponent.Props & RouteComponentProps> {
     updateSection = (payload:{currentSection:sidebarSections}) => {
@@ -49,11 +71,12 @@ class SidebarComponent extends React.Component<SidebarComponent.Props & RouteCom
             menuData,
             currentSection,
             encounters,
+            campaigns,
             showSidebar,
             actions,
         } = this.props;
 
-        const currenMenuItem = menuData.find(el => el.slug === currentSection);
+        const currentMenuItem = menuData.find(el => el.slug === currentSection);
 
         return(
             <div className={ `sidebar ${ showSidebar ? 'active' : '' }` }>
@@ -66,12 +89,17 @@ class SidebarComponent extends React.Component<SidebarComponent.Props & RouteCom
                 <div className="current-section-container">
                     <SidebarMenu
                         onItemSelect={ this.updateSection }
-                        currentActive={ currenMenuItem && currenMenuItem.id }
+                        currentActive={ currentMenuItem && currentMenuItem.id }
                         menuData={ menuData }/>
                     <AnimatedSidebarEncounters
-                        isMounted={ currenMenuItem && currenMenuItem.slug === 'encounters' }
+                        isMounted={ currentMenuItem && currentMenuItem.slug === 'encounters' }
                         encounters={ encounters }
                         actions={ actions }/>
+                    <AnimatedSidebarCampaigns
+                        isMounted={ currentMenuItem && currentMenuItem.slug === 'campaigns' }
+                        campaigns={ campaigns }
+                        actions={ actions }/>
+
                 </div>
             </div>
         )

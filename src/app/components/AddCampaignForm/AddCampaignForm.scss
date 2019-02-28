@@ -1,0 +1,142 @@
+@import "../../style/core/variables";
+
+.add-campaign-form {
+    width: 100%;
+    height: 100%;
+
+    .campaign-name {
+        padding: 0;
+        border-bottom: 1px solid $GREY;
+
+        input[name='campaign_name'] {
+            padding: 8px 0;
+            margin-bottom: 4px;
+
+            color: $GREY_LIGHT;
+            text-align: left;
+            font-size: 16px;
+            font-family: $MONTSERRAT;
+
+            border-left: 1px solid transparent;
+            border-radius: 2px;
+
+            &:focus {
+                padding-left: 12px;
+            }
+        }
+
+        textarea {
+            width: 100%;
+            height: 64px;
+
+            color: #fff;
+            font-size: 13px;
+            font-family: $MONTSERRAT;
+
+            border: none;
+            resize: none;
+            background: transparent;
+        }
+    }
+
+    .new-players-list-container {
+        .add-new {
+            padding: 16px 0;
+
+            button {
+                width: 100%;
+                margin: auto;
+                border-style: dashed;
+                opacity: .5;
+
+                &:after,
+                &:before {
+                    display: none;
+                }
+
+                &:hover,
+                &:active {
+                    opacity: 1;
+                    color: $GREY_TEXT;
+                }
+            }
+        }
+
+        .new-player-list {
+            max-height: 300px;
+            overflow-y: scroll;
+
+            padding: 0 0 16px 0;
+
+            .player {
+                position: relative;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                padding: 4px 0;
+                height: 48px;
+                width: 100%;
+
+                & > div {
+                    width: 80%;
+                    height: 100%;
+                    label {
+                        position: absolute;
+                        bottom: 12px;
+                        left: 0;
+
+                        font-size: 12px;
+                        font-weight: 800;
+                        text-transform: uppercase;
+                    }
+
+                    input {
+                        width: 100%;
+                        padding: 8px 0;
+
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: $GREY_TEXT;
+                        text-align: left;
+                        letter-spacing: .5px;
+                        font-family: $OPEN_SANS;
+
+                        background: transparent;
+                        transition: all .3s ease-in-out;
+
+                    }
+
+                    &.player-input-name {
+                        //width: 65%;
+
+                        input {
+                            &:focus,
+                            &:active {
+                                padding-left: 8px;
+                                background: $GREY_TEXT;
+                                color: $GREY_DARK;
+                            }
+                        }
+                    }
+                }
+
+                button {
+                    margin: 0;
+
+                    svg {
+                        path, polygon {
+                            fill: $GREY_TEXT;
+                        }
+                    }
+
+                    &:after,
+                    &:before {
+                        background: rgba($GREY_TEXT, .7);
+                    }
+                }
+            }
+        }
+    }
+}

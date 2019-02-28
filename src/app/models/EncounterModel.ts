@@ -1,15 +1,17 @@
 import { funcOptions } from "app/models/general.types";
 import { ConditionModel, ConditionsState } from "app/models/ConditionsModel";
+import { IUserRoles } from "app/models/UserRoles";
 
 export type EncounterModelProps = {
-    [key:string]:number|string|boolean|Array<Item>|undefined,
+    [key:string]:number|string|boolean|Array<Participant>|undefined,
     isActive?:boolean,
     id?:string;
+    campaignId:string;
     name:string;
-    items:Array<Item>;
+    participants:Array<Participant>;
 }
 
-export type Item = {
+export type Participant = {
     id:number,
     name:string,
     isActive:boolean,
@@ -20,7 +22,7 @@ export type Item = {
 
 
 export interface EncountersModel {
-    encounters:Array<EncounterModel>|undefined,
+    all:Array<EncounterModel>|undefined,
 }
 
 export class EncounterModel {
@@ -28,24 +30,15 @@ export class EncounterModel {
 
     public id:string = '';
     public name:string = '';
-    public items:Array<Item> = [];
+    public participants:Array<Participant> = [];
+    public campaignId:string = '';
     public isActive:boolean = false;
-    public roles:{[key:string]: string} = {};
+    public roles?:IUserRoles = {};
 
     public constructor(data:EncounterModelProps) {
         this.assignData(data);
 
         if(data.isActive === undefined) this.isActive = false;
-
-        //if(data.id) {
-        //    if(data.id > EncounterModel._id ) {
-        //        EncounterModel._id = data.id;
-        //    } else {
-        //        this.id = data.id;
-        //    }
-        //} else {
-        //    this.incrementId.bind(this)();
-        //}
 
         this.setActive = this.setActive.bind(this);
         this.setInactive = this.setInactive.bind(this);
@@ -59,14 +52,11 @@ export class EncounterModel {
             if(data[ key ] !== this[ key ]) {
                 this[ key ] = data[ key ];
             }
+            if(key === 'participants' && data.items) {
+                this.participants = data.items as Participant[]
+            }
         }
     };
-
-    //private incrementId() {
-    //    this.id = EncounterModel._id++;
-    //
-    //    return this;
-    //};
 
     public setActive():boolean {
         console.log('Encounter isActive :: ', this.isActive);
@@ -78,20 +68,21 @@ export class EncounterModel {
         return this.isActive = false;
     }
 
-    public addStatus(itemId:number, condition:ConditionModel):Array<Item> {
-        const { items } = this;
-        const itemToEdit = items.find(item => item.id === itemId);
+    public addStatus(itemId:number, condition:ConditionModel):Array<Participant> {
+        const { participants } = this;
+        const itemToEdit = participants.find(item => item.id === itemId);
 
         if(itemToEdit) itemToEdit.statuses = [ ...itemToEdit.statuses, condition ];
 
         console.log('==> addStatus result :: ', itemToEdit);
 
-        return items;
+        return participants;
     }
 
     public get plainData() {
         return {
-            items: this.items,
+            participants: this.participants,
+            campaignId: this.campaignId,
             name: this.name,
             isActive: this.isActive,
             roles: this.roles,

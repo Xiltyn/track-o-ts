@@ -12,7 +12,7 @@ export class Footer extends React.Component<Footer.Props> {
     render() {
         return (
             <footer>
-                <p>Copyrights® Kagami | 2018</p>
+                <p>Copyrights® Kagami | 2019</p>
             </footer>
         );
     }

@@ -5,6 +5,7 @@ import { reducer as formReducer } from 'redux-form';
 import { authReducer } from "./auth/reducer";
 import { sidebarReducer } from "app/modules/sidebar/reducer";
 import { encountersReducer } from "app/modules/encounters/reducer";
+import { campaignsReducer } from './campaigns/reducer';
 
 export { RootState, RouterState };
 
@@ -16,6 +17,7 @@ export const rootReducer = combineReducers<RootState>({
     auth: authReducer as any,
     sidebar: sidebarReducer as any,
     encounters: encountersReducer as any,
+    campaigns: campaignsReducer as any,
 });
 
 

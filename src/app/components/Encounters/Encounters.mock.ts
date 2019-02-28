@@ -5,7 +5,8 @@ const encountersData:Array<EncounterModelProps> = [
         id: 'asdadsfrgw',
         name: 'Bandit Slavers',
         isActive: false,
-        items: [
+        campaignId: '',
+        participants: [
             {
                 id: 0,
                 name: 'Rogue | Bandit',
@@ -36,7 +37,8 @@ const encountersData:Array<EncounterModelProps> = [
         id: 'dq13df3',
         name: 'Sewer Rats',
         isActive: false,
-        items: [
+        campaignId: '',
+        participants: [
             {
                 id: 0,
                 name: 'Craniun Rats | Swarm 1',

@@ -29,7 +29,7 @@ export class EncountersMiddleware {
 
                 console.log(payload);
                 dispatch(EncountersActions.setEncounters({
-                    encounters: payload,
+                    all: payload,
                 }))
             }
 
@@ -43,7 +43,7 @@ export class EncountersMiddleware {
         const uid = user && user.uid;
 
         firebaseDb.collection('encounters').where(`roles.${uid}`, '==', 'owner').onSnapshot((snapshot) => {
-            let payload = getState().encounters.encounters;
+            let payload = getState().encounters.all;
 
             snapshot.forEach(encounter => {
                 console.log('encounter_id', encounter.id);
@@ -54,12 +54,12 @@ export class EncountersMiddleware {
             });
 
             dispatch(EncountersActions.setEncounters({
-                encounters: payload,
+                all: payload,
             }))
         });
 
         firebaseDb.collection('encounters').where(`roles.${uid}`, '==', 'player').onSnapshot((snapshot) => {
-            let payload = getState().encounters.encounters;
+            let payload = getState().encounters.all;
 
             snapshot.forEach(encounter => {
                 if(payload) payload = [ ...payload.filter(el => el.id !== encounter.id), new EncounterModel({
@@ -69,7 +69,7 @@ export class EncountersMiddleware {
             });
 
             dispatch(EncountersActions.setEncounters({
-                encounters: payload,
+                all: payload,
             }))
         });
     };
@@ -81,14 +81,14 @@ export class EncountersMiddleware {
 
     static initMockEncounters = () => (dispatch:Dispatch) => {
         const payload = {
-            encounters: getMockEncounters(),
+            all: getMockEncounters(),
         };
 
         dispatch(EncountersActions.setEncounters(payload));
     };
 
     static setActiveEncounter = (id:string) => (dispatch:Dispatch, getState:() => RootState) => {
-          const currentEncounters = getState().encounters.encounters;
+          const currentEncounters = getState().encounters.all;
           const getPayload = ():Array<EncounterModel> => {
               let result:Array<EncounterModel> = [];
               if(currentEncounters) currentEncounters.map(encounter => {
@@ -104,11 +104,11 @@ export class EncountersMiddleware {
               return result;
           };
 
-          dispatch(EncountersActions.updateActiveEncounter({ encounters: getPayload() }))
-    }
+          dispatch(EncountersActions.updateActiveEncounter({ all: getPayload() }))
+    };
 
     static addCondition = (encounterId:string, itemId:number, condition:ConditionModel) => (dispatch:Dispatch, getState:() => RootState) => {
-        const currentEncounters = getState().encounters.encounters;
+        const currentEncounters = getState().encounters.all;
 
         if(currentEncounters) {
             const encounterToUpdate = currentEncounters.find(encounter => encounter.id === encounterId);
@@ -117,17 +117,19 @@ export class EncountersMiddleware {
                 const updatedEncounter = new EncounterModel(encounterToUpdate);
                 updatedEncounter.addStatus(itemId, condition);
 
-                dispatch(EncountersActions.updateActiveEncounter({ encounters: [
+                dispatch(EncountersActions.updateActiveEncounter({ all: [
                     ...currentEncounters.filter(el => el.id !== updatedEncounter.id),
                         updatedEncounter,
                     ] }))
             }
         }
-    }
+    };
 
     static addEncounter = (encounter:EncounterModelProps) => (dispatch:Dispatch, getState:() => RootState) => {
         const user = getState().auth.user;
         const uid = user && user.uid;
+
+        console.log('addEncounter payload :: ', encounter);
 
         if(uid) {
             firebaseDb.collection('encounters').add({

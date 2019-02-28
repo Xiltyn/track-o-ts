@@ -1,6 +1,6 @@
 @import "../../style/core/variables";
 
-.app-encounters {
+.app-campaigns {
     position: relative;
 
     max-height: 100vh;
@@ -22,13 +22,14 @@
         padding: 40px 0 80px;
     }
 
-    .encounters-container {
+    .campaigns-container {
         display: flex;
         flex-wrap: wrap;
         align-items: flex-start;
         justify-content: space-around;
     }
 
+    .animation-container--add-campaign-modal,
     .animation-container--add-encounter-modal {
         position: fixed;
         top: 120px;
@@ -46,7 +47,7 @@
         }
     }
 
-    button.add-encounter {
+    button.add-campaign {
         position: fixed;
         bottom: 72px;
         right: 72px;
