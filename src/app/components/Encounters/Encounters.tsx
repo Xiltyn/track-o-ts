@@ -44,7 +44,26 @@ export class Encounters extends React.Component<Encounters.Props, Encounters.Sta
         showAddEncounterModal: false,
     };
 
-    updateActiveEncounter = (id:string) => {
+    protected _getRelevantEncounters = ():EncounterModel[] => {
+        const {
+            encounters,
+            activeCampaign,
+        } = this.props;
+
+        let result:EncounterModel[] = [];
+
+        if(encounters) {
+            if(activeCampaign) {
+                result = encounters.filter(encounter => encounter.campaignId === activeCampaign).sort((a, b) => a.name.localeCompare(b.name));
+            } else {
+                result = encounters.sort((a, b) => a.name.localeCompare(b.name));
+            }
+        }
+
+        return result;
+    };
+
+    private updateActiveEncounter = (id:string) => {
         const { actions: { updateEncounter }, encounters } = this.props;
 
         if(encounters) {
@@ -66,7 +85,7 @@ export class Encounters extends React.Component<Encounters.Props, Encounters.Sta
     };
 
     render() {
-        const { encounters, actions, formData, activeCampaign } = this.props;
+        const { actions, formData, activeCampaign } = this.props;
         const { showAddEncounterModal } = this.state;
 
         return(
@@ -76,7 +95,7 @@ export class Encounters extends React.Component<Encounters.Props, Encounters.Sta
                 </h2>
                 <div className="encounters-container">
                     {
-                        encounters && encounters.filter(encounter => encounter.campaignId === activeCampaign).sort((a, b) => a.name.localeCompare(b.name)).map(encounter => (
+                        this._getRelevantEncounters().sort((a, b) => a.name.localeCompare(b.name)).map(encounter => (
                                 <EncounterCard
                                     id={ encounter.id }
                                     key={ encounter.id }

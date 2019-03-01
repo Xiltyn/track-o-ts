@@ -66,7 +66,7 @@ export class CampaignCard extends React.Component<CampaignCard.Props, CampaignCa
                     <h4>Encounters</h4>
                     {
                         campaignEncounters.length ?
-                            campaignEncounters.map(encounter => <p>{ encounter.name }</p>) :
+                            campaignEncounters.map((encounter, index) => <p key={ index }>{ encounter.name }</p>) :
                             <span>Add some Encounters to your { name } campaign!</span>
                     }
                     <Button

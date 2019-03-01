@@ -2,6 +2,8 @@ import { RootState } from "app/modules";
 import { handleActions } from "redux-actions";
 import { SidebarModel } from "app/models/SidebarModel";
 import { SidebarActions } from "app/modules/sidebar/actions";
+import { SidebarCampaigns } from "app/components/Sidebar/SidebarCampaigns/SidebarCampaigns";
+import { SidebarEncounters } from "app/components/Sidebar/SidebarEncounters/SidebarEncounters";
 
 const initialState:RootState.SidebarState = {
     showSidebar: false,
@@ -11,6 +13,19 @@ const initialState:RootState.SidebarState = {
             id: 1,
             name: 'Campaigns',
             slug: 'campaigns',
+            component: SidebarCampaigns,
+        },
+        {
+            id: 2,
+            name: 'Encounters',
+            slug: 'encounters',
+            component: SidebarEncounters,
+        },
+        {
+            id: 3,
+            name: 'Characters',
+            slug: 'player_characters',
+            component: SidebarEncounters,
         }
     ]
 };

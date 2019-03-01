@@ -30,103 +30,119 @@
         color: $GREY_LIGHT;
         background: $GREY_DARK;
 
-        .btn-back {
-            position: absolute;
-            right: 24px;
-            top: 50%;
-            margin-top: -20px;
-
-            width: 40px;
-            height: 40px;
-
-            background: none;
-            border: none;
-
-            svg {
-                height: 100%;
-                width: auto;
-            }
-        }
+        z-index: 10;
     }
 
     .sidebar-menu {
         display: flex;
+        flex-direction: column;
 
-        li {
-            width: 100%;
-            padding: 8px 4px;
-            cursor: pointer;
-            text-align: center;
-            box-sizing: border-box;
-            border: 2px solid $GREY_DARK;
+        .menu-item {
+            .item-header {
+                position: relative;
+                width: 100%;
+                padding: 8px 4px 8px 8px;
+                cursor: pointer;
+                box-sizing: border-box;
+                color: $GREY;
+                background: $GREY_MID;
 
-            transition: all .3s ease-in-out;
+                transition: all .3s ease-in-out;
+                z-index: 5;
 
-            p {
-                font-weight: 600;
-                font-family: $MONTSERRAT;
+                p {
+                    font-weight: 600;
+                    font-family: $MONTSERRAT;
+                }
+
+                &:first-of-type {
+                    border-right: none;
+                    border-left: none;
+                }
+
+                &:last-of-type {
+                    border-right: none;
+                }
             }
 
-            &:first-of-type {
-                border-right: none;
-                border-left: none;
-            }
+            .list-container {
+                height: 0;
+                overflow: hidden;
+                transition: height .3s ease-in-out;
 
-            &:last-of-type {
-                border-right: none;
+                .sidebar-list {
+                    padding: 0;
+
+                    li {
+                        position: relative;
+
+                        height: 40px;
+                        padding: 8px 16px;
+                        cursor: pointer;
+
+                        transition: all .3s ease-in-out;
+
+                        p {
+                            font-family: $MONTSERRAT;
+                            font-weight: 400;
+
+                            transition: all .3s ease-in-out;
+                        }
+
+                        &:hover {
+                            padding-left: 24px;
+                            color: $GREY_LIGHT;
+                            background-color: $GREY_MID;
+                        }
+
+                        &.active {
+                            padding-left: 32px;
+                            color: $GREY_LIGHT;
+                            background-color: $GREY_MID;
+
+                            p {
+                                font-weight: 600;
+                            }
+
+                            &:after {
+                                content: '';
+                                position: absolute;
+
+                                top: 8px;
+                                right: 16px;
+
+                                width: 0;
+                                height: 0;
+                                border-style: solid;
+                                border-width: 12px 0 12px 12px;
+                                border-color: transparent transparent transparent $GREY_LIGHT;
+
+                                animation: arrowMove 2s cubic-bezier(.8, .18, .31, .81) infinite;
+                                z-index: 0;
+                            }
+                        }
+                    }
+                }
             }
 
             &:hover,
             &.active {
-                background: $GREY_DARK;
-                color: $GREY;
-            }
-        }
-    }
-    .sidebar-list {
-        padding: 16px 0;
-
-        li {
-            position: relative;
-
-            height: 40px;
-            padding: 8px 16px;
-            cursor: pointer;
-
-            transition: all .3s ease-in-out;
-
-            p {
-                font-family: $MONTSERRAT;
-                font-weight: 400;
-
-                transition: all .3s ease-in-out;
+                .item-header {
+                    padding-left: 16px;
+                    background: $GREY_DARK;
+                }
             }
 
             &.active {
-                padding-left: 40px;
-                color: $GREY_DARK;
-
-                p {
-                    font-weight: 600;
-                }
-
-                &:after {
-                    content: '';
-                    position: absolute;
-
-                    top: 8px;
-                    right: 16px;
-
-                    width: 0;
-                    height: 0;
-                    border-style: solid;
-                    border-width: 12px 0 12px 12px;
-                    border-color: transparent transparent transparent $GREY_DARK;
-
-                    animation: arrowMove 2s cubic-bezier(.8, .18, .31, .81) infinite;
-                    z-index: 0;
+                .list-container {
+                    height: min-content;
+                    overflow-y: scroll;
                 }
             }
+        }
+
+        &.active {
+            box-shadow: 0 0 16px -4px rgba(0,0,0,0.7);
         }
     }
 }
