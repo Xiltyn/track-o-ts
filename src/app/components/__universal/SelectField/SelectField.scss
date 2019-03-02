@@ -1,0 +1,137 @@
+@import "../../../style/core/variables";
+
+.select-field {
+    position: relative;
+    height: 30px;
+    width: 100%;
+
+    margin-bottom: 4px;
+
+    label {
+        position: absolute;
+        top: 10px;
+        left: 14px;
+
+        font-size: 12px;
+        color: $GREY_LIGHT;
+
+        z-index: 2;
+    }
+
+    .rw-dropdown-list {
+        height: 100%;
+
+        .rw-widget-container {
+            height: 100%;
+            padding-left: 50px;
+
+            font-size: 12px;
+            font-weight: 500;
+            font-family: $MONTSERRAT;
+
+            border-radius: 10px;
+            background: $WHITE;
+            border: 1px solid rgba($GREY_TEXT, .1);
+            box-shadow: none;
+
+            cursor: pointer;
+
+            &:hover {
+                border: 1px solid rgba($GREY_TEXT, .1);
+                box-shadow: none;
+            }
+
+            .rw-input {
+                color: rgba($GREY_MID, .7);
+            }
+        }
+
+        &.rw-open {
+            .rw-widget-container {
+                position: relative;
+
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+
+                &:after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 12px;
+                    height: 1px;
+                    width: calc(100% - 24px);
+                    background: rgba($GREY_MID, .1);
+                }
+            }
+        }
+    }
+
+    .rw-popup {
+        padding: 8px 0;
+        border: 1px solid rgba($GREY_MID, .1);
+        border-top: none;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        box-shadow: none;
+
+        .rw-list-option {
+            position: relative;
+            border: none;
+
+            .item-component {
+                height: auto;
+                width: fit-content;
+                padding: 0 8px;
+
+                border-radius: 6px;
+                box-sizing: border-box;
+
+                transition: all .3s ease-in-out;
+
+                div {
+                    text-align: center;
+                    width: auto;
+
+                    font-size: 12px;
+                    font-weight: 400;
+                    font-family: $MONTSERRAT;
+
+                    color: $GREY_LIGHT;
+
+                    transition: color .3s ease-in-out;
+                }
+            }
+
+            &.rw-state-selected {
+                background: $WHITE;
+
+                .item-component {
+                    background: rgba($PRIMARY, .7);
+
+                    div {
+                        color: $WHITE;
+                    }
+                }
+            }
+
+            &:hover,
+            &:hover.rw-state-focus {
+                background: $WHITE;
+                .item-component {
+                    background: $WHITE;
+
+                    div {
+                        font-weight: 500;
+                        color: rgba($PRIMARY, .7);
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    &--user {
+
+    }
+}

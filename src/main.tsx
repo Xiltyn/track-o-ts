@@ -6,6 +6,7 @@ import { createBrowserHistory } from 'history';
 import { configureStore } from 'app/store';
 import { Routes } from 'app/Routes';
 
+import 'react-widgets/dist/css/react-widgets.css'
 import 'app/style/main.scss';
 
 // prepare store

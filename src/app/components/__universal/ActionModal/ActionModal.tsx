@@ -38,31 +38,33 @@ export class ActionModal extends React.Component<ActionModal.Props> {
         } = this.props;
 
         return (
-            <div className="modal">
-                <header className="modal-header">
-                    <h3>
-                        { header }
-                    </h3>
-                    <p>
-                        { description }
-                    </p>
-                </header>
-                <div className="modal-content">
-                    { children }
-                </div>
-
-                {
-                    enableNav && <div className="modal-controls">
-                        <Button
-                            label='Cancel'
-                            onSubmit={ onCancel }
-                            isBusy={ false }/>
-                        <Button
-                            label='Confirm'
-                            onSubmit={ onConfirm }
-                            isBusy={ false }/>
+            <div className="modal-container">
+                <div className="modal">
+                    <header className="modal-header">
+                        <h3>
+                            { header }
+                        </h3>
+                        <p>
+                            { description }
+                        </p>
+                    </header>
+                    <div className="modal-content">
+                        { children }
                     </div>
-                }
+
+                    {
+                        enableNav && <div className="modal-controls">
+                            <Button
+                                label='Cancel'
+                                onSubmit={ onCancel }
+                                isBusy={ false }/>
+                            <Button
+                                label='Confirm'
+                                onSubmit={ onConfirm }
+                                isBusy={ false }/>
+                        </div>
+                    }
+                </div>
             </div>
         )
     }

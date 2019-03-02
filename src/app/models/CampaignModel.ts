@@ -1,5 +1,6 @@
 import { IUserRoles } from "app/models/UserRoles";
 import { funcOptions } from "app/models/general.types";
+import { CharacterModel } from "./CharacterModel";
 
 export interface ICampaignModel {
     [key:string]:any;
@@ -7,6 +8,7 @@ export interface ICampaignModel {
     name:string;
     encounters:string[];
     description?:string;
+    characters?:CharacterModel[];
     roles?:IUserRoles;
     players?:string[];
     isActive?:boolean;
@@ -26,6 +28,7 @@ export class CampaignModel implements ICampaignModel {
     public encounters:string[] = [];
     public players:string[] = [];
     public roles:IUserRoles = {};
+    public characters:CharacterModel[] = [];
     public isActive:boolean = false;
 
     constructor(data:ICampaignModel) {
@@ -42,21 +45,13 @@ export class CampaignModel implements ICampaignModel {
         }
     };
 
-    public set setEncounters(encounterIdArr:number[]) {
-        this.numbers = encounterIdArr;
-    }
-
-    public set removeEncounter(encounterId:string) {
-        const newEncounters = this.encounters.filter(encounter => encounter !== encounterId);
-
-        this.encounters = newEncounters;
-    }
-
     public get plaintData() {
         return {
             id: this.id,
             name: this.name,
             encounters: this.encounters,
+            players: this.players,
+            characters: this.characters,
         }
     }
 
@@ -72,5 +67,9 @@ export class CampaignModel implements ICampaignModel {
 
     public setInactive():boolean {
         return this.isActive = false;
+    }
+
+    public set setCharacters(characters:CharacterModel[]) {
+        this.characters = characters;
     }
 }

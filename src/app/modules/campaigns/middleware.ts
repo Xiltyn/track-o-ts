@@ -3,6 +3,7 @@ import { RootState } from "app/modules";
 import { firebaseDb } from "app/shared/firebase.config";
 import { CampaignModel, ICampaignModel } from "app/models/CampaignModel";
 import { CampaignsActions } from "app/modules/campaigns/actions";
+import { CharacterModel, ICharacterModel } from "app/models/CharacterModel";
 
 export default class CampaignsMiddleware {
     static fetchCampaigns = () => async (dispatch:Dispatch) => {
@@ -60,7 +61,7 @@ export default class CampaignsMiddleware {
         }
     };
 
-    static updateCampaign = (updatedCampaign:CampaignModel) => (dispatch:Dispatch) => {
+    static updateCampaign = (updatedCampaign:CampaignModel) => {
         console.log(updatedCampaign);
         firebaseDb.collection('campaigns').doc(updatedCampaign.id).set(updatedCampaign.plainData).then().catch(err => console.log(err));
     };
@@ -85,4 +86,18 @@ export default class CampaignsMiddleware {
 
         dispatch(CampaignsActions.setCampaigns({ all: getPayload() }))
     };
+
+    public static addCharacter = (character:ICharacterModel, campaignId:string) => (getState:() => RootState) => {
+        const campaignRef = getState().campaigns.all.find(camp => camp.id === campaignId);
+
+        if(campaignRef) {
+            const newCampaignObj = new CampaignModel(campaignRef);
+            const currentCharacters = newCampaignObj.characters;
+            const newCharacterObj = new CharacterModel(character);
+            newCampaignObj.setCharacters = [ ...currentCharacters, newCharacterObj ];
+
+            CampaignsMiddleware.updateCampaign(newCampaignObj);
+        }
+
+    }
 }

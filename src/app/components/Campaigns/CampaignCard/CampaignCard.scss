@@ -69,8 +69,7 @@
         }
     }
 
-    .campaign-players,
-    .campaign-encounters {
+    .action-block {
         position: relative;
         padding: 16px;
 
@@ -110,9 +109,22 @@
             font-family: $MONTSERRAT;
             color: $GREY_LIGHT;
         }
-    }
 
-    .campaign-players {
+        button {
+            display: block;
+            margin: 24px auto 8px;
+            padding-left: 56px;
+            padding-right: 56px;
+
+            font-size: 14px;
+
+            opacity: .3;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
         &:after {
             content: '';
 
@@ -128,10 +140,9 @@
         }
     }
 
-    .campaign-encounters {
-        button {
-            display: block;
-            margin: 24px auto 8px;
+    .campaign-players {
+        &:after {
+            display: none
         }
     }
 

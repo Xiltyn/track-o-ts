@@ -11,10 +11,13 @@ import { CampaignModel, ICampaignModel } from "app/models/CampaignModel";
 import { ActionModal } from "app/components/__universal/ActionModal/ActionModal";
 import { FormState } from "redux-form";
 
-import './Campaigns.scss';
 import { EncounterModel } from "app/models/EncounterModel";
 import { Encounters } from "../Encounters/Encounters";
 import { AddEncounterForm } from "app/components/AddEncounterForm/AddEncounterForm";
+
+import './Campaigns.scss';
+import { AddCharacterForm } from "../AddCharacterForm/AddCharacterForm";
+import { ICharacterModel } from "app/models/CharacterModel";
 
 export namespace Campaigns {
     export interface Props {
@@ -23,11 +26,13 @@ export namespace Campaigns {
         encounters:Array<EncounterModel>,
         encounterFormData:FormState;
         campaignFormData:FormState;
+        charactersFormData:FormState;
     }
 
     export interface State {
         showAddCampaignModal:boolean,
         showAddEncounterModal:boolean,
+        showAddCharacterModal:boolean,
         currentCampaign?:string,
     }
 
@@ -35,6 +40,7 @@ export namespace Campaigns {
         initCampaignsListener:() => void;
         fetchCampaigns:() => void;
         addCampaign:(campaign:ICampaignModel) => void;
+        addCharacter:(character:ICharacterModel, campaignId:string) => void;
         updateCampaign:(campaign:CampaignModel) => void;
         setActiveCampaign:(id:string) => void;
     }
@@ -46,6 +52,7 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
     state:Campaigns.State = {
         showAddCampaignModal: false,
         showAddEncounterModal: false,
+        showAddCharacterModal: false,
     };
 
     componentDidMount() {
@@ -54,30 +61,27 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
         fetchCampaigns();
         initCampaignsListener();
 
-
-        //firebaseDb.collection('encounters').doc('iyNPovVMfHL1nqhfbMyR').get().then(res => console.log(res.data()));
-
-        //if(initMockCampaigns) initMockCampaigns();
     }
 
     render() {
-        const { encounters, campaigns, actions, encounterFormData, campaignFormData } = this.props;
-        const { showAddCampaignModal, showAddEncounterModal, currentCampaign } = this.state;
+        const { encounters, campaigns, actions, encounterFormData, campaignFormData, charactersFormData } = this.props;
+        const { showAddCampaignModal, showAddEncounterModal, showAddCharacterModal, currentCampaign } = this.state;
 
         const currentCampaignObject = campaigns.find(campaign => campaign.id === currentCampaign);
 
         return(
-            <section className="app-encounters">
+            <section className="app-campaigns">
                 <h2>
                     Campaigns
                 </h2>
-                <div className="encounters-container">
+                <div className="campaigns-container">
                     {
                         campaigns && campaigns.sort((a, b) => a.name.localeCompare(b.name)).map(campaign => (
                                 <CampaignCard
                                     key={ campaign.id }
                                     updateCampaign={ actions.updateCampaign }
                                     openAddEncounterModal={ () => this.setState({ showAddEncounterModal: true, currentCampaign: campaign.id }) }
+                                    openAddCharacterModal={ () => this.setState({ showAddCharacterModal: true, currentCampaign: campaign.id }) }
                                     encounters={ encounters }
                                     onClick={ () => actions.historyPush(`/encounters/${campaign.id}`) }
                                     campaign={ campaign }
@@ -89,9 +93,9 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
 
                 <AnimatedActionModal
                     header='Create Campaign'
-                    description='Below, you can create a new encounter'
+                    description='Below, you can create a new campaign'
                     onCancel={ () => this.setState({ showAddCampaignModal: false }) }
-                    identifier='add-encounter-modal'
+                    identifier='add-campaign-modal'
                     isMounted={ showAddCampaignModal }>
                     <AddCampaignForm
                         formData={ campaignFormData }
@@ -113,8 +117,24 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
                             closeModal={ () => this.setState({ showAddEncounterModal: false }) }/>
                     }
                 </AnimatedActionModal>
+
+                <AnimatedActionModal
+                    header={ `Add PCs to ${ currentCampaignObject && currentCampaignObject.name }` }
+                    description='Below, you can add new Characters'
+                    onCancel={ () => this.setState({ showAddCharacterModal: false, currentCampaign: undefined }) }
+                    identifier='add-character-modal'
+                    isMounted={ showAddCharacterModal && currentCampaign }>
+                    {
+                        currentCampaign && <AddCharacterForm
+                            formData={ charactersFormData }
+                            currentCampaign={ currentCampaign }
+                            addCharacter={ actions.addCharacter }
+                            closeModal={ () => this.setState({ showAddCharacterModal: false }) }/>
+                    }
+                </AnimatedActionModal>
+
                 <Button
-                    buttonClass='add-encounter'
+                    buttonClass='add-campaign'
                     label={ svg.add }
                     onSubmit={ () => this.setState({ showAddCampaignModal: true }) }/>
             </section>

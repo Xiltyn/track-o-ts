@@ -72,6 +72,7 @@ const AnimatedCampaigns = animationContainer(Campaigns);
             addCampaign:(campaign) => CampaignsMiddleware.addCampaign(campaign),
             updateCampaign:(campaign) => CampaignsMiddleware.updateCampaign(campaign),
             setActiveCampaign:(id) => CampaignsMiddleware.setActiveCampaign(id),
+            addCharacter:(character, campaignId) => CampaignsMiddleware.addCharacter(character, campaignId),
         }, dispatch),
     }),
 )
@@ -132,6 +133,7 @@ export class App extends React.Component<App.Props & RouteComponentProps<{view:s
                         encounters={ encounters }
                         campaignFormData={ forms.add_campaign }
                         encounterFormData={ forms.add_encounter }
+                        charactersFormData={ forms.add_character }
                         isMounted={ match.params && match.params.view === 'campaigns' }/>
                     <Footer/>
                 </div>

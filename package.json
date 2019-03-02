@@ -13,7 +13,8 @@
         "test:watch": "jest --watch",
         "test:update": "jest -u",
         "styleguide": "styleguidist server",
-        "styleguide:build": "styleguidist build"
+        "styleguide:build": "styleguidist build",
+        "firebase:deploy": "yarn run build && firebase deploy"
     },
     "license": "MIT",
     "devDependencies": {

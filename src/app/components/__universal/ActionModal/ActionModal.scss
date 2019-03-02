@@ -1,58 +1,71 @@
 @import "../../../style/core/variables";
 
-.modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
 
-    width: 400px;
-    height: auto;
-    padding: 24px;
+    width: 100vw;
+    height: 120vh;
 
-    background: $GREY_DARK;
-    box-shadow: 0 0 16px -4px rgba(#000, .7);
-    transform: translate(-50%, -50%);
+    margin-top: -10vh;
 
-    z-index: 50;
-    box-sizing: border-box;
+    background: rgba($GREY_DARK, .8);
 
-    &-header {
-        width: 100%;
-        font-family: $MONTSERRAT;
+    .modal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
 
-        h3 {
-            width: inherit;
-            margin-bottom: 16px;
+        width: 400px;
+        height: auto;
+        padding: 24px;
 
-            font-size: 18px;
-            font-weight: 600;
-            font-family: inherit;
-            text-align: center;
+        background: $GREY_DARK;
+        box-shadow: 0 0 16px -4px rgba(#000, .7);
+        transform: translate(-50%, -50%);
+
+        z-index: 50;
+        box-sizing: border-box;
+
+        &-header {
+            width: 100%;
+            font-family: $MONTSERRAT;
+
+            h3 {
+                width: inherit;
+                margin-bottom: 16px;
+
+                font-size: 18px;
+                font-weight: 600;
+                font-family: inherit;
+                text-align: center;
+            }
+
+            p {
+                width: inherit;
+                margin-bottom: 16px;
+
+                font-family: inherit;
+                font-size: 14px;
+                font-weight: 400;
+            }
         }
 
-        p {
-            width: inherit;
-            margin-bottom: 16px;
+        &-content {
 
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 400;
         }
-    }
 
-    &-content {
+        &-controls {
+            width: 100%;
 
-    }
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
 
-    &-controls {
-        width: 100%;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-
-        button:hover {
-            color: $GREY_DARK;
+            button:hover {
+                color: $GREY_DARK;
+            }
         }
     }
 }

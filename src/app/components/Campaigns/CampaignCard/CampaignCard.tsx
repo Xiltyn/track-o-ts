@@ -13,6 +13,7 @@ export namespace CampaignCard {
         campaign:CampaignModel;
         encounters:EncounterModel[];
         openAddEncounterModal:() => void;
+        openAddCharacterModal:() => void;
         updateCampaign:(campaign:CampaignModel) => void;
         onClick:(id:string) => void;
     }
@@ -36,11 +37,13 @@ export class CampaignCard extends React.Component<CampaignCard.Props, CampaignCa
                 name,
                 players,
                 description,
+                characters,
                 isActive
             },
             onClick,
             encounters,
             openAddEncounterModal,
+            openAddCharacterModal,
         } = this.props;
 
         const campaignEncounters = encounters.filter(encounter => encounter.campaignId === id);
@@ -56,22 +59,33 @@ export class CampaignCard extends React.Component<CampaignCard.Props, CampaignCa
                         <p>{ description }</p>
                     </div>
                 </header>
-                <div className="campaign-players">
-                    <h4>Players</h4>
-                    {
-                        players && players.map((email, index) => <p key={ index }>{ email }</p>)
-                    }
-                </div>
-                <div className="campaign-encounters">
+                <div className="action-block campaign-encounters">
                     <h4>Encounters</h4>
                     {
-                        campaignEncounters.length ?
+                        campaignEncounters && campaignEncounters.length ?
                             campaignEncounters.map((encounter, index) => <p key={ index }>{ encounter.name }</p>) :
                             <span>Add some Encounters to your { name } campaign!</span>
                     }
                     <Button
-                        label="Add Encounter"
+                        label="Create"
                         onSubmit={ openAddEncounterModal }/>
+                </div>
+                <div className="action-block campaign-characters">
+                    <h4>Characters</h4>
+                    {
+                        characters && characters.length ?
+                            characters.map(chara => <p key={ chara.id }>{ chara.name }</p>) :
+                            <span>Assign PCs to your { name } campaign!</span>
+                    }
+                    <Button
+                        label="Assign"
+                        onSubmit={ openAddCharacterModal }/>
+                </div>
+                <div className="action-block campaign-players">
+                    <h4>Players</h4>
+                    {
+                        players && players.map((email, index) => <p key={ index }>{ email }</p>)
+                    }
                 </div>
             </div>
         )
