@@ -1,12 +1,5 @@
 import * as React from 'react';
-import {
-    Field,
-    FieldArray,
-    Form, FormState,
-    InjectedFormProps,
-    reduxForm,
-    WrappedFieldArrayProps,
-} from "redux-form";
+import { Field, FieldArray, Form, FormState, InjectedFormProps, reduxForm, WrappedFieldArrayProps, } from "redux-form";
 
 import { InputField } from "../__universal/InputField/InputField";
 
@@ -16,16 +9,22 @@ import svg from "../../utils/svg";
 import { validate } from "./AddEncounterForm.validation";
 import { EncounterModelProps } from "app/models/EncounterModel";
 import NumberPicker from 'react-widgets/lib/NumberPicker';
+import { SelectField } from "app/components/__universal/SelectField/SelectField";
+import { CampaignModel } from "app/models/CampaignModel";
+import { CharacterModel } from "app/models/CharacterModel";
+
 const simpleNumberLocalizer = require('react-widgets-simple-number');
 
 simpleNumberLocalizer();
 
 export namespace AddEncounterFormComponent {
     export interface Props {
-        closeModal: () => void;
-        formData:FormState;
-        currentCampaign:string;
-        addEncounter: (encounter:EncounterModelProps) => void;
+        closeModal:() => void;
+        formData?:FormState;
+        campaigns?:CampaignModel[];
+        characters?:CharacterModel[];
+        currentCampaign?:string;
+        addEncounter:(encounter:EncounterModelProps) => void;
     }
 }
 
@@ -48,7 +47,7 @@ const renderField = (props:any) => (
     </div>
 );
 
-const Members = (props:WrappedFieldArrayProps<AddEncounterFormComponent.Props>) => (
+const Members = (props:WrappedFieldArrayProps<{ name?:string, roll?:number }>) => (
     <ul className='new-member-list'>
         <li className='member add-new'>
             <Button label='Add new' onSubmit={ () => props.fields.push({} as any) }/>
@@ -56,21 +55,19 @@ const Members = (props:WrappedFieldArrayProps<AddEncounterFormComponent.Props>) 
         {
             props.fields.map((field, index) => (
                 <li key={ index } className="member">
-                    { console.log(props) }
                     <Field
                         className="member-input-name"
-                        name={ `${field}_fields.name` }
+                        name={ `${ field }_fields.name` }
                         component={ renderField }
-                        placeholder='Some Guy'
-                        label={ `Party #${index + 1}` }/>
+                        placeholder='Ugly Troll'/>
                     <Field
                         className="member-input-roll"
-                        name={ `${field}_fields.roll` }
+                        name={ `${ field }_fields.roll` }
                         component={ renderNumberPicker }
                         defaultValue={ 10 }
                         min={ 1 }
                         max={ 50 }
-                        label={ `Initiative for Party #${index + 1}` }/>
+                        label={ `Initiative for Party #${ index + 1 }` }/>
                     <Button label={ svg.return } onSubmit={ () => props.fields.remove(index) }/>
                 </li>
             ))
@@ -78,16 +75,17 @@ const Members = (props:WrappedFieldArrayProps<AddEncounterFormComponent.Props>) 
     </ul>
 );
 
-class AddEncounterFormComponent extends React.Component<AddEncounterFormComponent.Props & InjectedFormProps<{}, AddEncounterFormComponent.Props>> {
+class AddEncounterFormComponent
+    extends React.Component<AddEncounterFormComponent.Props&InjectedFormProps<{}, AddEncounterFormComponent.Props>> {
 
     private submitNew = () => {
-        const { formData: { values }, addEncounter, currentCampaign } = this.props;
+        const { formData, addEncounter, currentCampaign } = this.props;
 
-        if( values && (values.encounter_name && values.members && currentCampaign)) {
+        if (formData && formData.values && (formData.values.encounter_name && formData.values.members && currentCampaign)) {
             const payload:EncounterModelProps = {
-                name: values.encounter_name,
+                name: formData.values.encounter_name,
                 campaignId: currentCampaign,
-                participants: values.members.map((el:{ _fields:{[key:string]: any} }, index:number) => ({
+                participants: formData.values.members.map((el:{ _fields:{ [ key:string ]:any } }, index:number) => ({
                     name: el._fields.name,
                     roll: el._fields.roll,
                     id: index,
@@ -102,8 +100,28 @@ class AddEncounterFormComponent extends React.Component<AddEncounterFormComponen
 
     };
 
+    protected _getCampaignSelectData = () => {
+        const { campaigns } = this.props;
+        let result:{ id:number, name:string, label:string }[] = [];
+
+        if (campaigns) {
+            result = campaigns.map((camp, index) => ({
+                id: index,
+                name: camp.name,
+                label: camp.name,
+            }))
+        }
+
+        return result;
+    };
+
     render() {
-        const { handleSubmit, closeModal } = this.props;
+        const { handleSubmit, closeModal, currentCampaign, formData, characters, campaigns } = this.props;
+        const selectedCampaign = campaigns && campaigns.find(
+            camp => camp.name === (formData && formData.values && formData.values.encounter_campaign) || camp.id === currentCampaign);
+        const selectedCampaignId = selectedCampaign && selectedCampaign.id;
+
+        console.log(characters);
 
         return (
             <Form
@@ -115,6 +133,36 @@ class AddEncounterFormComponent extends React.Component<AddEncounterFormComponen
                         label='Name'
                         placeholder='Dragon Fight'/>
                 </div>
+                {
+                    !currentCampaign &&
+                    <div className="encounter-campaign">
+                        <Field
+                            name="encounter_campaign"
+                            placeholder="Select Character's Campaign"
+                            label="Character campaign"
+                            data={ this._getCampaignSelectData() }
+                            component={ SelectField as any }/>
+                    </div>
+                }
+                {
+                    selectedCampaign &&
+                    <div className='encounter-characters'>
+                        <h3>Characters from { selectedCampaign.name }</h3>
+                        {
+                            characters && characters.filter(chara => chara.campaignId === selectedCampaignId)
+                                .map((chara, index) =>
+                                    <div className='character-info' key={ index }>
+                                        <p className='meta'>
+                                            <span>{ chara.name }</span> | { chara.class }
+                                        </p>
+                                        <div className='stats'>
+                                            <div className='row'>{ svg.ac } <span>{ chara.ac }</span></div>
+                                            <div className='row'>{ svg.hp } <span>{ chara.hp }</span></div>
+                                        </div>
+                                    </div>)
+                        }
+                    </div>
+                }
                 <FieldArray name='members' component={ Members }/>
                 <div className="modal-controls">
                     <Button

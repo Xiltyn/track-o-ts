@@ -1,6 +1,6 @@
 @import "../../style/core/variables";
 
-.app-encounters {
+.app-characters {
     position: relative;
 
     max-height: 100vh;
@@ -22,14 +22,14 @@
         padding: 40px 0 80px;
     }
 
-    .encounters-container {
+    .characters-container {
         display: flex;
         flex-wrap: wrap;
         align-items: flex-start;
         justify-content: space-around;
     }
 
-    .animation-container--add-encounter-modal {
+    .animation-container--add-character-modal {
         position: fixed;
         top: 0;
         left: 0;
@@ -40,7 +40,7 @@
         z-index: 15;
     }
 
-    button.add-encounter {
+    button.add-character {
         position: fixed;
         bottom: 72px;
         right: 72px;

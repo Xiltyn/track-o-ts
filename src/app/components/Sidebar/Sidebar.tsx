@@ -10,13 +10,15 @@ import { CampaignModel } from "app/models/CampaignModel";
 import { Campaigns } from "app/components/Campaigns/Campaigns";
 
 import './Sidebar.scss';
+import { CharacterModel } from "app/models/CharacterModel";
 
 export namespace SidebarComponent {
     export interface Props {
         actions?: SidebarComponentActions,
         menuData: sidebarMenuData,
-        campaigns?: CampaignModel[],
         currentSection: sidebarSections,
+        campaigns?: CampaignModel[],
+        characters?: CharacterModel[],
         encounters?: EncounterModel[],
         showSidebar: boolean,
     }
@@ -39,6 +41,7 @@ class SidebarComponent extends React.Component<SidebarComponent.Props & RouteCom
             currentSection,
             encounters,
             campaigns,
+            characters,
             showSidebar,
             actions,
         } = this.props;
@@ -53,18 +56,10 @@ class SidebarComponent extends React.Component<SidebarComponent.Props & RouteCom
                         onItemSelect={ this.updateSection }
                         encounters={ encounters }
                         campaigns={ campaigns }
+                        characters={ characters }
                         actions={ actions }
                         currentActive={ currentMenuItem && currentMenuItem.id }
                         menuData={ menuData }/>
-                    {/*<AnimatedSidebarEncounters*/ }
-                    {/*isMounted={ currentMenuItem && currentMenuItem.slug === 'player_characters' }*/ }
-                    {/*encounters={ encounters }*/ }
-                    {/*actions={ actions }/>*/ }
-                    {/*<AnimatedSidebarCampaigns*/ }
-                    {/*isMounted={ currentMenuItem && currentMenuItem.slug === 'campaigns' }*/ }
-                    {/*campaigns={ campaigns }*/ }
-                    {/*actions={ actions }/>*/ }
-
                 </div>
             </div>
         )

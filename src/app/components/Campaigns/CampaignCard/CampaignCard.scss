@@ -1,7 +1,7 @@
 @import "../../../style/core/variables";
 
 .campaign {
-    width: 400px;
+    width: 500px;
     margin-bottom: 40px;
 
     cursor: pointer;
@@ -110,7 +110,7 @@
             color: $GREY_LIGHT;
         }
 
-        button {
+        & > button {
             display: block;
             margin: 24px auto 8px;
             padding-left: 56px;
@@ -144,6 +144,77 @@
         &:after {
             display: none
         }
+    }
+
+    .campaign-characters {
+        .character-info {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .meta {
+                width: 55%;
+                padding-left: 8px;
+                font-size: 16px;
+
+                &:before {
+                    display: none;
+                }
+
+                span {
+                    font-weight: 700;
+                    font-size: 16px
+                }
+            }
+
+            .stats {
+                width: calc(45% - 80px);
+
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+
+                .row {
+                    width: 72px;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+
+                    svg {
+                        height: 40px;
+                        width: 40px;
+
+                        & > * {
+                            fill: $GREY_MID;
+                        }
+                    }
+
+                    span {
+                        font-size: 20px;
+                        font-weight: 600;
+                    }
+                }
+            }
+
+            button {
+                margin: 0;
+
+                svg {
+                    path, polygon {
+                        fill: $GREY_TEXT;
+                    }
+                }
+
+                &:after,
+                &:before {
+                    background: rgba($GREY_TEXT, .7);
+                }
+            }
+        }
+
     }
 
     &:hover .campaign-header .name {

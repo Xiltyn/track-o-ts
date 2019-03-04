@@ -62,8 +62,8 @@ export default class CampaignsMiddleware {
     };
 
     static updateCampaign = (updatedCampaign:CampaignModel) => {
-        console.log(updatedCampaign);
-        firebaseDb.collection('campaigns').doc(updatedCampaign.id).set(updatedCampaign.plainData).then().catch(err => console.log(err));
+        const data = updatedCampaign.plaintData;
+        if(data) firebaseDb.collection('campaigns').doc(updatedCampaign.id).set(data).then().catch(err => console.log(err));
     };
 
     static setActiveCampaign = (id:string) => (dispatch:Dispatch, getState:() => RootState) => {
@@ -87,16 +87,23 @@ export default class CampaignsMiddleware {
         dispatch(CampaignsActions.setCampaigns({ all: getPayload() }))
     };
 
-    public static addCharacter = (character:ICharacterModel, campaignId:string) => (getState:() => RootState) => {
-        const campaignRef = getState().campaigns.all.find(camp => camp.id === campaignId);
+    public static addCharacter = (character:ICharacterModel, campaignId:string) => (dispatch:Dispatch, getState:() => RootState) => {
+        const currentCampaigns = getState().campaigns.all;
+        const campaignRef = currentCampaigns.find(camp => camp.id === campaignId);
 
         if(campaignRef) {
             const newCampaignObj = new CampaignModel(campaignRef);
             const currentCharacters = newCampaignObj.characters;
             const newCharacterObj = new CharacterModel(character);
-            newCampaignObj.setCharacters = [ ...currentCharacters, newCharacterObj ];
+            newCampaignObj.setCharacters = currentCharacters ? [ ...currentCharacters, newCharacterObj ] : [ newCharacterObj ];
 
             CampaignsMiddleware.updateCampaign(newCampaignObj);
+
+            const payload = [ ...currentCampaigns.filter(camp => camp.id !== newCampaignObj.id), newCampaignObj ];
+            dispatch(CampaignsActions.setCampaigns({
+                all: payload,
+            }))
+
         }
 
     }

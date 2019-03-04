@@ -17,13 +17,15 @@ import { AddEncounterForm } from "app/components/AddEncounterForm/AddEncounterFo
 
 import './Campaigns.scss';
 import { AddCharacterForm } from "../AddCharacterForm/AddCharacterForm";
-import { ICharacterModel } from "app/models/CharacterModel";
+import { CharacterModel, ICharacterModel } from "app/models/CharacterModel";
+import { Characters } from "app/components/Characters/Characters";
 
 export namespace Campaigns {
     export interface Props {
-        actions:campaignsActions & Encounters.encountersActions & {historyPush:(location:string) => void},
+        actions:campaignsActions & Encounters.encountersActions & Characters.charactersActions & {historyPush:(location:string) => void},
         campaigns:Array<CampaignModel>,
         encounters:Array<EncounterModel>,
+        characters:Array<CharacterModel>,
         encounterFormData:FormState;
         campaignFormData:FormState;
         charactersFormData:FormState;
@@ -64,10 +66,11 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
     }
 
     render() {
-        const { encounters, campaigns, actions, encounterFormData, campaignFormData, charactersFormData } = this.props;
+        const { encounters, campaigns, actions, encounterFormData, campaignFormData, charactersFormData, characters } = this.props;
         const { showAddCampaignModal, showAddEncounterModal, showAddCharacterModal, currentCampaign } = this.state;
 
         const currentCampaignObject = campaigns.find(campaign => campaign.id === currentCampaign);
+        const currentCampaignCharacters = characters && characters.filter(chara => chara.campaignId === currentCampaign);
 
         return(
             <section className="app-campaigns">
@@ -83,6 +86,7 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
                                     openAddEncounterModal={ () => this.setState({ showAddEncounterModal: true, currentCampaign: campaign.id }) }
                                     openAddCharacterModal={ () => this.setState({ showAddCharacterModal: true, currentCampaign: campaign.id }) }
                                     encounters={ encounters }
+                                    characters={ characters.filter(chara => chara.campaignId === campaign.id) }
                                     onClick={ () => actions.historyPush(`/encounters/${campaign.id}`) }
                                     campaign={ campaign }
                                 />
@@ -94,26 +98,39 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
                 <AnimatedActionModal
                     header='Create Campaign'
                     description='Below, you can create a new campaign'
-                    onCancel={ () => this.setState({ showAddCampaignModal: false }) }
                     identifier='add-campaign-modal'
                     isMounted={ showAddCampaignModal }>
                     <AddCampaignForm
                         formData={ campaignFormData }
-                        addCampaign={ actions.addCampaign }
+                        addCampaign={ (campaign) => {
+                            actions.addCampaign(campaign);
+                            this.setState({ showAddCampaignModal: false })
+                        } }
                         closeModal={ () => this.setState({ showAddCampaignModal: false }) }/>
                 </AnimatedActionModal>
 
                 <AnimatedActionModal
                     header={ `Add Encounter to ${ currentCampaignObject && currentCampaignObject.name }` }
                     description='Below, you can create a new encounter'
-                    onCancel={ () => this.setState({ showAddEncounterModal: false, currentCampaign: undefined }) }
                     identifier='add-encounter-modal'
                     isMounted={ showAddEncounterModal && currentCampaign }>
                     {
                         currentCampaign && <AddEncounterForm
                             formData={ encounterFormData }
                             currentCampaign={ currentCampaign }
-                            addEncounter={ actions.addEncounter }
+                            campaigns={ campaigns }
+                            characters={ characters }
+                            initialValues={ {
+                                members: currentCampaignCharacters && currentCampaignCharacters.map(chara => ({
+                                    _fields: {
+                                        name: chara.name,
+                                    }
+                                }))
+                            } }
+                            addEncounter={ (encounter) => {
+                                actions.addEncounter(encounter);
+                                this.setState({ showAddEncounterModal: false })
+                            } }
                             closeModal={ () => this.setState({ showAddEncounterModal: false }) }/>
                     }
                 </AnimatedActionModal>
@@ -121,14 +138,16 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
                 <AnimatedActionModal
                     header={ `Add PCs to ${ currentCampaignObject && currentCampaignObject.name }` }
                     description='Below, you can add new Characters'
-                    onCancel={ () => this.setState({ showAddCharacterModal: false, currentCampaign: undefined }) }
                     identifier='add-character-modal'
                     isMounted={ showAddCharacterModal && currentCampaign }>
                     {
                         currentCampaign && <AddCharacterForm
                             formData={ charactersFormData }
                             currentCampaign={ currentCampaign }
-                            addCharacter={ actions.addCharacter }
+                            addCharacter={ (character) => {
+                                actions.addCharacter(character);
+                                this.setState({ showAddCharacterModal: false })
+                            } }
                             closeModal={ () => this.setState({ showAddCharacterModal: false }) }/>
                     }
                 </AnimatedActionModal>

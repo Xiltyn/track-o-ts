@@ -4,6 +4,7 @@ import { SidebarModel } from "app/models/SidebarModel";
 import { SidebarActions } from "app/modules/sidebar/actions";
 import { SidebarCampaigns } from "app/components/Sidebar/SidebarCampaigns/SidebarCampaigns";
 import { SidebarEncounters } from "app/components/Sidebar/SidebarEncounters/SidebarEncounters";
+import { SidebarCharacters } from "app/components/Sidebar/SidebarCharacters/SidebarCharacters";
 
 const initialState:RootState.SidebarState = {
     showSidebar: false,
@@ -24,8 +25,8 @@ const initialState:RootState.SidebarState = {
         {
             id: 3,
             name: 'Characters',
-            slug: 'player_characters',
-            component: SidebarEncounters,
+            slug: 'characters',
+            component: SidebarCharacters,
         }
     ]
 };

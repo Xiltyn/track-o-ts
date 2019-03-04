@@ -1,6 +1,6 @@
 import { IUserRoles } from "app/models/UserRoles";
 import { funcOptions } from "app/models/general.types";
-import { CharacterModel } from "./CharacterModel";
+import { CharacterModel, ICharacterModel } from "./CharacterModel";
 
 export interface ICampaignModel {
     [key:string]:any;
@@ -33,6 +33,8 @@ export class CampaignModel implements ICampaignModel {
 
     constructor(data:ICampaignModel) {
         this.assignData(data);
+
+        this.removeCharacter = this.removeCharacter.bind(this);
     }
 
     private assignData = (data:ICampaignModel, options?:funcOptions) => {
@@ -41,6 +43,11 @@ export class CampaignModel implements ICampaignModel {
         for(let key of thisKeys) {
             if(data[ key ] !== this[ key ]) {
                 this[ key ] = data[ key ];
+
+                if(key === 'characters') {
+                    const charactersData = data[ key ] as ICharacterModel[];
+                    this.characters = charactersData ? charactersData.map(data => new CharacterModel(data)) : []
+                }
             }
         }
     };
@@ -51,7 +58,7 @@ export class CampaignModel implements ICampaignModel {
             name: this.name,
             encounters: this.encounters,
             players: this.players,
-            characters: this.characters,
+            characters: this.characters.length ? this.characters.map(chara => chara.plainData) : [],
         }
     }
 
@@ -71,5 +78,11 @@ export class CampaignModel implements ICampaignModel {
 
     public set setCharacters(characters:CharacterModel[]) {
         this.characters = characters;
+    }
+
+    public removeCharacter(characterName:string):this {
+        this.characters = this.characters.filter(chara => chara.name !== characterName);
+
+        return this;
     }
 }

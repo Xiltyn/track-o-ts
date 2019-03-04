@@ -11,7 +11,7 @@ type ButtonProps = {
 
 const Button = (props:ButtonProps) => (
     <button
-        className={ `btn ${ props.buttonClass ? props.buttonClass : '' } ${ props.isBusy ? 'busy' : '' } ${ props.label && typeof props.label !== "string" ? 'icon' : '' }` }
+        className={ `btn ${ props.buttonClass ? props.buttonClass : '' }${ props.isBusy ? 'busy' : '' } ${ props.label && typeof props.label !== "string" ? 'icon' : '' }` }
         type='button'
         onClick={ props.onSubmit }>
         <div className="btn-label">

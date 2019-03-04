@@ -13,13 +13,17 @@ import { ActionModal } from "app/components/__universal/ActionModal/ActionModal"
 import { FormState } from "redux-form";
 
 import './Encounters.scss';
+import { CampaignModel } from "app/models/CampaignModel";
+import { CharacterModel } from "app/models/CharacterModel";
 
 export namespace Encounters {
     export interface Props {
         actions:encountersActions;
-        encounters:Array<EncounterModel>|undefined;
         activeCampaign?:string;
         formData:FormState;
+        encounters?:EncounterModel[];
+        campaigns?:CampaignModel[];
+        characters?:CharacterModel[];
     }
 
     export interface State {
@@ -52,10 +56,12 @@ export class Encounters extends React.Component<Encounters.Props, Encounters.Sta
 
         let result:EncounterModel[] = [];
 
-        if(encounters) {
-            if(activeCampaign) {
-                result = encounters.filter(encounter => encounter.campaignId === activeCampaign).sort((a, b) => a.name.localeCompare(b.name));
-            } else {
+        if (encounters) {
+            if (activeCampaign) {
+                result = encounters.filter(encounter => encounter.campaignId === activeCampaign)
+                    .sort((a, b) => a.name.localeCompare(b.name));
+            }
+            else {
                 result = encounters.sort((a, b) => a.name.localeCompare(b.name));
             }
         }
@@ -66,15 +72,16 @@ export class Encounters extends React.Component<Encounters.Props, Encounters.Sta
     private updateActiveEncounter = (id:string) => {
         const { actions: { updateEncounter }, encounters } = this.props;
 
-        if(encounters) {
-            for(let encounter of encounters) {
-                if(encounter.id === id) {
+        if (encounters) {
+            for (let encounter of encounters) {
+                if (encounter.id === id) {
                     const updatedEncounter = new EncounterModel(encounter);
                     console.log(updatedEncounter);
                     updatedEncounter.setActive();
 
                     updateEncounter(updatedEncounter);
-                } else {
+                }
+                else {
                     const updatedEncounter = new EncounterModel(encounter);
                     updatedEncounter.setInactive();
 
@@ -85,10 +92,12 @@ export class Encounters extends React.Component<Encounters.Props, Encounters.Sta
     };
 
     render() {
-        const { actions, formData, activeCampaign } = this.props;
+        const { actions, formData, activeCampaign, campaigns, characters } = this.props;
         const { showAddEncounterModal } = this.state;
 
-        return(
+        const currentCampaignCharacters = characters && characters.filter(chara => chara.campaignId === activeCampaign);
+
+        return (
             <section className="app-encounters">
                 <h2>
                     Encounters
@@ -104,10 +113,11 @@ export class Encounters extends React.Component<Encounters.Props, Encounters.Sta
                                     updateEncounter={ id => {
                                         const updatedEncounter = new EncounterModel(encounter);
 
-                                        for(let participant of updatedEncounter.participants) {
-                                            if(participant.id === id) {
+                                        for (let participant of updatedEncounter.participants) {
+                                            if (participant.id === id) {
                                                 participant.isActive = true;
-                                            } else if (participant.isActive) {
+                                            }
+                                            else if (participant.isActive) {
                                                 participant.isActive = false;
                                             }
                                         }
@@ -125,16 +135,25 @@ export class Encounters extends React.Component<Encounters.Props, Encounters.Sta
                 <AnimatedActionModal
                     header='Create Encounter'
                     description='Below, you can create a new encounter'
-                    onCancel={ () => this.setState({ showAddEncounterModal: false }) }
                     identifier='add-encounter-modal'
                     isMounted={ showAddEncounterModal }>
-                    {
-                        activeCampaign && <AddEncounterForm
-                            formData={ formData }
-                            currentCampaign={ activeCampaign }
-                            addEncounter={ actions.addEncounter }
-                            closeModal={ () => this.setState({ showAddEncounterModal: false }) }/>
-                    }
+                    <AddEncounterForm
+                        formData={ formData }
+                        campaigns={ campaigns }
+                        characters={ characters }
+                        initialValues={ {
+                            members: currentCampaignCharacters && currentCampaignCharacters.map(chara => ({
+                                _fields: {
+                                    name: chara.name,
+                                }
+                            }))
+                        } }
+                        currentCampaign={ activeCampaign }
+                        addEncounter={ (encounter) => {
+                            actions.addEncounter(encounter);
+                            this.setState({ showAddEncounterModal: false })
+                        } }
+                        closeModal={ () => this.setState({ showAddEncounterModal: false }) }/>
                 </AnimatedActionModal>
                 <Button
                     buttonClass='add-encounter'

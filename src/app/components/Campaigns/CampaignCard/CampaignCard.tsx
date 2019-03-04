@@ -6,12 +6,16 @@ import { CampaignModel } from "app/models/CampaignModel";
 import './CampaignCard.scss';
 import Button from "app/components/__universal/Button/Button";
 import { EncounterModel } from "app/models/EncounterModel";
+import svg from "app/utils/svg";
+import { CharacterModel } from "app/models/CharacterModel";
+import CampaignsMiddleware from "app/modules/campaigns/middleware";
 
 export namespace CampaignCard {
 
     export interface Props {
         campaign:CampaignModel;
         encounters:EncounterModel[];
+        characters?:CharacterModel[];
         openAddEncounterModal:() => void;
         openAddCharacterModal:() => void;
         updateCampaign:(campaign:CampaignModel) => void;
@@ -25,22 +29,29 @@ export namespace CampaignCard {
 }
 
 export class CampaignCard extends React.Component<CampaignCard.Props, CampaignCard.State> {
-    state:CampaignCard.State = {
+    public state:CampaignCard.State = {
         showModal: false,
         activeCondition: null,
     };
 
-    render() {
+    private handleRemoveCharacter = (campaign:CampaignModel, character:CharacterModel) => {
+        const newCampaign = new CampaignModel(campaign);
+        newCampaign.removeCharacter(character.name);
+
+        CampaignsMiddleware.updateCampaign(newCampaign);
+    };
+
+    public render() {
         const {
             campaign: {
                 id,
                 name,
                 players,
                 description,
-                characters,
                 isActive
             },
             onClick,
+            characters,
             encounters,
             openAddEncounterModal,
             openAddCharacterModal,
@@ -74,7 +85,17 @@ export class CampaignCard extends React.Component<CampaignCard.Props, CampaignCa
                     <h4>Characters</h4>
                     {
                         characters && characters.length ?
-                            characters.map(chara => <p key={ chara.id }>{ chara.name }</p>) :
+                            characters.map((chara, index) =>
+                                <div className='character-info' key={ index }>
+                                    <p className='meta'>
+                                        <span>{ chara.name }</span> | { chara.class }
+                                    </p>
+                                    <div className='stats'>
+                                        <div className='row'>{ svg.ac } <span>{ chara.ac }</span></div>
+                                        <div className='row'>{ svg.hp } <span>{ chara.hp }</span></div>
+                                    </div>
+                                    <Button onSubmit={ () => this.handleRemoveCharacter(this.props.campaign, chara) } label={ svg.return }/>
+                                </div>) :
                             <span>Assign PCs to your { name } campaign!</span>
                     }
                     <Button

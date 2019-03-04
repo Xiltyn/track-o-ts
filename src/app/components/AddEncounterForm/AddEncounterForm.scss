@@ -25,6 +25,76 @@
         }
     }
 
+    .encounter-campaign {
+        margin-top: 16px;
+
+        .rw-dropdown-list-input {
+            padding-left: 88px;
+        }
+    }
+
+    .encounter-characters {
+        h3 {
+            color: $GREY_LIGHT;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .character-info {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .meta {
+                font-size: 13px;
+                color: $GREY_LIGHT;
+
+                &:before {
+                    display: none;
+                }
+
+                span {
+                    font-weight: 700;
+                    font-size: 13px
+                }
+            }
+
+            .stats {
+                width: 40%;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+
+                .row {
+                    width: 64px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+
+                    svg {
+                        height: 32px;
+                        width: 32px;
+
+                        & > * {
+                            fill: $GREY_MID;
+                        }
+                    }
+
+                    span {
+                        color: $GREY_LIGHT;
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+
+    }
+
     .new-member-list {
         max-height: 300px;
         padding: 0 0 16px 0;
@@ -39,24 +109,18 @@
             justify-content: space-between;
 
             padding: 4px 0;
-            height: 72px;
+            height: 48px;
             width: 100%;
 
             & > div {
                 width: 80%;
                 height: 100%;
-                label {
-                    position: absolute;
-                    bottom: 12px;
-                    left: 0;
-
-                    font-size: 12px;
-                    font-weight: 800;
-                    text-transform: uppercase;
-                }
+                margin: 0;
+                padding: 0;
 
                 input {
                     width: 100%;
+                    height: 100%;
                     padding: 8px 0;
 
                     font-size: 14px;
@@ -85,35 +149,56 @@
                 }
 
                 &.member-input-roll {
-                    width: 15%;
+                    width: 20%;
 
                     box-sizing: border-box;
 
+                    &.rw-state-focus {
+                        .rw-widget-picker {
+                            box-shadow: none;
+                        }
+                    }
+
                     .rw-widget-picker {
                         height: 100%;
-
+                        border: none;
+                        background: none;
                         display: flex;
 
                         input {
                             padding: 0;
-                            margin-top: -4px;
+                            margin: -4px 4px 0 8px;
 
                             color: $GREY;
                             text-align: left;
                             font-weight: 800;
                             font-size: 20px;
 
-                            &:focus {
+                            background: none;
+
+                            &:focus,
+                            &:active {
                                 color: $GREY_TEXT;
+                                outline: none;
+                                box-shadow: none !important;
                             }
                         }
 
                         span {
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                            width: 32px;
                             height: 100%;
                             display: flex;
+                            border: none;
                             flex-direction: column;
                             align-items: center;
                             justify-content: space-around;
+
+                            &:hover {
+                                background: none;
+                            }
 
                             button {
                                 width: 0;
@@ -122,11 +207,15 @@
                                 padding: 0;
                                 background: none;
                                 border-style: solid;
-                                border-width: 0 6px 12px 6px;
+                                border-width: 0 5px 10px 5px;
                                 border-color: transparent transparent $GREY_LIGHT transparent;
 
+                                span {
+                                    display: none;
+                                }
+
                                 &:nth-of-type(2) {
-                                    border-width: 12px 6px 0 6px;
+                                    border-width: 10px 5px 0 5px;
                                     border-color: $GREY_LIGHT transparent transparent transparent;
                                 }
                             }
@@ -151,10 +240,22 @@
             }
 
             &.add-new {
+                margin: 8px 0 0;
+
                 button {
-                    width: 100%;
+                    width: auto;
+                    height: 32px;
+                    padding: 5px 48px;
                     margin: auto;
+
+                    font-weight: 500;
+                    color: $GREY_LIGHT;
+                    text-transform: capitalize;
+
                     border-style: dashed;
+                    border-color: $GREY_LIGHT;
+                    border-width: 1px;
+
                     opacity: .5;
 
                     &:after,

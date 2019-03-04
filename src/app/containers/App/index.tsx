@@ -18,6 +18,9 @@ import { FormStateMap } from "redux-form";
 import CampaignsMiddleware from "app/modules/campaigns/middleware";
 import { CampaignModel } from "app/models/CampaignModel";
 import { Campaigns } from "app/components/Campaigns/Campaigns";
+import { Characters } from 'app/components/Characters/Characters';
+import { CharactersMiddleware } from "app/modules/characters/middleware";
+import { CharacterModel } from "app/models/CharacterModel";
 
 export namespace App {
     export interface Props extends RouteComponentProps<{view:string, id:string}> {
@@ -27,9 +30,11 @@ export namespace App {
         appActions:appActions,
         campaigns?:CampaignModel[],
         encounters?:EncounterModel[],
+        characters?:CharacterModel[],
         sidebarActions:SidebarActions & {historyPush:(location:string) => void},
         encountersActions:Encounters.encountersActions,
         campaignsActions:Campaigns.campaignsActions,
+        charactersActions:Characters.charactersActions,
     }
 
     export type appActions = {
@@ -38,17 +43,19 @@ export namespace App {
 }
 
 const AnimatedEncounters = animationContainer(Encounters);
+const AnimatedCharacters = animationContainer(Characters);
 const AnimatedCampaigns = animationContainer(Campaigns);
 
 @connect(
-    (state:RootState):Pick<App.Props, 'router'|'sidebar'|'encounters'|'forms'|'campaigns'> => ({
+    (state:RootState):Pick<App.Props, 'router'|'sidebar'|'encounters'|'forms'|'campaigns'|'characters'> => ({
         router: state.router,
         sidebar: state.sidebar,
         encounters: state.encounters.all,
         campaigns: state.campaigns.all,
+        characters: state.characters.all,
         forms: state.form,
     }),
-    (dispatch:Dispatch):Pick<App.Props, 'appActions'|'sidebarActions'|'encountersActions'|'campaignsActions'> => ({
+    (dispatch:Dispatch):Pick<App.Props, 'appActions'|'sidebarActions'|'encountersActions'|'campaignsActions'|'charactersActions'> => ({
         appActions: bindActionCreators({
             logout: () => AuthMiddleware.logout(),
         }, dispatch),
@@ -72,13 +79,18 @@ const AnimatedCampaigns = animationContainer(Campaigns);
             addCampaign:(campaign) => CampaignsMiddleware.addCampaign(campaign),
             updateCampaign:(campaign) => CampaignsMiddleware.updateCampaign(campaign),
             setActiveCampaign:(id) => CampaignsMiddleware.setActiveCampaign(id),
-            addCharacter:(character, campaignId) => CampaignsMiddleware.addCharacter(character, campaignId),
+        }, dispatch),
+        charactersActions: bindActionCreators({
+            initCharactersListener:() => CharactersMiddleware.initCharactersListener(),
+            fetchCharacters:() => CharactersMiddleware.fetchCharacters(),
+            addCharacter:(character) => CharactersMiddleware.addCharacter(character),
+            updateCharacter:(character) => CharactersMiddleware.updateCharacter(character),
         }, dispatch),
     }),
 )
 export class App extends React.Component<App.Props & RouteComponentProps<{view:string, id:string}>> {
     public componentDidMount():void {
-        const { sidebarActions, campaignsActions, encountersActions, match } = this.props;
+        const { sidebarActions, campaignsActions, encountersActions, charactersActions, match } = this.props;
 
         if(campaignsActions) {
             campaignsActions.fetchCampaigns();
@@ -88,6 +100,11 @@ export class App extends React.Component<App.Props & RouteComponentProps<{view:s
         if(encountersActions) {
             encountersActions.fetchEncounters();
             encountersActions.initEncountersListener();
+        }
+
+        if(charactersActions) {
+            charactersActions.fetchCharacters();
+            charactersActions.initCharactersListener();
         }
 
         if(!match.params.view && sidebarActions) {
@@ -100,7 +117,9 @@ export class App extends React.Component<App.Props & RouteComponentProps<{view:s
             encountersActions,
             sidebarActions,
             campaignsActions,
+            charactersActions,
             appActions,
+            characters,
             sidebar,
             encounters,
             campaigns,
@@ -114,6 +133,7 @@ export class App extends React.Component<App.Props & RouteComponentProps<{view:s
                     currentSection={ sidebar.currentSection }
                     encounters={ encounters }
                     campaigns={ campaigns }
+                    characters={ characters }
                     showSidebar={ sidebar.showSidebar }
                     menuData={ sidebar.menuData }
                     actions={ { ...sidebarActions, ...encountersActions, ...campaignsActions} }/>
@@ -124,13 +144,23 @@ export class App extends React.Component<App.Props & RouteComponentProps<{view:s
                     <AnimatedEncounters
                         actions={ encountersActions }
                         formData={ forms.add_encounter }
+                        campaigns={ campaigns }
+                        characters={ characters }
                         activeCampaign={ match.params && match.params.id }
                         encounters={ encounters }
                         isMounted={ match.params && match.params.view === 'encounters' }/>
+                    <AnimatedCharacters
+                        actions={ charactersActions }
+                        formData={ forms.add_character }
+                        activeCampaign={ match.params && match.params.id }
+                        characters={ characters }
+                        campaigns={ campaigns }
+                        isMounted={ match.params && match.params.view === 'characters' }/>
                     <AnimatedCampaigns
-                        actions={ { ...campaignsActions, ...sidebarActions, ...encountersActions } }
+                        actions={ { ...campaignsActions, ...sidebarActions, ...encountersActions, ...charactersActions } }
                         campaigns={ campaigns }
                         encounters={ encounters }
+                        characters={ characters }
                         campaignFormData={ forms.add_campaign }
                         encounterFormData={ forms.add_encounter }
                         charactersFormData={ forms.add_character }

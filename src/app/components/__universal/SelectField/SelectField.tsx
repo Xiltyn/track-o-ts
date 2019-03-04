@@ -47,11 +47,9 @@ export const SelectField = (props:SelectField.Props) => {
             busy={ busy }
             placeholder={ placeholder }
             itemComponent={ ItemComponent }
-            valueField='id'
-            textField='label'
             name='select-field'
             data={ data }
-            onChange={ value => input.onChange(value.id) }
+            onChange={ value => input.onChange(value.name) }
         />
 
         { meta.touched && meta.error &&

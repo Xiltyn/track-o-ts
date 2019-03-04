@@ -9,7 +9,7 @@
 
     label {
         position: absolute;
-        top: 10px;
+        top: 9px;
         left: 14px;
 
         font-size: 12px;
@@ -30,23 +30,31 @@
             font-family: $MONTSERRAT;
 
             border-radius: 10px;
-            background: $WHITE;
+            background: transparent;
             border: 1px solid rgba($GREY_TEXT, .1);
             box-shadow: none;
+
+            overflow: hidden;
 
             cursor: pointer;
 
             &:hover {
                 border: 1px solid rgba($GREY_TEXT, .1);
                 box-shadow: none;
+                background: $GREY_MID;
             }
 
             .rw-input {
-                color: rgba($GREY_MID, .7);
+                color: $GREY_LIGHT;
+                font-weight: 600;
             }
         }
 
         &.rw-open {
+            background: $GREY_MID;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+
             .rw-widget-container {
                 position: relative;
 
@@ -72,6 +80,7 @@
         border-top: none;
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
+        background: $GREY_MID;
         box-shadow: none;
 
         .rw-list-option {
@@ -103,7 +112,7 @@
             }
 
             &.rw-state-selected {
-                background: $WHITE;
+                background: $GREY_MID;
 
                 .item-component {
                     background: rgba($PRIMARY, .7);
@@ -116,12 +125,12 @@
 
             &:hover,
             &:hover.rw-state-focus {
-                background: $WHITE;
+                background: $GREY_MID;
                 .item-component {
-                    background: $WHITE;
+                    background: $GREY_MID;
 
                     div {
-                        font-weight: 500;
+                        font-weight: 700;
                         color: rgba($PRIMARY, .7);
                     }
                 }

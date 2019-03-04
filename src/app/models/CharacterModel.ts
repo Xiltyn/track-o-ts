@@ -1,9 +1,10 @@
 export interface ICharacterModel {
-    [ key:string ]:((...args:any) => CharacterModel|undefined)|number|string|CharacterClass|undefined;
+    [ key:string ]:((...args:any) => CharacterModel|boolean|undefined)|number|boolean|string|CharacterClass|ICharacterModel|undefined;
 
-    id?:number;
+    id?:string;
     name:string;
     class?:CharacterClass;
+    campaignId:string;
     hp?:number;
     ac?:number;
 }
@@ -85,12 +86,17 @@ export const classes:{ id:number, name:CharacterClass, label:string }[] = [
     }
 ];
 
-export class CharacterModel implements ICharacterModel {
-    [ key:string ]:((...args:any) => CharacterModel|undefined)|number|string|CharacterClass|undefined;
+export interface CharactersModel {
+    all:Array<CharacterModel>|undefined,
+}
 
-    public id:number = 0;
+export class CharacterModel implements ICharacterModel {
+    [ key:string ]:((...args:any) => CharacterModel|boolean|undefined)|number|boolean|string|CharacterClass|ICharacterModel|undefined;
+
+    id?:string = '';
     public name:string = '';
     public class?:CharacterClass = undefined;
+    public campaignId:string = '';
     public hp?:number = 0;
     public ac?:number = 10;
 
@@ -108,5 +114,17 @@ export class CharacterModel implements ICharacterModel {
         }
 
         return this;
+    };
+
+    public get plainData():ICharacterModel {
+        return {
+            id: this.id,
+            name: this.name,
+            campaignId: this.campaignId,
+            class: this.class,
+            hp: this.hp,
+            ac: this.ac,
+        }
     }
+
 }

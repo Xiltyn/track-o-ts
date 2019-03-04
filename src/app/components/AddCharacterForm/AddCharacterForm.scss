@@ -26,8 +26,18 @@
     }
 
     .character-class {
+        margin-top: 16px;
+
         .rw-dropdown-list-input {
             padding-left: 64px;
+        }
+    }
+
+    .character-campaign {
+        margin-top: 16px;
+
+        .rw-dropdown-list-input {
+            padding-left: 88px;
         }
     }
 
@@ -38,10 +48,11 @@
 
         display: flex;
         align-items: center;
+        justify-content: space-around;
 
         & > div {
             position: relative;
-            width: 50%;
+            width: 150px;
             height: 100%;
 
             display: flex;
@@ -58,8 +69,10 @@
             }
 
             .picker {
-                .rw-state-focus {
-                    box-shadow: none !important;
+                &.rw-state-focus {
+                    .rw-widget-picker {
+                        box-shadow: none;
+                    }
                 }
 
                 .rw-widget-picker {
@@ -70,7 +83,7 @@
 
                     input {
                         padding: 0;
-                        margin: -4px 4px 0;
+                        margin: -4px 4px 0 8px;
 
                         color: $GREY;
                         text-align: left;
@@ -112,6 +125,10 @@
                             border-style: solid;
                             border-width: 0 5px 10px 5px;
                             border-color: transparent transparent $GREY_LIGHT transparent;
+
+                            span {
+                                display: none;
+                            }
 
                             &:nth-of-type(2) {
                                 border-width: 10px 5px 0 5px;

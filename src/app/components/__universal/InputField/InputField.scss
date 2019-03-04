@@ -9,7 +9,7 @@
     color: $GREY_TEXT;
 
     width: 100%;
-    margin-bottom: 32px;
+    margin-top: 32px;
     background-color: transparent;
     box-shadow: 0 0 16px -4px $GREY_DARK;
     //border: 2px solid $GREY_DARK;
@@ -24,9 +24,10 @@
 
     label {
         position: absolute;
-        bottom: -16px;
+        top: -16px;
         left: 0;
 
+        color: $GREY_LIGHT;
         font-size: 12px;
         font-weight: 800;
         text-transform: uppercase;
@@ -49,6 +50,10 @@
         &:active {
             background: $GREY_TEXT;
             color: $GREY_DARK;
+        }
+
+        &::placeholder {
+            color: $GREY_MID;
         }
 
     }
