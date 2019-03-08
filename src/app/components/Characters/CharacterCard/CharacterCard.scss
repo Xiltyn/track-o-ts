@@ -129,6 +129,7 @@
 
                 & > * {
                     fill: $GREY_MID;
+                    transition: all .3s ease-in-out;
                 }
             }
 

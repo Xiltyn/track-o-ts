@@ -1646,7 +1646,7 @@ c24 35 34 57 21 48 -13 -8 -24 -4 -24 9 0 12 17 27 38 33 42 11 82 85 82 155
             </g>
         </svg>,
         fighter: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                      width="198.000000pt" height="300.000000pt" viewBox="0 0 198.000000 300.000000"
+                      width="198.000000pt" height="300.000000pt" viewBox="0 0 198.000000 300.000000" transform="scale(0.9)"
                       preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,300.000000) scale(0.050000,-0.050000)"
                fill="#000000" stroke="none">
@@ -1818,7 +1818,7 @@ c55 -85 -18 -165 -188 -204 -112 -26 -119 -7 -40 109 109 160 169 185 228 95z"/>
         monk: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                    width="900.000000pt" height="1041.000000pt" viewBox="0 0 900.000000 1041.000000" transform="scale(1.1)"
                    preserveAspectRatio="xMidYMid meet">
-            <g transform="translate(0.000000,1041.000000) scale(0.100000,-0.100000)"
+            <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
                fill="#000000" stroke="none">
                 <path d="M4026 8580 c-27 -17 -71 -53 -100 -79 -60 -56 -101 -73 -148 -61 -94
 24 -160 29 -189 14 -38 -19 -37 -41 6 -153 19 -49 35 -102 35 -116 0 -14 14
@@ -1977,7 +1977,7 @@ m628 -590 c82 -68 97 -100 49 -100 -51 0 -141 73 -154 125 -11 44 36 33 105
         paladin: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                       width="176.000000pt" height="300.000000pt" viewBox="0 0 176.000000 300.000000"  transform="scale(.8)"
                       preserveAspectRatio="xMidYMid meet">
-            <g transform="translate(0.000000,300.000000) scale(0.050000,-0.050000)"
+            <g transform="translate(0.000000,310.000000) scale(0.050000,-0.050000)"
                fill="#000000" stroke="none">
                 <path d="M1175 5709 c-41 -40 -75 -82 -74 -95 1 -13 15 -4 32 21 18 25 41 45
 52 45 11 0 9 -13 -5 -30 -20 -24 -20 -30 0 -30 14 0 37 16 52 35 24 32 25 31
@@ -2509,7 +2509,7 @@ m-751 -157 c0 -42 -1 -45 -10 -23 -9 23 -5 70 6 70 3 0 5 -21 4 -47z m527
             </g>
         </svg>,
         rogue: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                    width="450.000000pt" height="900.000000pt" viewBox="0 0 450.000000 900.000000"
+                    width="450.000000pt" height="900.000000pt" viewBox="0 0 450.000000 900.000000" transform="scale(0.8)"
                     preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
                fill="#000000" stroke="none">
@@ -2734,7 +2734,7 @@ m-103 -157 c29 -23 34 -31 29 -55 -4 -20 -1 -30 8 -34 18 -7 3 -58 -23 -77 -9
             </g>
         </svg>,
         wizard: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                     width="537.000000pt" height="900.000000pt" viewBox="0 0 537.000000 900.000000"
+                     width="537.000000pt" height="900.000000pt" viewBox="0 0 537.000000 900.000000" transform="scale(0.85)"
                      preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
                fill="#000000" stroke="none">
@@ -3402,9 +3402,9 @@ c36 -18 66 -38 69 -44 6 -20 -49 -16 -109 9 -64 26 -79 36 -79 54 0 23 51 15
             </g>
         </svg>,
         sorcerer: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                       width="900.000000pt" height="972.000000pt" viewBox="0 0 900.000000 972.000000"
+                       width="900.000000pt" height="972.000000pt" viewBox="0 0 900.000000 972.000000" transform="scale(1.2)"
                        preserveAspectRatio="xMidYMid meet">
-            <g transform="translate(0.000000,972.000000) scale(0.100000,-0.100000)"
+            <g transform="translate(0.000000,850.000000) scale(0.100000,-0.100000)"
                fill="#000000" stroke="none">
                 <path d="M4266 8124 c-42 -41 -51 -64 -26 -64 5 0 25 14 43 30 32 28 40 30
 110 30 68 0 78 -2 88 -22 10 -19 8 -25 -20 -47 -17 -14 -31 -33 -31 -42 0 -8
