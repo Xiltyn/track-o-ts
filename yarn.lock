@@ -127,6 +127,12 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime@^7.3.1":
+  version "7.3.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.3.4.tgz#73d12ba819e365fcf7fd152aed56d6df97d21c83"
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@babel/template@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "http://registry.npmjs.org/@babel/template/-/template-7.0.0-beta.44.tgz#f8832f4fdcee5d59bf515e595fc5106c529b394f"
@@ -321,6 +327,10 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@posthtml/esm/-/esm-1.0.0.tgz#09bcb28a02438dcee22ad1970ca1d85a000ae0cf"
 
+"@tanem/svg-injector@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@tanem/svg-injector/-/svg-injector-2.1.4.tgz#b804f1c78b5179365ae21061f119263acccbeb13"
+
 "@types/body-parser@*":
   version "1.17.0"
   resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.17.0.tgz#9f5c9d9bd04bb54be32d5eb9fc0d8c974e6cf58c"
@@ -462,6 +472,12 @@
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
+
+"@types/react-svg@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-svg/-/react-svg-5.0.0.tgz#32c9b5e987cadff2797468bbee0abd265f44b75c"
+  dependencies:
+    react-svg "*"
 
 "@types/react-widgets@^4.2.0":
   version "4.2.0"
@@ -6954,6 +6970,14 @@ prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
+prop-types@^15.7.2:
+  version "15.7.2"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
+  dependencies:
+    loose-envify "^1.4.0"
+    object-assign "^4.1.1"
+    react-is "^16.8.1"
+
 protobufjs@^5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-5.0.3.tgz#e4dfe9fb67c90b2630d15868249bcc4961467a17"
@@ -7234,6 +7258,10 @@ react-is@^16.5.1, react-is@^16.5.2, react-is@^16.6.0:
   version "16.6.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.0.tgz#456645144581a6e99f6816ae2bd24ee94bdd0c01"
 
+react-is@^16.8.1:
+  version "16.8.4"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.4.tgz#90f336a68c3a29a096a3d648ab80e87ec61482a2"
+
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
@@ -7343,6 +7371,14 @@ react-styleguidist@^8.0.0:
     walkes "^0.2.1"
     webpack-dev-server "^3.1.10"
     webpack-merge "^4.1.4"
+
+react-svg@*, react-svg@^7.2.7:
+  version "7.2.7"
+  resolved "https://registry.yarnpkg.com/react-svg/-/react-svg-7.2.7.tgz#9d263357a676810521d4cca96d767ede9ee5e7dc"
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    "@tanem/svg-injector" "^2.1.4"
+    prop-types "^15.7.2"
 
 react-test-renderer@^16.0.0-0:
   version "16.6.0"

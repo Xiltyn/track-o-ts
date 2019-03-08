@@ -78,7 +78,7 @@ export class Characters extends React.Component<Characters.Props, Characters.Sta
                                 <CharacterCard
                                     id={ character.id }
                                     key={ character.id }
-                                    name={ character.name }
+                                    character={ character }
                                     updateCharacter={ () => {
                                         const updatedCharacter = new CharacterModel(character);
 
