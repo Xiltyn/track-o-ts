@@ -13,6 +13,7 @@ import { FormState } from "redux-form";
 
 import './Characters.scss';
 import { CampaignModel } from "app/models/CampaignModel";
+import { config, Spring } from "react-spring/renderprops";
 
 export namespace Characters {
     export interface Props {
@@ -32,6 +33,7 @@ export namespace Characters {
         initCharactersListener:() => void;
         addCharacter:(character:ICharacterModel) => void;
         updateCharacter:(character:CharacterModel) => void;
+        setCharacterActive:(characterId:string) => void;
     }
 }
 
@@ -75,15 +77,26 @@ export class Characters extends React.Component<Characters.Props, Characters.Sta
                 <div className="characters-container">
                     {
                         this._getRelevantCharacters().sort((a, b) => a.name.localeCompare(b.name)).map(character => (
-                                <CharacterCard
-                                    id={ character.id }
-                                    key={ character.id }
-                                    character={ character }
-                                    updateCharacter={ () => {
-                                        const updatedCharacter = new CharacterModel(character);
-
-                                        actions.updateCharacter(updatedCharacter);
-                                    } }/>
+                            <Spring
+                                key={ character.id }
+                                from={ { opacity: 0 } }
+                                config={ config.slow }
+                                to={ { opacity: 1, z: character.isActive ? 180 : 0 } }>
+                                { ({ z, opacity }) => (
+                                    <CharacterCard
+                                        id={ character.id }
+                                        style={ {
+                                            opacity,
+                                            transform: `rotateY(${z}deg)`,
+                                        } }
+                                        character={ character }
+                                        setActive={ actions.setCharacterActive }
+                                        updateCharacter={ () => {
+                                            const updatedCharacter = new CharacterModel(character);
+                                            actions.updateCharacter(updatedCharacter);
+                                        } }/>
+                                ) }
+                            </Spring>
                             )
                         )
                     }

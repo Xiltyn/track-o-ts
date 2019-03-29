@@ -7307,6 +7307,12 @@ react-router@^4.2.0, react-router@^4.3.1:
     prop-types "^15.6.1"
     warning "^4.0.1"
 
+react-spring@^8.0.14:
+  version "8.0.14"
+  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-8.0.14.tgz#d6162f90dfca259f7f0cc42bca4977a84917901a"
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+
 react-styleguidist@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/react-styleguidist/-/react-styleguidist-8.0.0.tgz#73013db0f87aabaccacb3f5f224cc6e74adf247c"

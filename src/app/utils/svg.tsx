@@ -586,11 +586,12 @@ export default {
     },
     classes: {
         druid: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                 width="591.000000pt" height="900.000000pt" viewBox="0 0 591.000000 900.000000" transform="scale(0.85)"
-                 preserveAspectRatio="xMidYMid meet">
-                <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
-                   fill="#000000" stroke="none">
-                    <path d="M2080 8950 c-12 -8 -12 -13 3 -44 18 -39 46 -59 145 -107 64 -31 86
+                    width="591.000000pt" height="900.000000pt" viewBox="0 0 591.000000 900.000000"
+                    transform="scale(0.85)"
+                    preserveAspectRatio="xMidYMid meet">
+            <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
+               fill="#000000" stroke="none">
+                <path d="M2080 8950 c-12 -8 -12 -13 3 -44 18 -39 46 -59 145 -107 64 -31 86
 -54 101 -105 13 -46 -3 -70 -62 -98 -108 -52 -114 -92 -11 -81 l64 7 35 -37
 c19 -20 35 -44 35 -53 0 -9 14 -41 30 -71 34 -61 37 -89 15 -131 -20 -39 -58
 -245 -75 -405 -18 -176 -47 -255 -140 -383 -29 -40 -32 -42 -83 -42 -31 0 -61
@@ -702,12 +703,13 @@ m72 -89 c0 -19 -28 -30 -42 -16 -6 6 -8 17 -5 26 7 18 47 10 47 -10z m493
 105 134 29 54 49 103 49 123 0 35 28 92 79 162 30 41 57 107 48 116 -2 2 -16
 0 -30 -5 -20 -8 -28 -7 -34 4 -12 20 2 181 22 250 9 33 21 82 27 110 15 73 44
 124 71 125 5 0 26 -17 46 -37z"/>
-                    <path d="M4166 544 c-3 -9 -4 -19 -1 -23 2 -5 5 -33 6 -63 l2 -55 48 23 c44
+                <path d="M4166 544 c-3 -9 -4 -19 -1 -23 2 -5 5 -33 6 -63 l2 -55 48 23 c44
 22 69 48 69 72 0 12 -83 62 -103 62 -8 0 -18 -7 -21 -16z"/>
-                </g>
-            </svg>,
+            </g>
+        </svg>,
         cleric: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                     width="900.000000pt" height="1098.000000pt" viewBox="0 0 900.000000 1098.000000" transform="scale(1.2)"
+                     width="900.000000pt" height="1098.000000pt" viewBox="0 0 900.000000 1098.000000"
+                     transform="scale(1.2)"
                      preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,1098.000000) scale(0.100000,-0.100000)"
                fill="#000000" stroke="none">
@@ -1452,7 +1454,8 @@ c-2 -103 -23 -276 -36 -291 -6 -7 -17 -13 -24 -13 -18 0 -20 154 -3 197 6 15
             </g>
         </svg>,
         barbarian: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                        width="140.000000pt" height="300.000000pt" viewBox="0 0 140.000000 300.000000"  transform="scale(.9)"
+                        width="140.000000pt" height="300.000000pt" viewBox="0 0 140.000000 300.000000"
+                        transform="scale(.9)"
                         preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,300.000000) scale(0.050000,-0.050000)"
                fill="#000000" stroke="none">
@@ -1646,7 +1649,8 @@ c24 35 34 57 21 48 -13 -8 -24 -4 -24 9 0 12 17 27 38 33 42 11 82 85 82 155
             </g>
         </svg>,
         fighter: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                      width="198.000000pt" height="300.000000pt" viewBox="0 0 198.000000 300.000000" transform="scale(0.9)"
+                      width="198.000000pt" height="300.000000pt" viewBox="0 0 198.000000 300.000000"
+                      transform="scale(0.9)"
                       preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,300.000000) scale(0.050000,-0.050000)"
                fill="#000000" stroke="none">
@@ -1816,7 +1820,8 @@ c55 -85 -18 -165 -188 -204 -112 -26 -119 -7 -40 109 109 160 169 185 228 95z"/>
             </g>
         </svg>,
         monk: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                   width="900.000000pt" height="1041.000000pt" viewBox="0 0 900.000000 1041.000000" transform="scale(1.1)"
+                   width="900.000000pt" height="1041.000000pt" viewBox="0 0 900.000000 1041.000000"
+                   transform="scale(1.1)"
                    preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
                fill="#000000" stroke="none">
@@ -1975,7 +1980,8 @@ m628 -590 c82 -68 97 -100 49 -100 -51 0 -141 73 -154 125 -11 44 36 33 105
             </g>
         </svg>,
         paladin: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                      width="176.000000pt" height="300.000000pt" viewBox="0 0 176.000000 300.000000"  transform="scale(.8)"
+                      width="176.000000pt" height="300.000000pt" viewBox="0 0 176.000000 300.000000"
+                      transform="scale(.8)"
                       preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,310.000000) scale(0.050000,-0.050000)"
                fill="#000000" stroke="none">
@@ -2252,7 +2258,8 @@ m-366 -19 c28 -47 76 -125 108 -174 143 -216 194 -302 185 -312 -21 -21 -54
             </g>
         </svg>,
         ranger: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                     width="756.000000pt" height="900.000000pt" viewBox="0 0 756.000000 900.000000" transform="scale(1.1)"
+                     width="756.000000pt" height="900.000000pt" viewBox="0 0 756.000000 900.000000"
+                     transform="scale(1.1)"
                      preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
                fill="#000000" stroke="none">
@@ -2509,7 +2516,8 @@ m-751 -157 c0 -42 -1 -45 -10 -23 -9 23 -5 70 6 70 3 0 5 -21 4 -47z m527
             </g>
         </svg>,
         rogue: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                    width="450.000000pt" height="900.000000pt" viewBox="0 0 450.000000 900.000000" transform="scale(0.8)"
+                    width="450.000000pt" height="900.000000pt" viewBox="0 0 450.000000 900.000000"
+                    transform="scale(0.8)"
                     preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
                fill="#000000" stroke="none">
@@ -2734,7 +2742,8 @@ m-103 -157 c29 -23 34 -31 29 -55 -4 -20 -1 -30 8 -34 18 -7 3 -58 -23 -77 -9
             </g>
         </svg>,
         wizard: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                     width="537.000000pt" height="900.000000pt" viewBox="0 0 537.000000 900.000000" transform="scale(0.85)"
+                     width="537.000000pt" height="900.000000pt" viewBox="0 0 537.000000 900.000000"
+                     transform="scale(0.85)"
                      preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
                fill="#000000" stroke="none">
@@ -3118,7 +3127,8 @@ m68 -310 c2 -32 9 -66 16 -74 18 -20 41 -88 33 -96 -21 -21 -77 67 -77 122 0
             </g>
         </svg>,
         warlock: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                      width="654.000000pt" height="900.000000pt" viewBox="0 0 654.000000 900.000000" transform="scale(0.95)"
+                      width="654.000000pt" height="900.000000pt" viewBox="0 0 654.000000 900.000000"
+                      transform="scale(0.95)"
                       preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
                fill="#000000" stroke="none">
@@ -3402,7 +3412,8 @@ c36 -18 66 -38 69 -44 6 -20 -49 -16 -109 9 -64 26 -79 36 -79 54 0 23 51 15
             </g>
         </svg>,
         sorcerer: <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                       width="900.000000pt" height="972.000000pt" viewBox="0 0 900.000000 972.000000" transform="scale(1.2)"
+                       width="900.000000pt" height="972.000000pt" viewBox="0 0 900.000000 972.000000"
+                       transform="scale(1.2)"
                        preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,850.000000) scale(0.100000,-0.100000)"
                fill="#000000" stroke="none">

@@ -1,10 +1,12 @@
 export interface ICharacterModel {
-    [ key:string ]:((...args:any) => CharacterModel|boolean|undefined)|number|boolean|string|CharacterClass|ICharacterModel|undefined;
+    [ key:string ]:((...args:any) => CharacterModel|boolean|undefined)|number|boolean|string|CharacterClass|ICharacterModel|{[key:string]:'owner'|'dm'|'player'}|undefined;
 
     id?:string;
     name:string;
     class?:CharacterClass;
     campaignId:string;
+    isActive?:boolean;
+    roles?:{[key:string]:'owner'|'dm'|'player'};
     hp?:number;
     ac?:number;
 }
@@ -22,6 +24,56 @@ export type CharacterClass =
     |'fighter'
     |'monk'
     |'druid';
+
+export interface CharactersModel {
+    all:Array<CharacterModel>|undefined,
+}
+
+export class CharacterModel implements ICharacterModel {
+    [ key:string ]:((...args:any) => CharacterModel|boolean|undefined)|number|boolean|string|CharacterClass|ICharacterModel|{[key:string]:'owner'|'dm'|'player'}|undefined;
+
+    id?:string = '';
+    public name:string = '';
+    public class?:CharacterClass = undefined;
+    public isActive?:boolean = false;
+    public roles:{[key:string]:'owner'|'dm'|'player'} = {};
+    public campaignId:string = '';
+    public hp?:number = 0;
+    public ac?:number = 10;
+
+    public constructor(data:ICharacterModel) {
+        this.assignData(data);
+    };
+
+    private assignData = (data:ICharacterModel):CharacterModel => {
+        const thisKeys = Object.keys(this);
+
+        for (let key of thisKeys) {
+            if (data[ key ]) {
+                this[ key ] = data[ key ];
+            }
+        }
+
+        return this;
+    };
+
+    public get plainData():ICharacterModel {
+        return {
+            id: this.id,
+            name: this.name,
+            campaignId: this.campaignId,
+            isActive: this.isActive,
+            roles: this.roles,
+            class: this.class,
+            hp: this.hp,
+            ac: this.ac,
+        }
+    }
+
+    public set setActive(isActive:boolean) {
+        this.isActive = isActive;
+    }
+}
 
 export const classes:{ id:number, name:CharacterClass, label:string }[] = [
     {
@@ -85,46 +137,3 @@ export const classes:{ id:number, name:CharacterClass, label:string }[] = [
         label: 'Druid',
     }
 ];
-
-export interface CharactersModel {
-    all:Array<CharacterModel>|undefined,
-}
-
-export class CharacterModel implements ICharacterModel {
-    [ key:string ]:((...args:any) => CharacterModel|boolean|undefined)|number|boolean|string|CharacterClass|ICharacterModel|undefined;
-
-    id?:string = '';
-    public name:string = '';
-    public class?:CharacterClass = undefined;
-    public campaignId:string = '';
-    public hp?:number = 0;
-    public ac?:number = 10;
-
-    public constructor(data:ICharacterModel) {
-        this.assignData(data);
-    };
-
-    private assignData = (data:ICharacterModel):CharacterModel => {
-        const thisKeys = Object.keys(this);
-
-        for (let key of thisKeys) {
-            if (data[ key ]) {
-                this[ key ] = data[ key ];
-            }
-        }
-
-        return this;
-    };
-
-    public get plainData():ICharacterModel {
-        return {
-            id: this.id,
-            name: this.name,
-            campaignId: this.campaignId,
-            class: this.class,
-            hp: this.hp,
-            ac: this.ac,
-        }
-    }
-
-}

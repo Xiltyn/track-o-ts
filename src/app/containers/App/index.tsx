@@ -85,6 +85,7 @@ const AnimatedCampaigns = animationContainer(Campaigns);
             fetchCharacters:() => CharactersMiddleware.fetchCharacters(),
             addCharacter:(character) => CharactersMiddleware.addCharacter(character),
             updateCharacter:(character) => CharactersMiddleware.updateCharacter(character),
+            setCharacterActive:(characterId) => CharactersMiddleware.setCharacterActive(characterId),
         }, dispatch),
     }),
 )

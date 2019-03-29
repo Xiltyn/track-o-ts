@@ -82,6 +82,7 @@
         height: 60%;
 
         transform: translate(-50%, -50%);
+        transition: all .4s ease-in-out;
 
         z-index: 1;
 
@@ -115,6 +116,7 @@
         justify-content: space-around;
 
         z-index: 1;
+        transition: all .4s ease-in-out;
 
         .row {
             width: 50%;
@@ -142,7 +144,6 @@
         }
     }
 
-    &.active,
     &:hover {
         border: solid 1px rgba($SECONDARY, .8);
         box-shadow: 0 0 32px -8px rgba(#000, 1);
@@ -195,6 +196,18 @@
                     color: $GREY_DARK;
                 }
             }
+        }
+    }
+
+    &.active {
+        .meta {
+            opacity: 0;
+        }
+        .class {
+            opacity: 0;
+        }
+        .stats {
+            opacity: 0;
         }
     }
 }
