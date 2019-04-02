@@ -115,7 +115,7 @@
         height: auto;
         width: calc(100% - 40px);
 
-        &.green {
+        &.yellow {
             background: $GRADIENT_GREEN;
             &:after {
                 border-color: transparent transparent transparent $SOLID_FROM_GREEN;

@@ -67,7 +67,5 @@ export const getMockEncounters = ():Array<EncounterModel> => {
 
     }
 
-    console.log(result);
-
     return result;
 };

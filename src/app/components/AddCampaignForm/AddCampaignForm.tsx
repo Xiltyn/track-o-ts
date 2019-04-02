@@ -107,7 +107,6 @@ class AddCampaignFormComponent extends React.Component<AddCampaignFormComponent.
                         onSubmit={ (evt:Event) => {
                             evt.preventDefault();
                             closeModal();
-                            console.log(this.props.formData);
                         } }
                         isBusy={ false }/>
                     <Button

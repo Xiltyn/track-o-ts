@@ -12,7 +12,21 @@
     box-sizing: border-box;
 
     .logo {
-        padding-bottom: 48px;
+
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .logo-o {
+            height: 34px;
+
+            img {
+                height: 100%;
+                width: auto;
+            }
+        }
+
     }
 
     .signin-form {

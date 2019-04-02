@@ -26,7 +26,8 @@ export type CharacterClass =
     |'druid';
 
 export interface CharactersModel {
-    all:Array<CharacterModel>|undefined,
+    all:Array<CharacterModel>|undefined;
+    status: 'idle'|'busy'|'error';
 }
 
 export class CharacterModel implements ICharacterModel {
@@ -45,7 +46,7 @@ export class CharacterModel implements ICharacterModel {
         this.assignData(data);
     };
 
-    private assignData = (data:ICharacterModel):CharacterModel => {
+    public assignData = (data:ICharacterModel):CharacterModel => {
         const thisKeys = Object.keys(this);
 
         for (let key of thisKeys) {
@@ -67,6 +68,16 @@ export class CharacterModel implements ICharacterModel {
             class: this.class,
             hp: this.hp,
             ac: this.ac,
+        }
+    }
+
+    public get formData():{[key:string]:any} {
+        return {
+            character_name: this.name,
+            character_campaign: this.campaignId,
+            character_class: this.class,
+            character_hp: this.hp,
+            character_ac: this.ac,
         }
     }
 

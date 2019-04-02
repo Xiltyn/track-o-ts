@@ -5,6 +5,7 @@ import { SidebarModel } from "app/models/SidebarModel";
 import { EncountersModel } from "app/models/EncounterModel";
 import { CampaignsModel } from "app/models/CampaignModel";
 import { CharactersModel } from "app/models/CharacterModel";
+import { MonstersModel } from "app/models/MonsterModel";
 
 export interface RootState {
     router:RouterState,
@@ -14,6 +15,7 @@ export interface RootState {
     encounters:EncountersModel,
     campaigns:CampaignsModel,
     characters:CharactersModel,
+    monsters:MonstersModel,
 }
 
 export namespace RootState {
@@ -22,4 +24,5 @@ export namespace RootState {
     export type EncounterState = EncountersModel;
     export type CampaignsState = CampaignsModel;
     export type CharactersState = CharactersModel;
+    export type MonstersState = MonstersModel;
 }

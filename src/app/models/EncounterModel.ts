@@ -59,12 +59,10 @@ export class EncounterModel {
     };
 
     public setActive():boolean {
-        console.log('Encounter isActive :: ', this.isActive);
         return this.isActive = true;
     }
 
     public setInactive():boolean {
-        console.log('Encounter isActive :: ', this.isActive);
         return this.isActive = false;
     }
 
@@ -73,8 +71,6 @@ export class EncounterModel {
         const itemToEdit = participants.find(item => item.id === itemId);
 
         if(itemToEdit) itemToEdit.statuses = [ ...itemToEdit.statuses, condition ];
-
-        console.log('==> addStatus result :: ', itemToEdit);
 
         return participants;
     }

@@ -35,7 +35,7 @@ const ItemComponent = (props:{[key:string]: any, item: SelectField.Data}) => {
 export const SelectField = (props:SelectField.Props) => {
     const { label, input, busy, placeholder, data, meta, type } = props;
 
-    return data && <div className={ `select-field ${'select-field--' + type || selectType.PRIMARY}`  }>
+    return data ? <div className={ `select-field ${'select-field--' + type || selectType.PRIMARY}`  }>
         {
             label && <label>
                 { label }
@@ -54,5 +54,5 @@ export const SelectField = (props:SelectField.Props) => {
 
         { meta.touched && meta.error &&
           <span className="error">{ meta.error }</span> }
-    </div>;
+    </div> : <React.Fragment/>;
 };

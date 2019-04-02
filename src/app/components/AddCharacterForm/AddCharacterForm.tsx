@@ -7,10 +7,11 @@ import './AddCharacterForm.scss';
 import Button from "../__universal/Button/Button";
 import { validate } from "./AddCharacterForm.validation";
 import NumberPicker from 'react-widgets/lib/NumberPicker';
-import { classes, ICharacterModel } from "app/models/CharacterModel";
+import { CharacterModel, classes, ICharacterModel } from "app/models/CharacterModel";
 import { SelectField } from "app/components/__universal/SelectField/SelectField";
 import svg from "app/utils/svg";
 import { CampaignModel } from "app/models/CampaignModel";
+import { CharactersMiddleware } from "app/modules/characters/middleware";
 
 const simpleNumberLocalizer = require('react-widgets-simple-number');
 
@@ -22,12 +23,15 @@ export namespace AddCharacterFormComponent {
         formData:FormState;
         currentCampaign?:string;
         campaigns?:CampaignModel[];
-        addCharacter:(character:ICharacterModel) => void;
+        currentCharacter?:CharacterModel;
+        addCharacter?:(character:ICharacterModel) => void;
+        editCharacter?:(character:CharacterModel) => void;
     }
 }
 
 const renderNumberPicker = (props:any) => <NumberPicker
     inputProps={ props.input }
+    value={ props.input.value }
     onChange={ props.input.onChange }
     { ...props }
 />;
@@ -37,20 +41,36 @@ class AddCharacterFormComponent
     extends React.Component<AddCharacterFormComponent.Props&InjectedFormProps<{}, AddCharacterFormComponent.Props>> {
 
     private submitNew = () => {
-        const { formData: { values }, addCharacter, currentCampaign, campaigns } = this.props;
+        const { formData: { values }, addCharacter, currentCampaign, campaigns, editCharacter, currentCharacter } = this.props;
         const currentCampaignObject = (campaigns && values) && campaigns.find(camp => camp.name === values.character_campaign);
 
-        if (values && (values.character_name)) {
-            const payload:ICharacterModel = {
-                name: values.character_name,
-                class: values.character_class,
-                ac: values.character_ac || 10,
-                hp: values.character_hp || 10,
-                campaignId: currentCampaign || currentCampaignObject && currentCampaignObject.id || '',
-            };
+        if(addCharacter) {
+            if (values && values.character_name) {
+                const payload:ICharacterModel = {
+                    name: values.character_name,
+                    class: values.character_class,
+                    ac: values.character_ac || 10,
+                    hp: values.character_hp || 10,
+                    campaignId: currentCampaign || currentCampaignObject && currentCampaignObject.id || '',
+                };
 
-            addCharacter(payload);
+                addCharacter(payload);
+            }
+        } else if (editCharacter && currentCharacter) {
+            if (values && values.character_name) {
+                const updated = new CharacterModel(currentCharacter);
+                const payload:CharacterModel = updated.assignData({
+                    name: values.character_name,
+                    class: values.character_class,
+                    ac: values.character_ac || 10,
+                    hp: values.character_hp || 10,
+                    campaignId: currentCampaignObject && currentCampaignObject.id || updated.campaignId,
+                });
+
+                CharactersMiddleware.updateCharacter(payload);
+            }
         }
+
     };
 
     protected _getCampaignSelectData = () => {
@@ -81,25 +101,28 @@ class AddCharacterFormComponent
                         label='Name'
                         placeholder='Drew Sallybottom'/>
                 </div>
-                {
-                    !currentCampaign &&
+                <div className='mid'>
+                    {
+                        !currentCampaign &&
                         <div className="character-campaign">
                             <Field
                                 name="character_campaign"
                                 placeholder="Select Character's Campaign"
-                                label="Character campaign"
+                                label="Campaign"
                                 data={ this._getCampaignSelectData() }
                                 component={ SelectField as any }/>
                         </div>
-                }
-                <div className="character-class">
-                    <Field
-                        name="character_class"
-                        placeholder="Select Character Class"
-                        label="Character class"
-                        data={ classes }
-                        component={ SelectField as any }/>
+                    }
+                    <div className="character-class">
+                        <Field
+                            name="character_class"
+                            placeholder="Select Character Class"
+                            label="Character class"
+                            data={ classes }
+                            component={ SelectField as any }/>
+                    </div>
                 </div>
+
                 <div className="character-stats">
                     <div className="hit-points">
                         { svg.hp }
@@ -107,7 +130,7 @@ class AddCharacterFormComponent
                             className="picker character-hp"
                             name="character_hp"
                             component={ renderNumberPicker }
-                            defaultValue={ 10 }
+                            //defaultValue={ 10 }
                             min={ 1 }
                             max={ 300 }
                             label='Armor Class'/>
@@ -118,7 +141,7 @@ class AddCharacterFormComponent
                             className="picker character-ac"
                             name="character_ac"
                             component={ renderNumberPicker }
-                            defaultValue={ 10 }
+                            //defaultValue={ 10 }
                             min={ 1 }
                             max={ 35 }
                             label='Armor Class'/>
@@ -130,7 +153,6 @@ class AddCharacterFormComponent
                         onSubmit={ (evt:Event) => {
                             evt.preventDefault();
                             closeModal();
-                            console.log(this.props.formData);
                         } }
                         isBusy={ false }/>
                     <Button

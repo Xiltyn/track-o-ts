@@ -21,7 +21,6 @@ export class CharactersMiddleware {
                     id: snapshot.id,
                 })));
 
-                console.log(payload);
                 dispatch(CharactersActions.setCharacters({
                     all: payload,
                 }))
@@ -39,12 +38,29 @@ export class CharactersMiddleware {
         firebaseDb.collection('characters').where(`roles.${ uid }`, '==', 'owner').onSnapshot((snapshot) => {
             let payload = getState().characters.all;
 
-            snapshot.forEach(character => {
-                console.log('character_id', character.id);
-                if (payload) payload = [ ...payload.filter(el => el.id !== character.id), new CharacterModel({
-                    ...character.data() as ICharacterModel,
-                    id: character.id,
-                }) ];
+            snapshot.docChanges().forEach(change => {
+                if (change.type === 'added') {
+                    if (payload) {
+                        payload = [ ...payload, new CharacterModel({
+                            ...change.doc.data() as ICharacterModel,
+                            id: change.doc.id,
+                        })]
+                    } else {
+                        payload = [ new CharacterModel({
+                            ...change.doc.data() as ICharacterModel,
+                            id: change.doc.id,
+                        }) ]
+                    }
+                } else if (change.type === 'modified') {
+                    if (payload) payload = [ ...payload.filter(el => el.id !== change.doc.id), new CharacterModel({
+                        ...change.doc.data() as ICharacterModel,
+                        id: change.doc.id,
+                    }) ];
+                } else if (change.type === 'removed') {
+                    if (payload) payload = payload.filter(chara => chara.id !== change.doc.id);
+                }
+
+
             });
 
             dispatch(CharactersActions.setCharacters({
@@ -67,8 +83,6 @@ export class CharactersMiddleware {
                 const newChara = new CharacterModel(characterToUpdate);
                 newChara.setActive = !newChara.isActive;
 
-                console.log(newChara);
-
                 payload.push(newChara);
                 CharactersMiddleware.updateCharacter(newChara);
             };
@@ -77,8 +91,6 @@ export class CharactersMiddleware {
                 const newChara = new CharacterModel(activeCharacter);
                 newChara.setActive = false;
 
-                console.log(newChara);
-
                 payload.push(newChara);
                 CharactersMiddleware.updateCharacter(newChara);
             }
@@ -86,7 +98,6 @@ export class CharactersMiddleware {
     };
 
     static updateCharacter = (updatedCharacter:CharacterModel) => {
-
         firebaseDb.collection('characters').doc(updatedCharacter.id).set(updatedCharacter.plainData).then()
             .catch(err => console.log(err));
     };
@@ -94,8 +105,6 @@ export class CharactersMiddleware {
     static addCharacter = (character:ICharacterModel) => (dispatch:Dispatch, getState:() => RootState) => {
         const user = getState().auth.user;
         const uid = user && user.uid;
-
-        console.log('addCharacter payload :: ', character);
 
         if (uid) {
             firebaseDb.collection('characters').add({
@@ -105,5 +114,16 @@ export class CharactersMiddleware {
                 }
             })
         }
+    };
+
+    static removeCharacter = (characterId:string) => (dispatch:Dispatch) => {
+        dispatch(CharactersActions.setStatus({status:'busy'}));
+        firebaseDb.collection('characters').doc(characterId).delete().then(() => {
+            dispatch(CharactersActions.setStatus({status:'idle'}));
+        })
+            .catch(err => {
+                console.log(err);
+                dispatch(CharactersActions.setStatus({status:'error'}));
+            });
     }
 }

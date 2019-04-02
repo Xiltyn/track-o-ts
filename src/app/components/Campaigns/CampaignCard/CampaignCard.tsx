@@ -8,7 +8,6 @@ import Button from "app/components/__universal/Button/Button";
 import { EncounterModel } from "app/models/EncounterModel";
 import svg from "app/utils/svg";
 import { CharacterModel } from "app/models/CharacterModel";
-import CampaignsMiddleware from "app/modules/campaigns/middleware";
 
 export namespace CampaignCard {
 
@@ -19,6 +18,7 @@ export namespace CampaignCard {
         openAddEncounterModal:() => void;
         openAddCharacterModal:() => void;
         updateCampaign:(campaign:CampaignModel) => void;
+        removeCharacter:(characterId:string) => void;
         onClick:(id:string) => void;
     }
 
@@ -34,11 +34,12 @@ export class CampaignCard extends React.Component<CampaignCard.Props, CampaignCa
         activeCondition: null,
     };
 
-    private handleRemoveCharacter = (campaign:CampaignModel, character:CharacterModel) => {
-        const newCampaign = new CampaignModel(campaign);
-        newCampaign.removeCharacter(character.name);
+    private handleRemoveCharacter = (character:CharacterModel) => {
+        const { removeCharacter } = this.props;
 
-        CampaignsMiddleware.updateCampaign(newCampaign);
+        if(character.id) {
+            removeCharacter(character.id);
+        }
     };
 
     public render() {
@@ -94,12 +95,12 @@ export class CampaignCard extends React.Component<CampaignCard.Props, CampaignCa
                                         <div className='row'>{ svg.ac } <span>{ chara.ac }</span></div>
                                         <div className='row'>{ svg.hp } <span>{ chara.hp }</span></div>
                                     </div>
-                                    <Button onSubmit={ () => this.handleRemoveCharacter(this.props.campaign, chara) } label={ svg.return }/>
+                                    <Button onSubmit={ () => this.handleRemoveCharacter(chara) } label={ svg.return }/>
                                 </div>) :
                             <span>Assign PCs to your { name } campaign!</span>
                     }
                     <Button
-                        label="Assign"
+                        label="Add New"
                         onSubmit={ openAddCharacterModal }/>
                 </div>
                 <div className="action-block campaign-players">

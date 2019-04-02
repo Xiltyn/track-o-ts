@@ -8,7 +8,6 @@ export const API = {
             if(currentUser !== null) {
                 return currentUser.getIdToken(true).then((idToken) => {
                     const bearer = `Bearer ${idToken}`;
-                    console.log(bearer);
 
                     if(idToken) axios.post('https://us-central1-track-o-aa053.cloudfunctions.net/validatedRequest/campaigns',{
                         name: 'test camp',

@@ -35,8 +35,6 @@ export class PrivateRoute extends React.Component<any|PrivateRoute.Props> {
             ...rest
         } = this.props;
 
-        console.log('isAuthenticated', isAuthenticated);
-
         return (
             <Route { ...rest } render={ (props:any) => (
                 isBusy

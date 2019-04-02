@@ -31,6 +31,7 @@ export namespace Characters {
     export type charactersActions = {
         fetchCharacters:() => void;
         initCharactersListener:() => void;
+        removeCharacter:(characterId:string) => void;
         addCharacter:(character:ICharacterModel) => void;
         updateCharacter:(character:CharacterModel) => void;
         setCharacterActive:(characterId:string) => void;
@@ -81,20 +82,22 @@ export class Characters extends React.Component<Characters.Props, Characters.Sta
                                 key={ character.id }
                                 from={ { opacity: 0 } }
                                 config={ config.slow }
-                                to={ { opacity: 1, z: character.isActive ? 180 : 0 } }>
-                                { ({ z, opacity }) => (
+                                to={ {
+                                    opacity: 1,
+                                    y: character.isActive ? 180 : 0,
+                                } }>
+                                { ({ y, opacity }) => (
                                     <CharacterCard
                                         id={ character.id }
                                         style={ {
                                             opacity,
-                                            transform: `rotateY(${z}deg)`,
+                                            transform: `rotateY(${y}deg)`,
                                         } }
                                         character={ character }
+                                        campaigns={ campaigns }
+                                        formData={ formData }
                                         setActive={ actions.setCharacterActive }
-                                        updateCharacter={ () => {
-                                            const updatedCharacter = new CharacterModel(character);
-                                            actions.updateCharacter(updatedCharacter);
-                                        } }/>
+                                        updateCharacter={ actions.updateCharacter }/>
                                 ) }
                             </Spring>
                             )

@@ -28,7 +28,6 @@ export class ConditionsPicker extends React.Component<ConditionsPicker.Props, Co
     handleConditionClick = (condition:ConditionModel) => {
         const { dispatchAction } = this.props;
 
-        console.log(this.state.activeCondition);
         this.setState({
             activeCondition: condition.id,
         });

@@ -24,7 +24,6 @@
             }
         }
     }
-
     .character-class {
         margin-top: 16px;
 
@@ -32,15 +31,14 @@
             padding-left: 64px;
         }
     }
-
     .character-campaign {
         margin-top: 16px;
 
         .rw-dropdown-list-input {
-            padding-left: 88px;
+            padding-left: 32px;
+            text-transform: capitalize;
         }
     }
-
     .character-stats {
         position: relative;
         width: 100%;
@@ -139,5 +137,10 @@
                 }
             }
         }
+    }
+    .modal-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
     }
 }

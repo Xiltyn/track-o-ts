@@ -20,6 +20,7 @@ export namespace SidebarComponent {
         campaigns?: CampaignModel[],
         characters?: CharacterModel[],
         encounters?: EncounterModel[],
+        monsters?: CharacterModel[],
         showSidebar: boolean,
     }
 

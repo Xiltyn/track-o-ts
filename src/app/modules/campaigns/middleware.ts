@@ -49,8 +49,6 @@ export default class CampaignsMiddleware {
         const user = getState().auth.user;
         const uid = user && user.uid;
 
-        console.log('addCampaign payload :: ', campaign);
-
         if(uid) {
             firebaseDb.collection('campaigns').add({
                 ...campaign,

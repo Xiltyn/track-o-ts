@@ -27,7 +27,6 @@ export class EncountersMiddleware {
                     id: snapshot.id,
                 })));
 
-                console.log(payload);
                 dispatch(EncountersActions.setEncounters({
                     all: payload,
                 }))
@@ -46,7 +45,6 @@ export class EncountersMiddleware {
             let payload = getState().encounters.all;
 
             snapshot.forEach(encounter => {
-                console.log('encounter_id', encounter.id);
                 if(payload) payload = [ ...payload.filter(el => el.id !== encounter.id), new EncounterModel({
                     ...encounter.data() as any,
                     id: encounter.id,
@@ -75,7 +73,6 @@ export class EncountersMiddleware {
     };
 
     static updateEncounter = (updatedEncounter:EncounterModel) => (dispatch:Dispatch) => {
-        console.log(updatedEncounter);
         firebaseDb.collection('encounters').doc(updatedEncounter.id).set(updatedEncounter.plainData).then().catch(err => console.log(err));
     };
 
@@ -128,8 +125,6 @@ export class EncountersMiddleware {
     static addEncounter = (encounter:EncounterModelProps) => (dispatch:Dispatch, getState:() => RootState) => {
         const user = getState().auth.user;
         const uid = user && user.uid;
-
-        console.log('addEncounter payload :: ', encounter);
 
         if(uid) {
             firebaseDb.collection('encounters').add({

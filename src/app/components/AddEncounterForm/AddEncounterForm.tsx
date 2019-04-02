@@ -121,8 +121,6 @@ class AddEncounterFormComponent
             camp => camp.name === (formData && formData.values && formData.values.encounter_campaign) || camp.id === currentCampaign);
         const selectedCampaignId = selectedCampaign && selectedCampaign.id;
 
-        console.log(characters);
-
         return (
             <Form
                 className="add-encounter-form"
@@ -170,7 +168,6 @@ class AddEncounterFormComponent
                         onSubmit={ (evt:Event) => {
                             evt.preventDefault();
                             closeModal();
-                            console.log(this.props.formData);
                         } }
                         isBusy={ false }/>
                     <Button

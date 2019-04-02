@@ -48,7 +48,7 @@ export class InputField extends React.Component<InputField.Props, InputField.Sta
 
         return(
             <div
-                className={ `input-container ${ isActive ? 'active' : '' }` }
+                className={ `input-container${ isActive ? ' active' : '' }` }
                 onMouseEnter={ () => this.setState({ isActive: true }) }
                 onMouseLeave={ () => this.setState({ isActive: false }) }>
                 {

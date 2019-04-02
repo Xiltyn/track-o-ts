@@ -86,6 +86,7 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
                                     openAddEncounterModal={ () => this.setState({ showAddEncounterModal: true, currentCampaign: campaign.id }) }
                                     openAddCharacterModal={ () => this.setState({ showAddCharacterModal: true, currentCampaign: campaign.id }) }
                                     encounters={ encounters }
+                                    removeCharacter={ actions.removeCharacter }
                                     characters={ characters.filter(chara => chara.campaignId === campaign.id) }
                                     onClick={ () => actions.historyPush(`/encounters/${campaign.id}`) }
                                     campaign={ campaign }

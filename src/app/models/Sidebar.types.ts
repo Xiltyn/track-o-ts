@@ -9,4 +9,4 @@ export type sidebarMenuElement = {
     component:ComponentClass<any>|StatelessComponent<any>
 };
 
-export type sidebarSections = 'campaigns'|'characters'|'encounters'|null;
+export type sidebarSections = 'campaigns'|'characters'|'encounters'|'monsters'|null;

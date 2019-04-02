@@ -2,18 +2,18 @@
 
 .btn {
     position: relative;
-    padding: 8px 20px;
+    padding: 6px 20px;
     margin-top: 24px;
 
     color: $GREY_TEXT;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     font-family: $MONTSERRAT;
     letter-spacing: 1px;
-    text-transform: uppercase;
+    //text-transform: uppercase;
 
     cursor: pointer;
-    border: 2px solid $GREY_TEXT;
+    border: none;
     background: transparent;
 
     transition: all .2s ease-in-out;

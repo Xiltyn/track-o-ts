@@ -7,6 +7,7 @@ import { sidebarReducer } from "app/modules/sidebar/reducer";
 import { encountersReducer } from "app/modules/encounters/reducer";
 import { campaignsReducer } from './campaigns/reducer';
 import { charactersReducer } from "app/modules/characters/reducer";
+import { monstersReducer } from "app/modules/monsters/reducer";
 
 export { RootState, RouterState };
 
@@ -20,6 +21,7 @@ export const rootReducer = combineReducers<RootState>({
     encounters: encountersReducer as any,
     campaigns: campaignsReducer as any,
     characters: charactersReducer as any,
+    monsters: monstersReducer as any,
 });
 
 

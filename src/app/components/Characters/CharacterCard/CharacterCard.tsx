@@ -2,17 +2,22 @@ import * as React from 'react';
 
 import { ConditionModel } from "app/models/ConditionsModel";
 import { CharacterModel } from "app/models/CharacterModel";
-import svg from "app/utils/svg";
+import { CardSummary } from "app/components/Characters/CharacterCard/CardSummary/CardSummary";
 
 import './CharacterCard.scss';
+import { AddCharacterForm } from 'app/components/AddCharacterForm/AddCharacterForm';
+import { FormState } from "redux-form";
+import { CampaignModel } from "app/models/CampaignModel";
 
 export namespace CharacterCard {
 
     export interface Props {
         id?:string;
+        formData:FormState;
         character:CharacterModel;
+        campaigns?:CampaignModel[];
         style?:React.CSSProperties;
-        updateCharacter:(id:string) => void;
+        updateCharacter:(updated:CharacterModel) => void;
         setActive:(id:string) => void;
         onClick?:(id:string) => void;
     }
@@ -31,44 +36,42 @@ export class CharacterCard extends React.Component<CharacterCard.Props, Characte
 
     render() {
         const {
-            character: {
-                id,
-                name,
-                class: characterClass,
-                isActive,
-                ac,
-                hp,
-            },
+            character,
             style,
             setActive,
+            updateCharacter,
+            formData,
+            campaigns,
         } = this.props;
 
+        const characterCampaign = campaigns && campaigns.find(camp => camp.id === character.campaignId);
 
         return (
             <div
-                onClick={ () => id && setActive(id) }
+                onClick={ () => character.id && !character.isActive && setActive(character.id) }
                 style={ style }
-                className={ `character-container ${ isActive ? 'active' : '' }` }>
+                className={ `character-container ${ character.isActive ? 'active' : '' }` }>
 
-                <div
-                    className={ `character ${ characterClass && characterClass.toLowerCase() }${ isActive ? ' active' : '' }` }>
-                    <header className="meta">
-                        <h3>{ name }</h3>
-                        <p>{ characterClass }</p>
-                    </header>
+                <div className={ `character ${ character.class && character.class.toLowerCase() } ${ character.isActive ? 'active' : '' }` }>
                     {
-                        characterClass &&
-                        <div className="class">
-                            <div className="class-svg">
-                                { svg.classes[ characterClass.toLowerCase() ] }
-                            </div>
-                        </div>
+                        character.isActive ?
+                            <div className='card-form back'>
+                                <AddCharacterForm
+                                    formData={ formData }
+                                    campaigns={ campaigns }
+                                    currentCharacter={ character }
+                                    initialValues={ {
+                                        ...character.formData,
+                                        character_campaign: characterCampaign && characterCampaign.name,
+                                    } }
+                                    editCharacter={ updateCharacter }
+                                    closeModal={ () => character.id && setActive(character.id) }/>
+                            </div> :
+                            <CardSummary
+                                chara={ character }/>
                     }
-                    <div className='stats'>
-                        <div className='row'>{ svg.ac } <span>{ ac }</span></div>
-                        <div className='row'>{ svg.hp } <span>{ hp }</span></div>
-                    </div>
                 </div>
+
             </div>
         )
     }
