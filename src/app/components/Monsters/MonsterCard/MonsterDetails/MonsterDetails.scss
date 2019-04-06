@@ -1,0 +1,224 @@
+@import "../../../../style/core/variables";
+
+.monster-details {
+    position: relative;
+    width: 100%;
+
+    .close-btn {
+        position: absolute;
+        top: 24px;
+        right: 32px;
+
+        width: 28px;
+        height: 28px;
+
+        cursor: pointer;
+        z-index: 2;
+
+        &:after,
+        &:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+
+            height: 4px;
+            width: 100%;
+            margin-top: -2px;
+
+            background: $GREY_MID;
+            transition: all .3s ease-in-out;
+        }
+
+        &:after {
+            transform: rotate(-45deg);
+        }
+
+        &:before {
+            transform: rotate(45deg);
+        }
+
+        &:hover {
+            &:after,
+            &:before {
+                background: $SECONDARY;
+            }
+        }
+    }
+
+    .meta {
+        padding: 16px 0 24px;
+        height: 96px;
+    }
+
+    .contents {
+        display: flex;
+        height: 360px;
+
+        .img-container {
+            width: 40%;
+            height: 100%;
+            overflow: hidden;
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+
+        .body {
+            width: 60%;
+            padding: 0 24px;
+
+            display: flex;
+            flex-direction: column;
+
+            .essentials {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 40px;
+                padding: 0 0 8px 0;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+
+                border-bottom: solid 1px $GREY_MID;
+                transition: all .4s ease-in-out;
+
+                box-sizing: content-box;
+                z-index: 1;
+
+                .col {
+                    width: 32%;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+
+                    svg {
+                        height: 40px;
+                        width: 40px;
+
+                        & > * {
+                            fill: $GREY_MID;
+                            transition: all .3s ease-in-out;
+                        }
+                    }
+
+                    span {
+                        font-size: 22px;
+                        font-weight: 600;
+                        color: $GREY_LIGHT;
+                        transition: all .4s ease-in-out;
+                    }
+                }
+
+                .col {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+
+                    &.ac svg path { fill: $SOLID_FROM_SEA }
+                    &.hp svg path { fill: $SECONDARY }
+                    &.cr svg path { fill: $SOLID_FROM_MAGENTA }
+                }
+            }
+
+            .description {
+                height: 100%;
+                padding: 16px 0 8px;
+
+                font-size: 14px;
+                font-family: $MONTSERRAT;
+
+                overflow-y: scroll;
+
+                .separator {
+                    height: 1px;
+                    width: 100%;
+                    display: block;
+
+                    margin: 8px auto;
+                    background: $GREY_MID;
+                }
+
+                article {
+                    padding-bottom: 4px;
+                    margin-bottom: 4px;
+
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 22px;
+                    color: rgba($GREY_LIGHT, .8);
+
+                    & > p {
+                        margin-top: 4px;
+                    }
+
+                    strong {
+                        color: $GREY_LIGHT;
+                        font-weight: 600;
+                    }
+
+                    span {
+                        padding-right: 8px;
+                        font-weight: 700;
+                        color: $GREY;
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    .stats {
+        position: relative;
+        left: unset;
+        bottom: unset;
+
+        width: 100%;
+        height: 120px;
+        padding: 12px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        transition: all .4s ease-in-out;
+        z-index: 1;
+
+        .stat-block {
+            width: 15%;
+            color: $GREY_LIGHT;
+            text-align: center;
+
+            h5 {
+                width: 100%;
+                color: $GREY_DARK;
+                font-weight: 600;
+                padding: 4px 0;
+                margin-bottom: 8px;
+                background: $GREY;
+            }
+
+            .numbers {
+                p {
+                    &:first-of-type {
+                        color: $GREY_LIGHT;
+                        font-size: 28px;
+                        font-weight: 700;
+                        padding-bottom: 8px;
+                    }
+
+                    color: $GREY;
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}

@@ -15,7 +15,7 @@ export interface IMonsterModel {
     stats?:{[key:string]:{value:number, modifier:number}};
     hp?:number;
     ac?:number;
-    cr?:string|number;
+    cr?:number;
     languages?:string;
     legendary_actions?:string;
     saving_throws?:string;
@@ -44,7 +44,7 @@ export class MonsterModel implements IMonsterModel {
     public img_url?:string = '';
     public actions?:string = '';
     public stats?:{[key:string]:{value:number, modifier:number}} = {};
-    public cr:number = 0;
+    public cr?:number = 0;
     public languages?:string = '';
     public legendary_actions?:string = '';
     public saving_throws?:string = '';
@@ -65,14 +65,14 @@ export class MonsterModel implements IMonsterModel {
             if (this[ key ] && this[ key ] !== data[ key ]) {
                 this[ key ] = data[ key ];
             } else if(data[ `${key}_mod` ]) {
-                const value = data[`${key}_mod`];
+                const value = data[ `${ key }_mod` ];
                 const regexp = new RegExp(/[{()}]/g);
                 const modifier = value.replace(regexp, "");
 
                 this.stats = {
                     ...this.stats,
-                    [key]: {
-                        value: parseInt(data[key]),
+                    [ key ]: {
+                        value: parseInt(data[ key ]),
                         modifier: parseInt(modifier),
                     }
                 }
@@ -81,7 +81,9 @@ export class MonsterModel implements IMonsterModel {
                     case 'Armor Class': this.ac = data[key]; break;
                     case 'Hit Points': this.hp = data[key];  break;
                     case 'Saving Throws': this.saving_throws = data[key];  break;
+                    case 'saving_throws': this.saving_throws = data[key];  break;
                     case 'Legendary Actions': this.legendary_actions = data[key];  break;
+                    case 'legendary_actions': this.legendary_actions = data[key];  break;
                     case 'Challenge':
                         const parsed = data[key].split(' (')[0];
                         if(parsed.includes('/')) {
@@ -91,15 +93,22 @@ export class MonsterModel implements IMonsterModel {
                             this.cr = parseInt(data[key].split(' (')[0]);
                         }
                         break;
+                    case 'cr': this.cr = data[key];  break;
                     case 'Actions': this.actions = data[key];  break;
+                    case 'actions': this.actions = data[key];  break;
                     case 'name': this.name = data[key];  break;
                     case 'meta': this.meta = data[key];  break;
                     case 'img_url': this.img_url = data[key];  break;
                     case 'Languages': this.languages = data[key];  break;
+                    case 'languages': this.languages = data[key];  break;
                     case 'Senses': this.senses = data[key];  break;
+                    case 'sense': this.senses = data[key];  break;
                     case 'Speed': this.speed = data[key];  break;
+                    case 'speed': this.speed = data[key];  break;
                     case 'Skills': this.skills = data[key];  break;
+                    case 'skills': this.skills = data[key];  break;
                     case 'Traits': this.traits = data[key];  break;
+                    case 'traits': this.traits = data[key];  break;
                 }
             }
         });
@@ -107,8 +116,8 @@ export class MonsterModel implements IMonsterModel {
         return this;
     };
 
-    public get plainData():IMonsterModel|{} {
-        let result:IMonsterModel|{} = {};
+    public get plainData():IMonsterModel {
+        let result = {};
         const thisKeys = Object.keys(this);
 
         for(let key of thisKeys) {
@@ -118,7 +127,7 @@ export class MonsterModel implements IMonsterModel {
             }
         }
 
-        return result
+        return result as IMonsterModel;
     }
 
     public getComputedValue = (key:string):number => {
@@ -139,5 +148,9 @@ export class MonsterModel implements IMonsterModel {
             case 0.5: return '1/2';
             default: return value.toString();
         }
+    };
+
+    public set active(value:boolean) {
+        this.isActive = value;
     }
 }

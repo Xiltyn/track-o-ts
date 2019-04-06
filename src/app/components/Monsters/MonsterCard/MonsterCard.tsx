@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { MonsterSummary } from "app/components/Monsters/MonsterCard/MonsterSummary/MonsterSummary";
+import { MonsterDetails } from "app/components/Monsters/MonsterCard/MonsterDetails/MonsterDetails";
 
 import { ConditionModel } from "app/models/ConditionsModel";
 import { MonsterModel } from "app/models/MonsterModel";
 
 import './MonsterCard.scss';
-import svg from "app/utils/svg";
 
 export namespace MonsterCard {
 
@@ -13,6 +14,7 @@ export namespace MonsterCard {
         monster:MonsterModel;
         style?:React.CSSProperties;
         setActive?:(id:string) => void;
+        setInactive?:(id:string) => void;
         onClick?:(id:string) => void;
     }
 
@@ -33,28 +35,23 @@ export class MonsterCard extends React.Component<MonsterCard.Props, MonsterCard.
             monster,
             style,
             setActive,
+            setInactive,
         } = this.props;
 
         return (
             <div
-                onClick={ () => setActive && monster.id && !monster.isActive && setActive(monster.id) }
+                onClick={ () => setActive && monster.id && setActive(monster.id) }
                 style={ style }
-                className={ `monster-container ${ monster.isActive ? 'active' : '' }` }>
+                className={ `monster-container ${ monster.isActive ? 'active' : 'inactive' }` }>
 
-                <div className={ `monster ${ monster.isActive ? 'active' : '' }` }>
-                    <div className="meta">
-                        <h3 className="name">
-                            { monster.name }
-                        </h3>
-                        <p className="details">
-                            { monster.meta }
-                        </p>
-                    </div>
-                    <div className='stats'>
-                        <div className='col'>{ svg.ac } <span>{ monster.getComputedValue('ac') }</span></div>
-                        <div className='col'>{ svg.hp } <span>{ monster.getComputedValue('hp') }</span></div>
-                        <div className='col'>{ svg.cr } <span>{ monster.getCrString(monster.cr) }</span></div>
-                    </div>
+                <div className={ `monster ${ monster.isActive ? 'active' : 'inactive' }` }>
+
+                    {
+                        !monster.isActive
+                            ? <MonsterSummary monster={ monster }/>
+                            : <MonsterDetails monster={ monster } setInactive={ setInactive } />
+                    }
+
                 </div>
 
             </div>

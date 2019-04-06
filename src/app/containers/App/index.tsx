@@ -102,6 +102,8 @@ const AnimatedMonsters = animationContainer(Monsters);
         }, dispatch),
         monstersActions: bindActionCreators({
             fetchMonsters: () => MonstersMiddleware.fetchMonsters(),
+            setMonsterActive: (monsterId) => MonstersMiddleware.setActiveMonster(monsterId),
+            setMonsterInactive: (monsterId) => MonstersMiddleware.setInactiveMonster(monsterId),
         }, dispatch),
         formsActions: bindActionCreators({
             updateForm:(form, field, value) => change(form, field, value),

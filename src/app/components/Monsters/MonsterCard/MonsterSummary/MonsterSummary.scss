@@ -1,0 +1,72 @@
+@import "../../../../style/core/variables";
+
+.meta {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    padding: 16px 0 32px;
+    color: $GREY_LIGHT;
+    text-align: center;
+
+    transition: all .4s ease-in-out;
+    z-index: 1;
+
+    h3 {
+        font-weight: 600;
+        text-transform: capitalize;
+        transition: all .4s ease-in-out;
+    }
+
+    p {
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: capitalize;
+        color: $GREY_MID;
+        transition: all .4s ease-in-out;
+
+        &:after,
+        &:before {
+            content: ' - ';
+        }
+    }
+}
+.essentials {
+    position: absolute;
+    left: 0;
+    bottom: 24px;
+
+    width: 100%;
+    padding: 0 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    z-index: 1;
+    transition: all .4s ease-in-out;
+
+    .col {
+        width: 32%;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        svg {
+            height: 40px;
+            width: 40px;
+
+            & > * {
+                fill: $GREY_MID;
+                transition: all .3s ease-in-out;
+            }
+        }
+
+        span {
+            font-size: 22px;
+            font-weight: 600;
+            color: $GREY_LIGHT;
+            transition: all .4s ease-in-out;
+        }
+    }
+}

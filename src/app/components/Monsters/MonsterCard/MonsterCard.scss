@@ -3,8 +3,9 @@
 .monster {
     position: relative;
 
-    width: 320px;
+    width: 100%;
     min-height: 200px;
+    height: 100%;
     padding: 8px;
     margin: 0 8px 40px;
 
@@ -26,111 +27,87 @@
         background: $GRADIENT_MAGENTA;
         opacity: 0;
         transition: all .4s ease-in-out;
+        pointer-events: none;
         z-index: 0;
     }
 
-    .meta {
-        position: relative;
-        width: 100%;
-        height: 120px;
-        padding: 16px 0 32px;
-        color: $GREY_LIGHT;
-        text-align: center;
+    &.inactive {
+        &:hover {
+            border: solid 1px rgba($SECONDARY, .8);
+            box-shadow: 0 0 32px -8px rgba(#000, 1);
 
-        transition: all .4s ease-in-out;
-        z-index: 1;
-
-        h3 {
-            font-weight: 600;
-            text-transform: capitalize;
-            transition: all .4s ease-in-out;
-        }
-
-        p {
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: capitalize;
-            color: $GREY_MID;
-            transition: all .4s ease-in-out;
-
-            &:after,
-            &:before {
-                content: ' - ';
+            &:after {
+                opacity: 1;
             }
-        }
-    }
-    .stats {
-            position: absolute;
-            left: 0;
-            bottom: 24px;
 
-            width: 100%;
-            padding: 0 24px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-
-            z-index: 1;
-            transition: all .4s ease-in-out;
-
-            .col {
-                width: 32%;
-
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-
-                svg {
-                    height: 40px;
-                    width: 40px;
-
-                    & > * {
-                        fill: $GREY_MID;
-                        transition: all .3s ease-in-out;
-                    }
+            .meta {
+                h3 {
+                    color: $GREY_DARK;
                 }
 
-                span {
-                    font-size: 22px;
-                    font-weight: 600;
-                    color: $GREY_LIGHT;
-                    transition: all .4s ease-in-out;
-                }
-            }
-        }
-
-    &:hover {
-        border: solid 1px rgba($SECONDARY, .8);
-        box-shadow: 0 0 32px -8px rgba(#000, 1);
-
-        &:after {
-            opacity: 1;
-        }
-
-        .meta {
-            h3 {
-                color: $GREY_DARK;
-            }
-
-            p {
-                color: $GREY_DARK;
-            }
-        }
-
-        .stats {
-            .col {
-                svg {
-                    & > * {
-                        fill: $GREY_DARK;
-                        opacity: .5;
-                    }
-                }
-
-                span {
+                p {
                     color: $GREY_DARK;
                 }
             }
+
+            .essentials {
+                .col {
+                    svg {
+                        & > * {
+                            fill: $GREY_DARK;
+                            opacity: .5;
+                        }
+                    }
+
+                    span {
+                        color: $GREY_DARK;
+                    }
+                }
+            }
         }
     }
+
+    &.active {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+
+        width: 800px;
+        height: 600px;
+        padding: 16px;
+        margin: auto;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        overflow: hidden;
+    }
 }
+
+.monster-container {
+    transition: all .3s ease-in-out;
+
+    &.inactive {
+        position: relative;
+        width: 320px;
+        height: auto;
+    }
+
+    &.active {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+
+        width: 800px;
+        height: 600px;
+
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 32px -8px rgba(#000, 1);
+        z-index: 100;
+    }
+}
+

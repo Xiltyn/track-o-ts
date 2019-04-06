@@ -25,10 +25,8 @@ export namespace Monsters {
 
     export type monstersActions = {
         fetchMonsters:() => void;
-        //initMonstersListener:() => void;
-        //addMonster:(monster:IMonsterModel) => void;
-        //updateMonster:(monster:MonsterModel) => void;
-        //setMonsterActive:(monsterId:string) => void;
+        setMonsterActive:(monsterId:string) => void;
+        setMonsterInactive:(monsterId:string) => void;
     }
 }
 
@@ -38,11 +36,11 @@ export class Monsters extends React.Component<Monsters.Props, Monsters.State> {
     };
 
     public componentDidMount():void {
-        if(this._wrapperRef) this._wrapperRef.addEventListener('scroll', _.debounce(this.handleScrolling, 500));
+        if (this._wrapperRef) this._wrapperRef.addEventListener('scroll', _.debounce(this.handleScrolling, 500));
     }
 
     public componentWillUnmount():void {
-        if(this._wrapperRef) this._wrapperRef.removeEventListener('scroll', _.debounce(this.handleScrolling));
+        if (this._wrapperRef) this._wrapperRef.removeEventListener('scroll', _.debounce(this.handleScrolling));
     }
 
     protected _wrapperRef:HTMLElement|null = null;
@@ -51,11 +49,12 @@ export class Monsters extends React.Component<Monsters.Props, Monsters.State> {
         const evtTarget = evt.target as any;
         const { scrollTop } = evtTarget;
 
-        if(scrollTop > 320) {
+        if (scrollTop > 320) {
             this.setState({
                 shouldFixFilters: true,
             })
-        } else {
+        }
+        else {
             this.setState({
                 shouldFixFilters: false,
             })
@@ -74,7 +73,8 @@ export class Monsters extends React.Component<Monsters.Props, Monsters.State> {
                             result.push(monster);
                         }
                     }
-                } else {
+                }
+                else {
                     result = monsters;
                 }
 
@@ -84,7 +84,7 @@ export class Monsters extends React.Component<Monsters.Props, Monsters.State> {
                     if (searchFormData.values[ key ] === true) {
                         switch (key) {
                             case 'sortByCr':
-                                result.sort((a, b) => a.cr - b.cr);
+                                result.sort((a:any, b:any) => a.cr - b.cr);
                                 break;
                             case 'sortByHp':
                                 result.sort((a, b) => a.getComputedValue('hp') - b.getComputedValue('hp'));
@@ -131,9 +131,9 @@ export class Monsters extends React.Component<Monsters.Props, Monsters.State> {
                             <MonsterCard
                                 key={ monster.id }
                                 monster={ monster }
-                                //setActive={ actions.setMonsterActive }
+                                setActive={ actions.setMonsterActive }
+                                setInactive={ actions.setMonsterInactive }
                             />
-
                         ))
                     }
                 </div>
