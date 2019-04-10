@@ -1,7 +1,7 @@
 @import "../../../style/core/variables";
 
 .active-encounter {
-    position: fixed;
+    position: absolute;
     top: 80px;
     left: 0;
 
@@ -13,7 +13,7 @@
     height: calc(100% - 80px);
 
     background: $GREY_DARK;
-    z-index: 50;
+    z-index: 20;
 
     & > div {
         width: 50%;
