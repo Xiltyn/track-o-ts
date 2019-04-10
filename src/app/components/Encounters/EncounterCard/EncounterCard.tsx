@@ -7,18 +7,15 @@ import { ActionModal } from "app/components/__universal/ActionModal/ActionModal"
 import { ConditionsPicker } from "app/components/ConditionsPicker/ConditionsPicker";
 
 import { ConditionModel } from "app/models/ConditionsModel";
-import { Participant } from "app/models/EncounterModel";
+import { EncounterModel, Participant } from "app/models/EncounterModel";
 
 import './EncounterCard.scss';
 
 export namespace EncounterCard {
 
     export interface Props {
-        id:string,
-        name:string,
+        encounter:EncounterModel;
         updateEncounter:(id:number) => void,
-        isActive:boolean,
-        participants:Array<Participant>,
         addCondition:(encounterId:string, itemId:number, condition:ConditionModel) => void,
         onClick?:(id:string) => void,
     }
@@ -39,11 +36,13 @@ export class EncounterCard extends React.Component<EncounterCard.Props, Encounte
 
     render() {
         const {
-            id,
-            name,
-            participants,
+            encounter: {
+                id,
+                name,
+                isActive,
+                participants,
+            },
             onClick,
-            isActive,
             addCondition,
             updateEncounter,
         } = this.props;
@@ -65,12 +64,9 @@ export class EncounterCard extends React.Component<EncounterCard.Props, Encounte
                         participants && participants.sort((a:Participant, b:Participant) => b.roll - a.roll).map(item => (
                             <EncounterParticipant
                                 key={ item.id }
-                                id={ item.id }
-                                name={ item.name }
-                                color={ typeof item.color === "string" ? item.color : '#F15025' }
+                                participant={ item }
                                 onClick={ isActive ? updateEncounter : () => console.log('Encounter not active > handler disabled') }
                                 addStatus={ () => this.setState({ showModal: true }) }
-                                statuses={ item.statuses }
                                 isActive={ item.isActive && isActive }/>
                         ))
                     }

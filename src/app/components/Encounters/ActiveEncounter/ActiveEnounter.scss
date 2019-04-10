@@ -1,0 +1,25 @@
+@import "../../../style/core/variables";
+
+.active-encounter {
+    position: fixed;
+    top: 80px;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    height: calc(100% - 80px);
+
+    background: $GREY_DARK;
+    z-index: 50;
+
+    & > div {
+        width: 50%;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+}

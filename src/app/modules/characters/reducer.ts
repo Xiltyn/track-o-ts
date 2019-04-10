@@ -12,7 +12,7 @@ export const charactersReducer = handleActions<RootState.CharactersState, Charac
     {
         [ CharactersActions.Type.SET_CHARACTERS ]: (state, action) => ({
             ...state,
-            all: action.payload && action.payload.all,
+            all: action.payload ? action.payload.all : state.all,
         }),
         [ CharactersActions.Type.SET_STATUS ]: (state, action) => ({
             ...state,

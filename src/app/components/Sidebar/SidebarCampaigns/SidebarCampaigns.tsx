@@ -1,5 +1,6 @@
 import * as React from "react";
 import { SidebarComponent } from "app/components/Sidebar/Sidebar";
+import { getURLFriendlyString } from "app/utils/getURLFriendlyString/getURLFriendlyString";
 
 export const SidebarCampaigns = (props:Pick<SidebarComponent.Props, 'campaigns'|'actions'>) => <ul className="sidebar-list sidebar-campaigns">
     {
@@ -8,8 +9,8 @@ export const SidebarCampaigns = (props:Pick<SidebarComponent.Props, 'campaigns'|
                 className={ campaign.isActive ? 'active' : '' }
                 onClick={ () => {
                     if(props.actions) {
-                        props.actions.setActiveCampaign(campaign.id)
-                        props.actions.historyPush(`/encounters/${campaign.id}`)
+                        if(props.actions.setActiveCampaign) { props.actions.setActiveCampaign(campaign.id) }
+                        props.actions.historyPush(`/encounters/${getURLFriendlyString(campaign.name)}`)
                     }
                 } }
                 key={ campaign.id }>

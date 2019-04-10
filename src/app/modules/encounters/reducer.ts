@@ -11,10 +11,10 @@ export const encountersReducer = handleActions<RootState.EncounterState, Encount
     {
         [ EncountersActions.Type.SET_ENCOUNTERS ]: (state, action) => ({
             ...state,
-            all: action.payload && action.payload.all,
+            all: action.payload ? action.payload.all : state.all,
         }),
         [ EncountersActions.Type.TOGGLE_ACTIVE ]: (state, action) => ({
             ...state,
-            all: action.payload && action.payload.all,
+            all: action.payload ? action.payload.all : state.all,
         }),
 }, initialState);

@@ -12,7 +12,7 @@ export const monstersReducer = handleActions<RootState.MonstersState, MonstersMo
     {
         [ MonstersActions.Type.SET_MONSTERS ]: (state, action) => ({
             ...state,
-            all: action.payload && action.payload.all,
+            all: action.payload ? action.payload.all : state.all,
         }),
         [ MonstersActions.Type.SET_STATUS ]: (state, action) => ({
             ...state,

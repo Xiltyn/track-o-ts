@@ -28,11 +28,17 @@ export namespace AddEncounterFormComponent {
     }
 }
 
-const renderNumberPicker = (props:any) => <NumberPicker
-    inputProps={ props.input }
-    onChange={ props.input.onChange }
-    { ...props }
-/>;
+const renderNumberPicker = (props:any) => <div className="number-picker">
+    {
+        props.label && <label htmlFor={ props.input.name }>{ props.label }</label>
+    }
+    <NumberPicker
+        inputProps={ props.input }
+        defaultValue={ props.input.value || props.defaultVal }
+        onChange={ props.input.onChange }
+        { ...props }
+    />
+</div>;
 
 const renderField = (props:any) => (
     <div className={ props.className }>
@@ -48,31 +54,50 @@ const renderField = (props:any) => (
 );
 
 const Members = (props:WrappedFieldArrayProps<{ name?:string, roll?:number }>) => (
+    <React.Fragment>
+        <div className='member add-new'>
+            <Button label='Add more' onSubmit={ () => props.fields.push({} as any) }/>
+        </div>
     <ul className='new-member-list'>
-        <li className='member add-new'>
-            <Button label='Add new' onSubmit={ () => props.fields.push({} as any) }/>
-        </li>
         {
             props.fields.map((field, index) => (
                 <li key={ index } className="member">
-                    <Field
-                        className="member-input-name"
-                        name={ `${ field }_fields.name` }
-                        component={ renderField }
-                        placeholder='Ugly Troll'/>
-                    <Field
-                        className="member-input-roll"
-                        name={ `${ field }_fields.roll` }
-                        component={ renderNumberPicker }
-                        defaultValue={ 10 }
-                        min={ 1 }
-                        max={ 50 }
-                        label={ `Initiative for Party #${ index + 1 }` }/>
-                    <Button label={ svg.return } onSubmit={ () => props.fields.remove(index) }/>
+                    <div className="top">
+                        <Field
+                            className="member-input-name"
+                            name={ `${ field }_fields.name` }
+                            autofocus
+                            component={ renderField }
+                            placeholder='Ugly Troll'/>
+                        <div className="close-btn" onClick={ () => props.fields.remove(index) }/>
+                    </div>
+                    <div className="bottom">
+                        <Field
+                            className="member-input-roll"
+                            name={ `${ field }_fields.roll` }
+                            component={ renderNumberPicker }
+                            min={ 1 }
+                            max={ 50 }
+                            defaultVal={ 10 }
+                            label={ svg.d20 }/>
+                        <Field
+                            className="member-input-roll"
+                            name={ `${ field }_fields.hp` }
+                            component={ renderNumberPicker }
+                            defaultVal={ 1 }
+                            label={ svg.hp }/>
+                        <Field
+                            className="member-input-roll"
+                            name={ `${ field }_fields.ac` }
+                            component={ renderNumberPicker }
+                            defaultVal={ 1 }
+                            label={ svg.ac }/>
+                    </div>
                 </li>
             ))
         }
     </ul>
+    </React.Fragment>
 );
 
 class AddEncounterFormComponent
@@ -88,9 +113,12 @@ class AddEncounterFormComponent
                 participants: formData.values.members.map((el:{ _fields:{ [ key:string ]:any } }, index:number) => ({
                     name: el._fields.name,
                     roll: el._fields.roll,
+                    hp: el._fields.hp,
+                    ac: el._fields.ac,
                     id: index,
                     color: 'primary',
                     position: index + 1,
+                    characterId: el._fields.characterId || null,
                     statuses: [],
                 })),
             };
@@ -125,43 +153,49 @@ class AddEncounterFormComponent
             <Form
                 className="add-encounter-form"
                 onSubmit={ handleSubmit(this.submitNew) }>
-                <div className='encounter-name'>
-                    <InputField
-                        name='encounter_name'
-                        label='Name'
-                        placeholder='Dragon Fight'/>
-                </div>
-                {
-                    !currentCampaign &&
-                    <div className="encounter-campaign">
-                        <Field
-                            name="encounter_campaign"
-                            placeholder="Select Character's Campaign"
-                            label="Character campaign"
-                            data={ this._getCampaignSelectData() }
-                            component={ SelectField as any }/>
-                    </div>
-                }
-                {
-                    selectedCampaign &&
-                    <div className='encounter-characters'>
-                        <h3>Characters from { selectedCampaign.name }</h3>
+                <div className="contents">
+                    <div className="left">
+                        <div className='encounter-name'>
+                            <InputField
+                                name='encounter_name'
+                                label='Name'
+                                placeholder='Dragon Fight'/>
+                        </div>
                         {
-                            characters && characters.filter(chara => chara.campaignId === selectedCampaignId)
-                                .map((chara, index) =>
-                                    <div className='character-info' key={ index }>
-                                        <p className='meta'>
-                                            <span>{ chara.name }</span> | { chara.class }
-                                        </p>
-                                        <div className='stats'>
-                                            <div className='row'>{ svg.ac } <span>{ chara.ac }</span></div>
-                                            <div className='row'>{ svg.hp } <span>{ chara.hp }</span></div>
-                                        </div>
-                                    </div>)
+                            !currentCampaign &&
+                            <div className="encounter-campaign">
+                                <Field
+                                    name="encounter_campaign"
+                                    placeholder="Select Character's Campaign"
+                                    label="Character campaign"
+                                    data={ this._getCampaignSelectData() }
+                                    component={ SelectField as any }/>
+                            </div>
+                        }
+                        {
+                            selectedCampaign &&
+                            <div className='encounter-characters'>
+                                <h3>Characters from { selectedCampaign.name }</h3>
+                                {
+                                    characters && characters.filter(chara => chara.campaignId === selectedCampaignId)
+                                        .map((chara, index) =>
+                                            <div className='character-info' key={ index }>
+                                                <p className='meta'>
+                                                    <span>{ chara.name }</span> | { chara.class }
+                                                </p>
+                                                <div className='stats'>
+                                                    <div className='row'>{ svg.ac } <span>{ chara.ac }</span></div>
+                                                    <div className='row'>{ svg.hp } <span>{ chara.hp }</span></div>
+                                                </div>
+                                            </div>)
+                                }
+                            </div>
                         }
                     </div>
-                }
-                <FieldArray name='members' component={ Members }/>
+                    <div className="right">
+                        <FieldArray name='members' component={ Members }/>
+                    </div>
+                </div>
                 <div className="modal-controls">
                     <Button
                         label='Close'

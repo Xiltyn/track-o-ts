@@ -6,23 +6,60 @@
     align-items: center;
     justify-content: space-between;
 
-    max-height: 64px;
-    height: 64px;
     width: 100%;
-    padding: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
     background-color: $GREY_DARK;
     box-sizing: border-box;
 
     transition: all .5s ease-in-out;
 
-    .item-name {
-        font-weight: 600;
-        color: $GREY;
-        pointer-events: none;
+    .details {
+        .item-name {
+            padding-left: 6px;
 
-        transition: all .3s ease-in-out;
+            font-weight: 600;
+            color: $GREY;
+            pointer-events: none;
+
+            transition: all .3s ease-in-out;
+        }
+        .stats {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+
+            z-index: 1;
+            transition: all .4s ease-in-out;
+
+            .row {
+                width: 30%;
+
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+
+                svg {
+                    height: 32px;
+                    width: 32px;
+
+                    & > * {
+                        fill: $GREY_MID;
+                        transition: all .3s ease-in-out;
+                    }
+                }
+
+                span {
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: $GREY_LIGHT;
+                    transition: all .4s ease-in-out;
+                }
+            }
+        }
     }
+
 
     .item-statuses {
         display: flex;
@@ -36,10 +73,10 @@
         overflow: hidden;
         z-index: 10;
         .status {
-            height: 48px;
-            width: 48px;
+            height: 40px;
+            width: 40px;
             padding-top: 8px;
-            margin: 0 4px 4px 0;
+            margin: 4px;
 
             display: flex;
             justify-content: center;
@@ -99,8 +136,8 @@
                         top: 0;
                         left: 0;
 
-                        width: 48px;
-                        height: 48px;
+                        width: 40px;
+                        height: 40px;
 
                         background: $GREY_DARK;
                     }
@@ -110,108 +147,8 @@
     }
 
     &.active {
-        max-height: 132px;
-        min-height: 64px;
-        height: auto;
-        width: calc(100% - 40px);
-
-        &.yellow {
-            background: $GRADIENT_GREEN;
-            &:after {
-                border-color: transparent transparent transparent $SOLID_FROM_GREEN;
-            }
-
-            .item-statuses .status {
-                svg path,
-                svg polygon {
-                    fill: $SOLID_FROM_GREEN;
-                    transition: all .5s ease-in-out;
-                }
-
-                &:hover {
-                    svg {
-                        path,
-                        polygon {
-                            fill: $SOLID_FROM_GREEN;
-                        }
-                    }
-                }
-            }
-        }
-        &.sea {
-            background: $GRADIENT_SEA;
-            &:after {
-                border-color: transparent transparent transparent $SOLID_FROM_SEA;
-            }
-
-            .item-statuses .status {
-                svg path,
-                svg polygon {
-                    fill: $SOLID_FROM_SEA;
-                    transition: all .5s ease-in-out;
-                }
-
-                &:hover {
-                    svg {
-                        path,
-                        polygon {
-                            fill: $SOLID_FROM_SEA;
-                        }
-                    }
-                }
-            }
-        }
-        &.magenta {
-            background: $GRADIENT_MAGENTA;
-            &:after {
-                border-color: transparent transparent transparent $SOLID_FROM_MAGENTA;
-            }
-
-            .item-statuses .status {
-                svg path,
-                svg polygon {
-                    fill: $SOLID_FROM_MAGENTA;
-                    transition: all .5s ease-in-out;
-                }
-
-                &:hover {
-                    svg {
-                        path,
-                        polygon {
-                            fill: $SOLID_FROM_MAGENTA;
-                        }
-                    }
-                }
-            }
-        }
-        &.blue {
-            background: $GRADIENT_BLUE;
-            &:after {
-                border-color: transparent transparent transparent $SOLID_FROM_BLUE;
-            }
-
-            .item-statuses .status {
-                svg path,
-                svg polygon {
-                    fill: $SOLID_FROM_BLUE;
-                    transition: all .5s ease-in-out;
-                }
-
-                &:hover {
-                    svg {
-                        path,
-                        polygon {
-                            fill: $SOLID_FROM_BLUE;
-                        }
-                    }
-                }
-            }
-        }
         &.primary {
             background: $GRADIENT_PRIMARY;
-            &:after {
-                border-color: transparent transparent transparent $SECONDARY;
-            }
 
             .item-statuses .status {
                 svg path,
@@ -231,27 +168,18 @@
             }
         }
 
-        &:after {
-            content: '';
-            position: absolute;
+        .details {
+            .item-name {
+                color: $GREY_DARK;
+            }
 
-            top: 50%;
-            left: calc(100% + 8px);
-
-            width: 0;
-            height: 0;
-            margin-top: -32px;
-            border-style: solid;
-            border-width: 32px 0 32px 32px;
-            border-color: transparent transparent transparent $PRIMARY;
-
-            animation: arrowMove 2s cubic-bezier(.8,.18,.31,.81) infinite;
-            z-index: 0;
+            .stats {
+                span {
+                    color: $GREY_DARK
+                }
+            }
         }
 
-        .item-name {
-            color: $GREY_DARK;
-        }
 
         .item-statuses {
             height: auto;

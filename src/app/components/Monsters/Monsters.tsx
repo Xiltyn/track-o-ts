@@ -1,22 +1,24 @@
 import * as React from "react";
-import { FormState } from "redux-form";
+import { change, FormState } from "redux-form";
 import * as _ from 'lodash';
 
 import { CampaignModel } from "app/models/CampaignModel";
 import { MonsterModel } from "app/models/MonsterModel";
 import { MonsterCard } from "app/components/Monsters/MonsterCard/MonsterCard";
 import { MonstersFilters } from "app/components/Monsters/MonstersFilters/MonstersFilters";
-import { App } from "app/containers/App";
 
 import './Monsters.scss';
+import { connect } from "react-redux";
+import { RootState } from "app/modules";
+import { bindActionCreators, Dispatch } from "redux";
+import { MonstersMiddleware } from "app/modules/monsters/middleware";
 
 export namespace Monsters {
     export interface Props {
-        actions:monstersActions&App.formsActions;
-        monsters?:MonsterModel[];
-        campaigns?:CampaignModel[];
+        actions:monstersActions;
+        monsters:MonsterModel[];
+        campaigns:CampaignModel[];
         searchFormData?:FormState;
-        activeCampaign?:string;
     }
 
     export interface State {
@@ -27,8 +29,25 @@ export namespace Monsters {
         fetchMonsters:() => void;
         setMonsterActive:(monsterId:string) => void;
         setMonsterInactive:(monsterId:string) => void;
+        updateForm:(form:String, field:String, value:any) => void;
     }
 }
+
+@connect(
+    (state:RootState):Pick<Monsters.Props, 'monsters'|'campaigns'|'searchFormData'> => ({
+        monsters: state.monsters.all,
+        campaigns: state.campaigns.all,
+        searchFormData: state.form.monsters_filters,
+    }),
+    (dispatch:Dispatch):Pick<Monsters.Props, 'actions'> => ({
+        actions: bindActionCreators({
+            fetchMonsters:() => MonstersMiddleware.fetchMonsters(),
+            setMonsterActive:(monsterId) => MonstersMiddleware.setActiveMonster(monsterId),
+            setMonsterInactive:(monsterId) => MonstersMiddleware.setInactiveMonster(monsterId),
+            updateForm:(form, field, value) => change(form, field, value),
+        }, dispatch),
+    }),
+)
 
 export class Monsters extends React.Component<Monsters.Props, Monsters.State> {
     public state:Monsters.State = {
@@ -36,7 +55,14 @@ export class Monsters extends React.Component<Monsters.Props, Monsters.State> {
     };
 
     public componentDidMount():void {
-        if (this._wrapperRef) this._wrapperRef.addEventListener('scroll', _.debounce(this.handleScrolling, 500));
+        const { actions } = this.props;
+
+        actions.fetchMonsters();
+
+        if (this._wrapperRef) {
+            this._wrapperRef.addEventListener('scroll', _.debounce(this.handleScrolling, 500));
+        }
+
     }
 
     public componentWillUnmount():void {
@@ -63,6 +89,7 @@ export class Monsters extends React.Component<Monsters.Props, Monsters.State> {
 
     private getMonstersList = ():MonsterModel[] => {
         const { monsters, searchFormData } = this.props;
+
         let result:MonsterModel[] = [];
 
         if (monsters) {
@@ -107,6 +134,8 @@ export class Monsters extends React.Component<Monsters.Props, Monsters.State> {
     public render() {
         const { actions, searchFormData } = this.props;
         const { shouldFixFilters } = this.state;
+
+        console.log(this.getMonstersList());
 
         return (
             <section

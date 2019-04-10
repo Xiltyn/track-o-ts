@@ -17,12 +17,16 @@ export type Participant = {
     isActive:boolean,
     color?:string;
     roll:number;
+    ac:number;
+    hp:number;
+    characterId?:string,
+    monsterId?:string,
     statuses:ConditionsState,
 }
 
 
 export interface EncountersModel {
-    all:Array<EncounterModel>|undefined,
+    all:EncounterModel[],
 }
 
 export class EncounterModel {

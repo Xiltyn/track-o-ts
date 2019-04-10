@@ -1,11 +1,44 @@
 @import "../../style/core/variables";
 
 .add-encounter-form {
-    width: 100%;
+    width: 800px;
     height: 100%;
+
+    .contents {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .left,
+        .right {
+            width: calc(50% - 16px);
+            min-height: 300px;
+            height: 100%;
+        }
+
+        .left {
+            align-self: flex-start;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            width: 1px;
+            height: 100%;
+            background: $GREY_MID;
+
+            transform: translate(-50%, -50%);
+        }
+    }
 
     .encounter-name {
         padding: 0;
+        margin-bottom: 24px;
         border-bottom: 1px solid $GREY;
 
         input[name='encounter_name'] {
@@ -97,126 +130,160 @@
 
     .new-member-list {
         max-height: 300px;
-        padding: 0 0 16px 0;
+        padding: 8px 0 16px;
 
         overflow-y: scroll;
 
         .member {
             position: relative;
+            display: block;
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 4px 0;
-            height: 48px;
             width: 100%;
+            padding: 8px;
+            margin: 8px auto;
+            background: $GREY_MID;
 
-            & > div {
-                width: 80%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
+            .top,
+            .bottom {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+
+            .member-input-name {
+                width: 100%;
+
+                margin-bottom: 8px;
 
                 input {
-                    width: 100%;
+                    position: relative;
+                    border-bottom: 1px solid $GREY;
+                    font-size: 16px;
+                    font-weight: 600;
+
+                    &:focus,
+                    &:hover,
+                    &:active {
+                        color: $GREY_TEXT;
+                        border-color: $GREY_LIGHT;
+                    }
+                }
+            }
+
+            input {
+                width: 100%;
+                height: 100%;
+                padding: 8px 0;
+
+                font-size: 14px;
+                font-weight: 500;
+                color: $GREY_LIGHT;
+                text-align: center;
+                letter-spacing: .5px;
+                font-family: $OPEN_SANS;
+
+                background: transparent;
+                transition: all .3s ease-in-out;
+            }
+
+            .number-picker {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                svg {
+                    width: 32px;
+                    height: 32px;
+
+                    path {
+                        fill: $GREY_DARK;
+                    }
+                }
+
+                &:first-of-type svg {
+                    width: 28px;
+                    height: 28px;
+                }
+
+                & > div {
+                    width: 80%;
                     height: 100%;
-                    padding: 8px 0;
+                    margin: 0;
+                    padding: 0;
 
-                    font-size: 14px;
-                    font-weight: 500;
-                    color: $GREY_TEXT;
-                    text-align: left;
-                    letter-spacing: .5px;
-                    font-family: $OPEN_SANS;
+                    &.member-input-roll {
+                        width: calc(100% - 40px);
 
-                    background: transparent;
-                    transition: all .3s ease-in-out;
+                        box-sizing: border-box;
 
-                }
-
-                &.member-input-name {
-                    width: 65%;
-
-                    input {
-                        &:focus,
-                        &:active {
-                            padding-left: 8px;
-                            background: $GREY_TEXT;
-                            color: $GREY_DARK;
+                        &.rw-state-focus {
+                            .rw-widget-picker {
+                                box-shadow: none;
+                            }
                         }
-                    }
-                }
 
-                &.member-input-roll {
-                    width: 20%;
-
-                    box-sizing: border-box;
-
-                    &.rw-state-focus {
                         .rw-widget-picker {
-                            box-shadow: none;
-                        }
-                    }
-
-                    .rw-widget-picker {
-                        height: 100%;
-                        border: none;
-                        background: none;
-                        display: flex;
-
-                        input {
-                            padding: 0;
-                            margin: -4px 4px 0 8px;
-
-                            color: $GREY;
-                            text-align: left;
-                            font-weight: 800;
-                            font-size: 20px;
-
-                            background: none;
-
-                            &:focus,
-                            &:active {
-                                color: $GREY_TEXT;
-                                outline: none;
-                                box-shadow: none !important;
-                            }
-                        }
-
-                        span {
-                            position: absolute;
-                            right: 0;
-                            top: 0;
-                            width: 32px;
                             height: 100%;
-                            display: flex;
                             border: none;
-                            flex-direction: column;
-                            align-items: center;
-                            justify-content: space-around;
+                            background: none;
+                            display: flex;
 
-                            &:hover {
+                            input {
+                                padding: 0;
+                                margin: 0;
+                                width: calc(100% - 28px);
+
+                                color: $GREY;
+                                text-align: center;
+                                font-weight: 800;
+                                font-size: 20px;
+
                                 background: none;
+                                transform: translateY(-2px);
+
+                                &:focus,
+                                &:active {
+                                    color: $GREY_TEXT;
+                                    outline: none;
+                                    box-shadow: none !important;
+                                }
                             }
 
-                            button {
-                                width: 0;
-                                height: 0;
-                                margin: 0;
-                                padding: 0;
-                                background: none;
-                                border-style: solid;
-                                border-width: 0 5px 10px 5px;
-                                border-color: transparent transparent $GREY_LIGHT transparent;
+                            span {
+                                position: absolute;
+                                right: 0;
+                                top: 0;
+                                width: 32px;
+                                height: 100%;
+                                display: flex;
+                                border: none;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: space-around;
 
-                                span {
-                                    display: none;
+                                &:hover {
+                                    background: none;
                                 }
 
-                                &:nth-of-type(2) {
-                                    border-width: 10px 5px 0 5px;
-                                    border-color: $GREY_LIGHT transparent transparent transparent;
+                                button {
+                                    width: 0;
+                                    height: 0;
+                                    margin: 0;
+                                    padding: 0;
+                                    background: none;
+                                    border-style: solid;
+                                    border-width: 0 5px 10px 5px;
+                                    border-color: transparent transparent $GREY_LIGHT transparent;
+
+                                    span {
+                                        display: none;
+                                    }
+
+                                    &:nth-of-type(2) {
+                                        border-width: 10px 5px 0 5px;
+                                        border-color: $GREY_LIGHT transparent transparent transparent;
+                                    }
                                 }
                             }
                         }
@@ -224,51 +291,78 @@
                 }
             }
 
-            button {
-                margin: 0;
+            .close-btn {
+                position: absolute;
+                top: 12px;
+                right: 12px;
 
-                svg {
-                    path, polygon {
-                        fill: $GREY_TEXT;
-                    }
-                }
+                width: 24px;
+                height: 24px;
+
+                cursor: pointer;
+                z-index: 2;
 
                 &:after,
                 &:before {
-                    background: rgba($GREY_TEXT, .7);
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+
+                    height: 4px;
+                    width: 100%;
+                    margin-top: -2px;
+
+                    background: $GREY_DARK;
+                    transition: all .3s ease-in-out;
                 }
-            }
 
-            &.add-new {
-                margin: 8px 0 0;
+                &:after {
+                    transform: rotate(-45deg);
+                }
 
-                button {
-                    width: auto;
-                    height: 32px;
-                    padding: 5px 48px;
-                    margin: auto;
+                &:before {
+                    transform: rotate(45deg);
+                }
 
-                    font-weight: 500;
-                    color: $GREY_LIGHT;
-                    text-transform: capitalize;
-
-                    border-style: dashed;
-                    border-color: $GREY_LIGHT;
-                    border-width: 1px;
-
-                    opacity: .5;
-
+                &:hover {
                     &:after,
                     &:before {
-                        display: none;
-                    }
-
-                    &:hover,
-                    &:active {
-                        opacity: 1;
-                        color: $GREY_TEXT;
+                        background: $SECONDARY;
                     }
                 }
+            }
+        }
+    }
+    .add-new {
+        padding: 8px 0;
+        border-bottom: 1px solid $GREY_LIGHT;
+
+        button {
+            display: block;
+
+            width: auto;
+            height: 32px;
+            margin: auto;
+
+            color: $GREY_LIGHT;
+            text-transform: capitalize;
+
+            //border-style: dashed;
+            //border-color: $GREY_LIGHT;
+            //border-width: 1px;
+
+            opacity: .5;
+
+            //&:after,
+            //&:before {
+            //    display: none;
+            //}
+
+            &:hover,
+            &:active {
+                opacity: 1;
+                color: $GREY_DARK;
             }
         }
     }

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { sidebarMenuData, sidebarSections } from "app/models/Sidebar.types";
-import { EncounterModel } from "app/models/EncounterModel";
 import { CampaignModel } from "app/models/CampaignModel";
 import { CharacterModel } from "app/models/CharacterModel";
 import { SidebarComponent } from "app/components/Sidebar/Sidebar";
@@ -8,7 +7,6 @@ import { SidebarComponent } from "app/components/Sidebar/Sidebar";
 export namespace SidebarMenu {
     export interface Props {
         menuData: sidebarMenuData,
-        encounters?: EncounterModel[];
         characters?: CharacterModel[];
         campaigns?: CampaignModel[];
         actions?: SidebarComponent.SidebarComponentActions;
@@ -34,8 +32,7 @@ export const SidebarMenu = (props:SidebarMenu.Props) =>
                             <item.component
                                 campaigns={ props.campaigns }
                                 characters={ props.characters }
-                                actions={ props.actions }
-                                encounters={ props.encounters }/>
+                                actions={ props.actions }/>
                         }
                     </div>
                 </li>

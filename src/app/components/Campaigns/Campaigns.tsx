@@ -9,7 +9,7 @@ import { AddCampaignForm } from "app/components/AddCampaignForm/AddCampaignForm"
 
 import { CampaignModel, ICampaignModel } from "app/models/CampaignModel";
 import { ActionModal } from "app/components/__universal/ActionModal/ActionModal";
-import { FormState } from "redux-form";
+import { change, FormState } from "redux-form";
 
 import { EncounterModel } from "app/models/EncounterModel";
 import { Encounters } from "../Encounters/Encounters";
@@ -19,16 +19,24 @@ import './Campaigns.scss';
 import { AddCharacterForm } from "../AddCharacterForm/AddCharacterForm";
 import { CharacterModel, ICharacterModel } from "app/models/CharacterModel";
 import { Characters } from "app/components/Characters/Characters";
+import { getURLFriendlyString } from "app/utils/getURLFriendlyString/getURLFriendlyString";
+import { connect } from "react-redux";
+import { RootState } from "app/modules";
+import { bindActionCreators, Dispatch } from "redux";
+import CampaignsMiddleware from "app/modules/campaigns/middleware";
+import { CharactersMiddleware } from "app/modules/characters/middleware";
+import { EncountersMiddleware } from "app/modules/encounters/middleware";
+import { push } from "react-router-redux";
 
 export namespace Campaigns {
     export interface Props {
         actions:campaignsActions & Encounters.encountersActions & Characters.charactersActions & {historyPush:(location:string) => void},
-        campaigns:Array<CampaignModel>,
-        encounters:Array<EncounterModel>,
-        characters:Array<CharacterModel>,
+        campaigns:CampaignModel[],
+        encounters:EncounterModel[],
+        characters:CharacterModel[],
         encounterFormData:FormState;
         campaignFormData:FormState;
-        charactersFormData:FormState;
+        characterFormData:FormState;
     }
 
     export interface State {
@@ -45,10 +53,36 @@ export namespace Campaigns {
         addCharacter:(character:ICharacterModel, campaignId:string) => void;
         updateCampaign:(campaign:CampaignModel) => void;
         setActiveCampaign:(id:string) => void;
+        updateForm:(form:String, field:String, value:any) => void;
     }
 }
 
 const AnimatedActionModal = animationContainer(ActionModal);
+
+@connect(
+    (state:RootState):Pick<Campaigns.Props, 'campaigns'|'encounters'|'characters'|'encounterFormData'|'characterFormData'|'campaignFormData'> => ({
+        campaigns: state.campaigns.all,
+        encounters: state.encounters.all,
+        characters: state.characters.all,
+        encounterFormData: state.form.add_encounter,
+        characterFormData: state.form.add_character,
+        campaignFormData: state.form.add_campaign,
+    }),
+    (dispatch:Dispatch):Pick<Campaigns.Props, 'actions'> => ({
+        actions: bindActionCreators({
+            addCampaign: (campaign) => CampaignsMiddleware.addCampaign(campaign),
+            updateCampaign: (campaign) => CampaignsMiddleware.updateCampaign(campaign),
+            setActiveCampaign: (id) => CampaignsMiddleware.setActiveCampaign(id),
+            addCharacter:(character) => CharactersMiddleware.addCharacter(character),
+            updateCharacter:(character) => CharactersMiddleware.updateCharacter(character),
+            removeCharacter:(characterId) => CharactersMiddleware.removeCharacter(characterId),
+            addEncounter: (encounter) => EncountersMiddleware.addEncounter(encounter),
+            updateEncounter: (updatedEncounter) => EncountersMiddleware.updateEncounter(updatedEncounter),
+            updateForm: (form, field, value) => change(form, field, value),
+            historyPush: (location) => push(location),
+        }, dispatch),
+    }),
+)
 
 export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State> {
     state:Campaigns.State = {
@@ -57,16 +91,8 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
         showAddCharacterModal: false,
     };
 
-    componentDidMount() {
-        const { actions: { fetchCampaigns, initCampaignsListener } } = this.props;
-
-        fetchCampaigns();
-        initCampaignsListener();
-
-    }
-
     render() {
-        const { encounters, campaigns, actions, encounterFormData, campaignFormData, charactersFormData, characters } = this.props;
+        const { encounters, campaigns, actions, encounterFormData, campaignFormData, characterFormData, characters } = this.props;
         const { showAddCampaignModal, showAddEncounterModal, showAddCharacterModal, currentCampaign } = this.state;
 
         const currentCampaignObject = campaigns.find(campaign => campaign.id === currentCampaign);
@@ -88,7 +114,7 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
                                     encounters={ encounters }
                                     removeCharacter={ actions.removeCharacter }
                                     characters={ characters.filter(chara => chara.campaignId === campaign.id) }
-                                    onClick={ () => actions.historyPush(`/encounters/${campaign.id}`) }
+                                    onClick={ () => actions.historyPush(`/encounters/${getURLFriendlyString(campaign.name)}`) }
                                     campaign={ campaign }
                                 />
                             )
@@ -125,6 +151,9 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
                                 members: currentCampaignCharacters && currentCampaignCharacters.map(chara => ({
                                     _fields: {
                                         name: chara.name,
+                                        hp: chara.hp,
+                                        ac: chara.ac,
+                                        roll: 10,
                                     }
                                 }))
                             } }
@@ -143,7 +172,7 @@ export class Campaigns extends React.Component<Campaigns.Props, Campaigns.State>
                     isMounted={ showAddCharacterModal && currentCampaign }>
                     {
                         currentCampaign && <AddCharacterForm
-                            formData={ charactersFormData }
+                            formData={ characterFormData }
                             currentCampaign={ currentCampaign }
                             addCharacter={ (character) => {
                                 actions.addCharacter(character);

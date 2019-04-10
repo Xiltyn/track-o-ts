@@ -14,18 +14,27 @@ import { FormState } from "redux-form";
 import './Characters.scss';
 import { CampaignModel } from "app/models/CampaignModel";
 import { config, Spring } from "react-spring/renderprops";
+import { connect } from "react-redux";
+import { RootState } from "app/modules";
+import { bindActionCreators, Dispatch } from "redux";
+import { CharactersMiddleware } from "app/modules/characters/middleware";
+import { RouteComponentProps } from "react-router";
+import { getURLFriendlyString } from "app/utils/getURLFriendlyString/getURLFriendlyString";
 
 export namespace Characters {
     export interface Props {
         actions:charactersActions;
-        characters:Array<CharacterModel>|undefined;
+        characters?:CharacterModel[];
         campaigns?:CampaignModel[];
-        activeCampaign?:string;
         formData:FormState;
     }
 
     export interface State {
         showAddCharacterModal:boolean;
+    }
+
+    export type matchParams = {
+        campaign?:string;
     }
 
     export type charactersActions = {
@@ -40,7 +49,23 @@ export namespace Characters {
 
 const AnimatedActionModal = animationContainer(ActionModal);
 
-export class Characters extends React.Component<Characters.Props, Characters.State> {
+@connect(
+    (state:RootState):Pick<Characters.Props, 'formData'|'campaigns'|'characters'> => ({
+        campaigns: state.campaigns.all,
+        characters: state.characters.all,
+        formData: state.form.add_character,
+    }),
+    (dispatch:Dispatch):Pick<Characters.Props, 'actions'> => ({
+        actions: bindActionCreators({
+            addCharacter:(character) => CharactersMiddleware.addCharacter(character),
+            updateCharacter:(character) => CharactersMiddleware.updateCharacter(character),
+            setCharacterActive:(characterId) => CharactersMiddleware.setCharacterActive(characterId),
+            removeCharacter:(characterId) => CharactersMiddleware.removeCharacter(characterId),
+        }, dispatch),
+    }),
+)
+
+export class Characters extends React.Component<Characters.Props & RouteComponentProps<Characters.matchParams>, Characters.State> {
     state:Characters.State = {
         showAddCharacterModal: false,
     };
@@ -48,14 +73,17 @@ export class Characters extends React.Component<Characters.Props, Characters.Sta
     protected _getRelevantCharacters = ():CharacterModel[] => {
         const {
             characters,
-            activeCampaign,
+            campaigns,
+            match: { params: { campaign } }
         } = this.props;
+
+        const activeCampaign = campaigns && campaigns.find(camp => getURLFriendlyString(camp.name) === campaign);
 
         let result:CharacterModel[] = [];
 
         if (characters) {
             if (activeCampaign) {
-                result = characters.filter(character => character.campaignId === activeCampaign)
+                result = characters.filter(character => character.campaignId === activeCampaign.id)
                     .sort((a, b) => a.name.localeCompare(b.name));
             }
             else {

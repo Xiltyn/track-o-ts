@@ -26,7 +26,7 @@ export interface IMonsterModel {
 }
 
 export interface MonstersModel {
-    all:MonsterModel[]|undefined;
+    all:MonsterModel[];
     status: 'idle'|'busy'|'error';
 }
 

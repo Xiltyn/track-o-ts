@@ -29,7 +29,7 @@ type errorMessageProps = {
 type SignInModalProps = {
     handleSubmit:(evt:Event) => void,
     isBusy:boolean,
-    message:string,
+    message?:string,
 }
 
 
@@ -82,8 +82,6 @@ const SignInModal = (props:SignInModalProps) => {
     );
 };
 
-const AnimatedSignIn = animationContainer(SignInModal);
-
 class SignInComponent extends React.Component<SignInComponent.Props & InjectedFormProps<{}, SignInComponent.Props>, SignInComponent.State> {
     state:SignInComponent.State = {
         shouldRender: false,
@@ -114,12 +112,12 @@ class SignInComponent extends React.Component<SignInComponent.Props & InjectedFo
         } = this.props;
 
         return (
-            <AnimatedSignIn
-                handleSubmit={ handleSubmit(this.handleSubmit) }
-                isMounted={ auth.user === null }
-                isBusy={ auth.started && (!auth.completed || !auth.failed ) }
-                message={ auth.statusMessage }
-                identifier="signin"/>
+            <div>
+                <SignInModal
+                    handleSubmit={ handleSubmit(this.handleSubmit) }
+                    message={ auth.statusMessage }
+                    isBusy={ auth.started ? (!auth.completed || !auth.failed) : false }/>
+            </div>
         )
     }
 }

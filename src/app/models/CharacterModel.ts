@@ -26,7 +26,7 @@ export type CharacterClass =
     |'druid';
 
 export interface CharactersModel {
-    all:Array<CharacterModel>|undefined;
+    all:CharacterModel[];
     status: 'idle'|'busy'|'error';
 }
 

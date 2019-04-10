@@ -17,7 +17,7 @@ export const MonsterSummary = (props:MonsterSummary.Props) => {
     } = props;
 
     return (
-        <React.Fragment>
+        <div className="monster-summary">
             <div className="meta">
                 <h3 className="name">
                     { monster.name }
@@ -31,6 +31,6 @@ export const MonsterSummary = (props:MonsterSummary.Props) => {
                 <div className='col'>{ svg.hp } <span>{ monster.getComputedValue('hp') }</span></div>
                 <div className='col'>{ svg.cr } <span>{ monster.cr && monster.getCrString(monster.cr) }</span></div>
             </div>
-        </React.Fragment>
+        </div>
     )
 }

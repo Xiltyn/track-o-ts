@@ -3,14 +3,11 @@ import * as React from "react";
 import './EncounterParticipant.scss';
 import svg from "app/utils/svg";
 import animationContainer from "app/utils/animationContainer/animationContainer";
-import { ConditionsState } from "app/models/ConditionsModel";
+import { Participant } from "app/models/EncounterModel";
 
 type encounterItemProps = {
-    id:number,
-    name:string,
+    participant:Participant
     isActive:boolean,
-    color:string,
-    statuses?:ConditionsState,
     addStatus:() => void,
     onClick:(id:number) => void,
 }
@@ -25,14 +22,21 @@ const AnimatedAddButton = animationContainer(AddButton);
 
 export const EncounterParticipant = (props:encounterItemProps) => (
     <li
-        className={ `item-strip primary ${ props.isActive ? 'active' : '' }` } //TODO: Add active/inactive handler
-        onClick={ () => props.onClick(props.id) }>
-        <h4 className="item-name">
-            { props.name }
-        </h4>
+        className={ `item-strip primary ${ props.isActive ? 'active' : '' }` }
+        onClick={ () => props.onClick(props.participant.id) }>
+        <div className="details">
+            <h4 className="item-name">
+                { props.participant.name }
+            </h4>
+            <div className='stats'>
+                <div className='row'>{ svg.ac } <span>{ props.participant.ac }</span></div>
+                <div className='row'>{ svg.hp } <span>{ props.participant.hp }</span></div>
+                <div className='row'>{ svg.d20 } <span>{ props.participant.roll }</span></div>
+            </div>
+        </div>
         <ul className="item-statuses">
             {
-                props.statuses && props.statuses.map(status => (
+                props.participant.statuses && props.participant.statuses.map(status => (
                     <li
                         key={ status.id }
                         className={ `status ${ status.name }` }>
